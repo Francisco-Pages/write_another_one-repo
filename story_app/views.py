@@ -1,0 +1,245 @@
+from django.shortcuts import render
+from django.views.generic import DetailView, CreateView, ListView, TemplateView, UpdateView
+from hitcount.views import HitCountDetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.http import Http404
+from taggit.models import Tag
+from django.db.models import Q
+from . import forms
+
+
+
+from . import models as story_models
+from author_app import models as author_models
+
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
+from django.conf import settings
+
+
+# Create your views here.
+
+def write(request):
+    return render(request, 'write.html')
+
+def read(request):
+    return render(request, 'read.html')
+
+def test_home(request):
+    return render(request, 'story_app/test_home.html')
+    
+def lists(request):
+    return render(request, 'lists.html')
+
+def detailed_list(request):
+    return render(request, 'detailed_list.html')
+
+def explore(request):
+    return render(request, 'explore.html')
+
+
+
+
+class StoryDetailView(LoginRequiredMixin, HitCountDetailView):
+    login_url = reverse_lazy('login')
+    model = story_models.Story
+    template_name = "detailed_story.html"
+    count_hit = True
+
+    
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_extras = author_models.UserExtra.objects.get(user=self.object.author_id)
+        current_user = author_models.UserExtra.objects.get(user=self.request.user)
+        context['user_extras'] = user_extras
+        context['current_user'] = current_user
+        context.update({'popular_posts': story_models.Story.objects.order_by('-hit_count_generic__hits')[:3],})
+        return context
+    
+
+
+class WriteStoryCreateView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('login')
+    success_url = reverse_lazy("home")
+    template_name = "write.html"
+
+    model = story_models.Story
+    fields = ['title', 'content', 'tags', 'cover_image']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_user = author_models.UserExtra.objects.get(user=self.request.user)
+        context['current_user'] = current_user
+        return context
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.author_id = self.request.user
+        self.object.save()
+        user = author_models.UserExtra.objects.get(user=self.request.user)
+        user.stories.add(self.object)
+        return super().form_valid(form)
+    
+class StoryUpdateView(LoginRequiredMixin, UpdateView):
+    model = story_models.Story
+    form_class = forms.StoryUpdateForm
+    # success_url = reverse_lazy("detailed_author")
+    template_name = 'write.html'
+
+    def get_success_url(self, **kwargs):    
+        return reverse_lazy('author:detailed_author', kwargs = {'slug':self.object.author_id, 'pk':self.object.author_id.pk})     
+        
+
+class ListsListView(LoginRequiredMixin,ListView):
+    login_url = reverse_lazy('login')
+    # model = story_models.StoryList
+    template_name = 'story_lists.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_user = author_models.UserExtra.objects.get(user=self.request.user)
+        context['current_user'] = current_user
+        return context
+
+
+    def get_queryset(self, **kwargs):
+        self.user_lists = story_models.StoryList.objects.all().select_related('user')
+        return [user_list for user_list in self.user_lists if user_list.user == self.request.user]
+
+class ListCreateView(LoginRequiredMixin,CreateView):
+    login_url = reverse_lazy('login')
+    template_name = 'create_list.html'
+    success_url = reverse_lazy("home")
+    
+    model = story_models.StoryList
+    fields = ['name', 'description']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_user = author_models.UserExtra.objects.get(user=self.request.user)
+        context['current_user'] = current_user
+        return context
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        user = author_models.UserExtra.objects.get(user=self.request.user)
+        user.lists.add(self.object)
+        return super().form_valid(form)
+
+class ListUpdateView(LoginRequiredMixin, UpdateView):
+    model = story_models.StoryList
+    form_class = forms.ListUpdateForm
+    # success_url = reverse_lazy("detailed_author")
+    template_name = 'create_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_user = author_models.UserExtra.objects.get(user=self.request.user)
+        context['current_user'] = current_user
+        return context
+
+    def get_success_url(self, **kwargs):    
+        return reverse_lazy('story:author-list', kwargs = {'owner':self.request.user.username})     
+        
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        # user = author_models.UserExtra.objects.get(user=self.request.user)
+        # user.stories.add(self.object) -----> create 'lists' field in UserExtra model
+        return super().form_valid(form)
+
+
+class ListDetailView(LoginRequiredMixin, DetailView):
+    login_url = reverse_lazy('login')
+    model = story_models.StoryList
+    template_name = 'detailed_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_user = author_models.UserExtra.objects.get(user=self.request.user)
+        user_extras = author_models.UserExtra.objects.all().select_related('user') 
+        context['current_user'] = current_user
+        context['user_extras'] = user_extras
+        return context
+
+
+
+class TagDetailView(LoginRequiredMixin,DetailView):
+    model = Tag
+    login_url = reverse_lazy('login')
+    template_name = 'detailed_tag.html'
+
+    extra_context = {
+        'stories': story_models.Story.objects.all().order_by('-published_date'),
+        'user_extras': author_models.UserExtra.objects.all(),
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_user = author_models.UserExtra.objects.get(user=self.request.user)
+        context['current_user'] = current_user
+        return context
+
+class StorySearchResultsView(LoginRequiredMixin, ListView):
+    model = story_models.Story
+    template_name = 'story_search_results.html'
+    login_url = reverse_lazy('login')
+
+    extra_context = {
+        'user_extras': author_models.UserExtra.objects.all().select_related('user'),
+    }
+
+    def get_queryset(self):  
+        query = self.request.GET.get("q")
+        object_list = story_models.Story.objects.order_by('-published_date').filter(~Q(author_id=self.request.user)).filter(
+            Q(content__icontains=query)
+        )
+        return object_list
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_user = author_models.UserExtra.objects.get(user=self.request.user)
+        query = self.request.GET.get("q")
+        context['current_user'] = current_user
+        context['query'] = query
+        return context
+        
+
+class AuthorSearchResultsView(LoginRequiredMixin, ListView):
+    model = author_models.UserExtra
+    template_name = 'author_search_results.html'
+    login_url = reverse_lazy('login')
+
+    def get_queryset(self):  
+        query = self.request.GET.get("q")
+        object_list = author_models.UserExtra.objects.filter(~Q(user=self.request.user)).filter(
+            Q(user__username__icontains=query)
+        )
+        return object_list
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get("q")
+        current_user = author_models.UserExtra.objects.get(user=self.request.user)
+        context['query'] = query
+        context['current_user'] = current_user
+        return context
+
+
+    
+class SearchPageView(LoginRequiredMixin,TemplateView):
+    template_name = 'story_search_results.html'
+    login_url = reverse_lazy('login')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_user = author_models.UserExtra.objects.get(user=self.request.user)
+        context['current_user'] = current_user
+        return context

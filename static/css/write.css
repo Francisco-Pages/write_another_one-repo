@@ -1,0 +1,42 @@
+.write__header {
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    max-width: 90rem;
+    margin-bottom: 4rem;
+}
+.write__editor-container {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.write__buttons-container {
+    display: flex;
+    gap: 1rem;
+
+}
+
+.write__main-container {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 74ch;
+}
+.write__title-container {
+    
+   
+}
+.write__content-container {
+    
+   
+}
+
+.editor__title {
+    padding: 1rem;
+}
+
+.editor__content {
+    padding: 1rem;
+}

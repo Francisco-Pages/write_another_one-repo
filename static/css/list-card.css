@@ -1,0 +1,92 @@
+.list-card__container {
+    flex-grow: 1;
+
+}
+
+
+.list-card {
+    display: flex;
+    justify-content: space-between;
+    gap: 4rem;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: var(--background-secondary);
+    border: 1px solid var(--background-alt-secondary);
+    border-radius: 3px;
+    /* margin-top: 2rem; */
+    /* border-bottom: 3px solid var(--clr-light-grey); */
+    /* min-height: 18rem; */
+}
+
+.list-card__text-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    
+}
+.list-card__header {
+    display: flex;
+    gap: 2rem;
+}
+
+.list-card__author {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.list-card__main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    /* min-width: 22rem; */
+}
+
+.list-card__footer-container {
+    display: flex;
+    /* gap: 1rem; */
+    /* min-height: 6rem; */
+    margin: 2rem 0 1rem 0;
+    align-items: center;
+}
+
+.list-card__footer {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+    gap: 2rem;
+    
+}
+.list-card__footer-info {
+    display: flex;
+    gap: 2rem;
+}
+
+
+.list-card__footer-about {
+    display: flex;
+    gap: 1rem;
+
+}
+
+.list-card__image-container {
+    min-width: 6rem;
+    max-width: 16rem;
+    flex-shrink: 1;
+    
+}
+@media (max-width: 700px) {
+    
+    .list-card__footer-info {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+}
+@media (max-width: 480px) {
+    .list-card__description {
+        display: none;
+    }
+    
+}

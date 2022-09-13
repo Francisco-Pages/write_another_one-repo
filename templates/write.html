@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<form class="flex-container" method="POST" enctype="multipart/form-data">
+    <main class="layout__main-container">
+        <main class="main">
+
+            <header class="main__header">
+                <div class="write__header">
+                    <div class="write__editor-container">
+                        
+                        <img class="icon-md icon-round" src="/{{current_user.cover_image}}" alt="">
+
+                        <div class="ff-sub-title">
+                            {{ request.user }}
+                        </div>
+                                
+                    </div>
+                    <div class="write__buttons-container">
+                    
+                        
+                        <div class="button-container">
+                            
+                            <button class="button-pill" type="submit">Publish</button>
+                            
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="main__content col-container">
+                
+                <div class="write__main-container">
+
+                    <!-- <div class="write__title-container">
+                        <div class="editor__title ff-read fs-heading-2 text-alt-secondary" contenteditable="true">
+                            
+                            {{form.title}}
+
+                            
+                            
+                        </div>
+                    </div>
+                    <div class="write__content-container">
+                        <div class="editor__content ff-read fs-body-1 text-alt-secondary" contenteditable="true">
+                            {{form.content}}
+                        </div>
+                    </div>     -->
+                    
+          
+
+                        {% csrf_token %}
+              
+                        {{ form.as_p }}
+              
+                        
+              
+                    </div>
+                </main>
+            </main>
+        </main>
+    </form>
+{% endblock %}

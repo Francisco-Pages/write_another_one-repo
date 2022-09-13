@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+
+
+    <main class="layout__main-container">
+        <main class="main">
+
+            <header class="main__header">
+                <div class="header-feed content-container">
+                    <header class="header-feed__title-container">
+                        <div class="header-feed__title fs-heading-4 fw-bold text-main">
+                            Lists
+                        </div>
+                        
+                        <div class="button-container">
+                            <a href="{% url 'story:new-list' %}">
+                                <div class="button-pill">
+                                    New List
+                                </div>
+                            </a>
+                            <img class="icon-xsm" id="svg-icon-primary" src="{% static 'wao_project/svg/drop-down-button.svg' %}" alt="">
+                        </div>
+                    </header>
+                    
+                
+                    <footer class="header-feed__footer-container">
+                        <div class="header-feed__footer-tab--active">
+                            Your Lists
+                        </div>
+                        <div class="header-feed__footer-tab">
+                            Pinned
+                        </div>
+                        <div class="header-feed__footer-tab">
+                            Find more lists
+                        </div>
+
+                    </footer>
+                </div>
+            </header>
+            
+            <div class="main__content col-container">
+                {% for list in object_list %}
+                <div class="list-card__container">
+                    <article class="list-card content-container">
+                        <div class="list-card__main-container">
+                            <a href="{% url 'story:detailed_list' list.user list.slug list.pk %}">
+                                <div class="list-card__text-container">
+                                    <header class="list-card__header">
+                                        <div class="list-card__title fs-heading-4 fw-bold">
+                                            {{list.name}}
+                                        </div>
+                                        
+                                    </header>
+                                    <main class="list-card__description fs-body-3 text-secondary">
+                                        {{list.description}}
+                                    </main>
+                                    
+                                </div>
+                            </a>
+                            <footer class="list-card__footer-container text-alt-secondary">
+                                <div class="list-card__footer">
+
+                                    <div class="list-card__footer-info">
+                                        
+                                        <a class="list-card__author" href="{% url 'author:detailed_author' current_user.user.username current_user.user.id %}">
+                                            <div class="list-card__author">
+                                                <img class="icon-xsm icon-round" src="/{{ current_user.cover_image }}" alt="">
+                                                <div class="ff-sub-title fs-body-3 text-main">
+                                                    {{ list.user.username }}
+                                                </div>
+                                                <div class="button-container">
+                                                    ·
+                                                </div>
+                                            </div>
+                                            <div class="list-card__footer-about">
+                                                
+                                                <div class="button-container">
+                                                    {{ list.stories.all.count}} stories
+                                                    
+                                                </div>
+                                                <div class="button-container">
+                                                    ·
+                                                </div>
+                                                <div class="button-container">
+                                                    {{list.pinners.count}} pins
+                                                </div>
+                                                
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="button-container">
+                                        <div class="button-container">
+                                            <div class="dropdown">
+                                                <div class="" type="button" data-toggle="dropdown" >
+                                                    <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/more-icon.svg' %}" alt="">
+                                                </div>
+                                                <div class="dropdown-menu fs-body-4">
+                                                {% if request.user == list.user %}
+                                                <a class="dropdown-item" href="{% url 'story:update-list' list.user list.slug list.pk %}">Edit</a>
+                                                {% else %}
+                                                <a class="dropdown-item" href="">Block</a>
+                                                {% endif %}
+
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown">
+                                                <div class="" type="button" data-toggle="dropdown" >
+                                                    <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/bookmark-add.svg' %}" alt="">
+                                                </div>
+                                                <div class="dropdown-menu fs-body-4">
+                                                <a class="dropdown-item" href="#">btn 1</a>
+                                                
+                                                <a class="dropdown-item" href="#">btn 2</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                            </footer>
+                            </div>
+                            <div class="list-card__image-container">
+                                <img src="story-image.webp" alt="">
+                            </div>
+                        </article>
+                    
+                </div>
+                <div class="flex-container">
+                    <div class="content-container divider-item">
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </main>
+    </main>
+{% endblock %}
