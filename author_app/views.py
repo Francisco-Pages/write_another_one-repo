@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, DetailView, ListView, UpdateView
 from django.contrib.auth import get_user_model
-from hitcount.models import HitCountMixin, HitCount, Hit
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from story_app import models as story_models
@@ -80,7 +80,6 @@ class AuthorHomePageView(LoginRequiredMixin, TemplateView):
         following_users = [user for user in author_models.UserExtra.objects.select_related('user') if user.user in current_user.following.all()]
         following_user_ids = [user.user for user in author_models.UserExtra.objects.select_related('user') if user.user in current_user.following.all()]
         following_stories = [story for story in story_models.Story.objects.select_related('author_id').order_by('-published_date') if story.author_id in following_user_ids]
-        
         context["current_user"] = current_user
         context['following_users'] = following_users
         context['following_stories'] = following_stories
