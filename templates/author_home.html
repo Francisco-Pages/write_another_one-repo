@@ -35,15 +35,14 @@
                             <a href="{% url 'author:detailed_author' user.user.username user.user.id %}">
                                 <img class="icon-md icon-round" src="/{{ user.cover_image }}" alt="">
                             </a>
-                            
                             <!-- <div class="fs-body-5 icon-notification">
                                 9+
                             </div> -->
                         </div>
                         {% endfor %}
-                        <!-- <div class="button-container">
+                        <div class="button-container">
                             <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/add-icon.svg' %}" alt="">
-                        </div> -->
+                        </div>
 
                     </main>
                     <main class="header-feed__main-container text-main">
@@ -55,7 +54,7 @@
                             </div>
                         </a>
                         {% endfor %}
-
+                        
                         <!-- <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/next.svg' %}" alt=""> -->
                     </main>
                     <footer class="header-feed__footer-container">
