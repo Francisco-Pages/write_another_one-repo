@@ -3,7 +3,7 @@ from django.contrib.auth import models as authmodels
 from django.utils import timezone
 from django.conf import settings
 from taggit.models import Tag
-
+from hitcount.models import HitCountMixin, HitCount, Hit
 
 from story_app import models as story_models
 
