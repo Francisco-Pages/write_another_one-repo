@@ -30,7 +30,6 @@
                     </header>
                     <main class="header-feed__main-container">
                         {% for user in following_users %}
-                        
                         <div class="button-container">
                             <a href="{% url 'author:detailed_author' user.user.username user.user.id %}">
                                 <img class="icon-md icon-round" src="/{{ user.cover_image }}" alt="">
@@ -39,6 +38,7 @@
                                 9+
                             </div> -->
                         </div>
+
                         {% endfor %}
                         <div class="button-container">
                             <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/add-icon.svg' %}" alt="">
@@ -53,6 +53,7 @@
                                 {{tag.name}}
                             </div>
                         </a>
+                        
                         {% endfor %}
                         
                         <!-- <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/next.svg' %}" alt=""> -->
@@ -69,6 +70,16 @@
                 </div>
             </header>
             <div class="main__content">
+
+                <button type="button" id="testing-ajax" class="btn btn-success btn-lg">GET</button>
+                <ul id="seconds">
+
+
+                </ul>
+                {% csrf_token %}
+                <ul id="ajax-success">
+
+                </ul>
                 {% for story in following_stories %}
                     
                 <div class="story-card__container">

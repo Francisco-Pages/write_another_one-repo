@@ -5,6 +5,10 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, DetailView, ListView, UpdateView
 from django.contrib.auth import get_user_model
 
+from time import time
+from django.http import JsonResponse
+from django.core import serializers
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from story_app import models as story_models
@@ -71,7 +75,7 @@ class AuthorHomePageView(LoginRequiredMixin, TemplateView):
     login_url = reverse_lazy('login')
     template_name = 'author_home.html'
     # model = author_models.UserExtra
-    
+        
    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -83,10 +87,30 @@ class AuthorHomePageView(LoginRequiredMixin, TemplateView):
         context["current_user"] = current_user
         context['following_users'] = following_users
         context['following_stories'] = following_stories
-
         return context
 
+    def get(self, request, *args, **kwargs):
+        self.context = self.get_context_data()
+        # text = request.GET.get('button_text')
         
+        def is_ajax(request):
+            return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
+        if is_ajax(request=request):
+            users = serializers.serialize("json", author_models.UserExtra.objects.all())
+            
+            return JsonResponse({"users": users}, status=200)
+        
+        return render(request, 'author_home.html', self.context)
+
+    def post(self, request):
+        card_text = request.POST.get("text")
+        result = f"i've got: {card_text}"
+        current_user = author_models.UserExtra.objects.get(user=request.user)
+        current_user.following.add(request.user)
+
+        return JsonResponse({"data":result}, status=200)    
+    
         
 # class ListsListView(LoginRequiredMixin,ListView):
 #     login_url = reverse_lazy('login')
