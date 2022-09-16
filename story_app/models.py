@@ -26,7 +26,7 @@ class Story(models.Model):
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',
      related_query_name='hit_count_generic_relation')
     cover_image = models.ImageField(upload_to="static/media/story_images", default='none')
-    
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_by', blank=True)
 
     def __str__(self):
         return self.title

@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView, CreateView, ListView, TemplateView, UpdateView
 from hitcount.views import HitCountDetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
-from django.http import Http404
+from django.urls import reverse_lazy, reverse
+from django.http import Http404, HttpResponseRedirect
 from taggit.models import Tag
 from django.db.models import Q
 from . import forms
@@ -40,7 +40,15 @@ def explore(request):
     return render(request, 'explore.html')
 
 
+def StoryLikeView(request, pk):
+    story = get_object_or_404(story_models.Story, pk=request.POST.get('story_pk'))
+    story.likes.add(request.user)
+    return HttpResponseRedirect(reverse('author:author_home'))
 
+def StoryUnlikeView(request, pk):
+    story = get_object_or_404(story_models.Story, pk=request.POST.get('story_pk'))
+    story.likes.remove(request.user)
+    return HttpResponseRedirect(reverse('author:author_home'))
 
 class StoryDetailView(LoginRequiredMixin, HitCountDetailView):
     login_url = reverse_lazy('login')

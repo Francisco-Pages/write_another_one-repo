@@ -132,6 +132,31 @@
                                         
                                         <div class="story-card__buttons">
                                             <div class="button-container">
+
+                                                {% if request.user in story.likes.all %}
+                                                <form action="{% url 'story:unlike_story' story.pk %}" method="POST">
+                                                    {% csrf_token %}
+                                                    <button type="submit" 
+                                                            name="story_pk" 
+                                                            value="{{story.pk}}" 
+                                                            class=" btn btn-primary">
+                                                            
+                                                            Unlike
+                                                    </button>
+                                                </form>
+                                                {% else %}
+                                                <form action="{% url 'story:like_story' story.pk %}" method="POST">
+                                                    {% csrf_token %}
+                                                    <button type="submit" 
+                                                            name="story_pk" 
+                                                            value="{{story.pk}}" 
+                                                            class="btn btn-primary">
+                                                            Like
+                                                    </button>
+                                                </form>
+                                                {% endif %}
+
+
                                                 <div class="dropdown">
                                                     <div class="" type="button" data-toggle="dropdown" >
                                                         <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/more-icon.svg' %}" alt="">
