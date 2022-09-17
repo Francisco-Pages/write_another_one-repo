@@ -21,7 +21,6 @@ urlpatterns = [
     path('search/authors/', views.AuthorSearchResultsView.as_view(), name='author-search-results'),
     path('explore/', views.SearchPageView.as_view(), name='explore'),
     path('update-story/<author_id>/<slug>/<pk>/', views.StoryUpdateView.as_view(), name='update-story'),
-    path('like/<int:pk>', views.StoryLikeView, name="like_story"),
-    path('unlike/<int:pk>', views.StoryUnlikeView, name="unlike_story"),
+    path('like/', views.like_story, name="like_story_ajax")
 
 ]

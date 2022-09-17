@@ -22,11 +22,12 @@ class Story(models.Model):
     slug = models.SlugField(null=False)
     editable = models.BooleanField(default=False)
     updated = models.BooleanField(default=False)
-    published_date = models.DateField(default=now)
+    published_date = models.DateTimeField(default=now)
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',
      related_query_name='hit_count_generic_relation')
     cover_image = models.ImageField(upload_to="static/media/story_images", default='none')
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_by', blank=True)
+    like_count = models.BigIntegerField(default=0)
 
     def __str__(self):
         return self.title
@@ -59,7 +60,7 @@ class EditSuggestion(models.Model):
     comments = models.CharField(max_length=12000, default='comments')
     liked = models.BooleanField(default=False)
     accepted = models.BooleanField(default=False)
-    created_date = models.DateField(default=now)
+    created_date = models.DateTimeField(default=now)
 
 class UpdatedStory(models.Model):
     og_story_id = models.ForeignKey(
@@ -69,7 +70,7 @@ class UpdatedStory(models.Model):
                                 )
     new_title = models.CharField(max_length=300, default='new title')
     new_content = models.CharField(max_length=12000, default='new content')
-    created_date = models.DateField(default=now)
+    created_date = models.DateTimeField(default=now)
 
 class StoryList(models.Model):
     user = models.ForeignKey(
@@ -84,7 +85,7 @@ class StoryList(models.Model):
     description = models.CharField(max_length=1200, default='list description')
     stories = models.ManyToManyField(Story)
     pinners = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='pinned_by')
-    created_date = models.DateField(default=now)
+    created_date = models.DateTimeField(default=now)
 
     def __str__(self):
         return self.name
@@ -131,7 +132,7 @@ class LikedStory(models.Model):
                                 default=None,
                                 on_delete=models.CASCADE
                             )
-    liked_date = models.DateField(default=now)
+    liked_date = models.DateTimeField(default=now)
 
 class TagsFollowed(models.Model):
     user = models.ForeignKey(
@@ -144,6 +145,6 @@ class TagsFollowed(models.Model):
                                 default=None,
                                 on_delete=models.CASCADE
                             )
-    date_followed = models.DateField(default=now)
+    date_followed = models.DateTimeField(default=now)
 
     

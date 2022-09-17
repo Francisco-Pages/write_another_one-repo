@@ -393,11 +393,11 @@ UTILITY CLASSES
     
 }
 
-#svg-icon-primary {
+.svg-icon-primary {
     filter: var(--svg-primary);
 }
 
-#svg-icon-secondary {
+.svg-icon-secondary {
     filter: var(--svg-secondary);
 }
 

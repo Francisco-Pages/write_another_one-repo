@@ -41,7 +41,7 @@
 
                         {% endfor %}
                         <div class="button-container">
-                            <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/add-icon.svg' %}" alt="">
+                            <img class="icon-xsm svg-icon-primary" src="{% static 'svg/add-icon.svg' %}" alt="">
                         </div>
 
                     </main>
@@ -71,15 +71,7 @@
             </header>
             <div class="main__content">
 
-                <button type="button" id="testing-ajax" class="btn btn-success btn-lg">GET</button>
-                <ul id="seconds">
-
-
-                </ul>
-                {% csrf_token %}
-                <ul id="ajax-success">
-
-                </ul>
+                
                 {% for story in following_stories %}
                     
                 <div class="story-card__container">
@@ -132,34 +124,15 @@
                                         
                                         <div class="story-card__buttons">
                                             <div class="button-container">
-
-                                                {% if request.user in story.likes.all %}
-                                                <form action="{% url 'story:unlike_story' story.pk %}" method="POST">
-                                                    {% csrf_token %}
-                                                    <button type="submit" 
-                                                            name="story_pk" 
-                                                            value="{{story.pk}}" 
-                                                            class=" btn btn-primary">
-                                                            
-                                                            Unlike
-                                                    </button>
-                                                </form>
-                                                {% else %}
-                                                <form action="{% url 'story:like_story' story.pk %}" method="POST">
-                                                    {% csrf_token %}
-                                                    <button type="submit" 
-                                                            name="story_pk" 
-                                                            value="{{story.pk}}" 
-                                                            class="btn btn-primary">
-                                                            Like
-                                                    </button>
-                                                </form>
-                                                {% endif %}
-
+                                                {% csrf_token %}
+                                                <button id="like-story-button" onclick="reply_click(this.value)" value="{{story.pk}}">
+                                                
+                                                </button>
+                                                <span id="{{story.pk}}-like-count">{{story.like_count}}</span>
 
                                                 <div class="dropdown">
                                                     <div class="" type="button" data-toggle="dropdown" >
-                                                        <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/more-icon.svg' %}" alt="">
+                                                        <img class="icon-xsm svg-icon-primary" src="{% static 'svg/more-icon.svg' %}" alt="">
                                                     </div>
                                                     <div class="dropdown-menu fs-body-4">
                                                     {% if request.user == story.author_id %}
@@ -173,7 +146,7 @@
                                                 </div>
                                                 <div class="dropdown">
                                                     <div class="" type="button" data-toggle="dropdown" >
-                                                        <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/bookmark-add.svg' %}" alt="">
+                                                        <img class="icon-xsm svg-icon-primary" src="{% static 'svg/bookmark-add.svg' %}" alt="">
                                                     </div>
                                                     <div class="dropdown-menu fs-body-4">
                                                     <a class="dropdown-item" href="#">btn 1</a>
@@ -219,3 +192,27 @@
 
 {% endblock %}
     
+{% block scripts %}
+<script>
+    function reply_click(storyClicked){
+        const story = storyClicked
+        $.ajax({
+            type: 'POST',
+            url: '{% url "story:like_story_ajax" %}',
+            data: {
+                storypk: storyClicked,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            cache: false,
+            success: function(json) {
+                document.getElementById(`${story}-like-count`).innerHTML = json['result']
+                console.log('success')
+            },
+            error: function(xhr, errmsg, err) {
+                
+            }
+        });
+    }
+</script>
+{% endblock %}

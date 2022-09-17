@@ -89,27 +89,6 @@ class AuthorHomePageView(LoginRequiredMixin, TemplateView):
         context['following_stories'] = following_stories
         return context
 
-    def get(self, request, *args, **kwargs):
-        self.context = self.get_context_data()
-        # text = request.GET.get('button_text')
-        
-        def is_ajax(request):
-            return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
-
-        if is_ajax(request=request):
-            users = serializers.serialize("json", author_models.UserExtra.objects.all())
-            
-            return JsonResponse({"users": users}, status=200)
-        
-        return render(request, 'author_home.html', self.context)
-
-    def post(self, request):
-        card_text = request.POST.get("text")
-        result = f"i've got: {card_text}"
-        current_user = author_models.UserExtra.objects.get(user=request.user)
-        current_user.following.add(request.user)
-
-        return JsonResponse({"data":result}, status=200)    
     
         
 # class ListsListView(LoginRequiredMixin,ListView):

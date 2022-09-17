@@ -1,3 +1,8 @@
+
+
+
+
+
 $(document).ready(function(){
     console.log("ready to go")
 
@@ -35,3 +40,4 @@ $(document).ready(function(){
     })
 
 });   
+

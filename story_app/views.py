@@ -2,10 +2,11 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView, CreateView, ListView, TemplateView, UpdateView
 from hitcount.views import HitCountDetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, reverse
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, JsonResponse
 from taggit.models import Tag
-from django.db.models import Q
+from django.db.models import Q, F
 from . import forms
 
 
@@ -40,15 +41,27 @@ def explore(request):
     return render(request, 'explore.html')
 
 
-def StoryLikeView(request, pk):
-    story = get_object_or_404(story_models.Story, pk=request.POST.get('story_pk'))
-    story.likes.add(request.user)
-    return HttpResponseRedirect(reverse('author:author_home'))
+@login_required
+def like_story(request):
+    if request.POST.get('action') =='post':
+        result = ''
+        pk = int(request.POST.get('storypk'))
+        story = get_object_or_404(story_models.Story, pk=pk)
+        print(story.pk)
+        
+        if story.likes.filter(pk=request.user.pk).exists():
+            story.likes.remove(request.user)
+            story.like_count -= 1
+            result = story.like_count
+            story.save()
+        else:
+            story.likes.add(request.user)
+            story.like_count += 1
+            result = story.like_count 
+            story.save()
+        print(result)
+        return JsonResponse({'result':result})
 
-def StoryUnlikeView(request, pk):
-    story = get_object_or_404(story_models.Story, pk=request.POST.get('story_pk'))
-    story.likes.remove(request.user)
-    return HttpResponseRedirect(reverse('author:author_home'))
 
 class StoryDetailView(LoginRequiredMixin, HitCountDetailView):
     login_url = reverse_lazy('login')
