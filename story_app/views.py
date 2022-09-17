@@ -45,6 +45,7 @@ def explore(request):
 def like_story(request):
     if request.POST.get('action') =='post':
         result = ''
+        liked = ''
         pk = int(request.POST.get('storypk'))
         story = get_object_or_404(story_models.Story, pk=pk)
         print(story.pk)
@@ -53,14 +54,16 @@ def like_story(request):
             story.likes.remove(request.user)
             story.like_count -= 1
             result = story.like_count
+            liked = "/static/svg/like-icon.svg"
             story.save()
         else:
             story.likes.add(request.user)
             story.like_count += 1
-            result = story.like_count 
+            result = story.like_count
+            liked = "/static/svg/like-icon-filled.svg"
             story.save()
         print(result)
-        return JsonResponse({'result':result})
+        return JsonResponse({'result':result, 'liked':liked})
 
 
 class StoryDetailView(LoginRequiredMixin, HitCountDetailView):

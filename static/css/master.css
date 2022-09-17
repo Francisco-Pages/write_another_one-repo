@@ -134,6 +134,17 @@ html {
     font-size: 62.5%;
 }
 
+/* BUTTON STYLING */
+button, input[type="submit"], input[type="reset"] {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
 /* BORDER STYLING */
 input {
     border: none;
@@ -375,8 +386,12 @@ UTILITY CLASSES
 }
 
 .button-pill:hover {
-    color: var(--clr-constant-100);
-    background-color: var(--background-accent);
+    /* color: var(--clr-constant-100); */
+    /* background-color: var(--background-accent); */
+}
+.button-pill-md {
+    border-radius: 99rem;
+    padding: 0.3rem 1rem;
 }
 .button-pill-sm {
     border-radius: 99rem;
@@ -454,6 +469,14 @@ UTILITY CLASSES
     min-width: 2.4rem;
     max-height: 2.4rem;
     min-height: 2.4rem;
+    /* border-radius: 9999px; */
+    /* filter: invert(40%) sepia(0%) saturate(126%) hue-rotate(4deg) brightness(109%) contrast(101%); */
+}
+.icon-xxsm {
+    max-width: 2rem;
+    min-width: 2rem;
+    max-height: 2rem;
+    min-height: 2rem;
     /* border-radius: 9999px; */
     /* filter: invert(40%) sepia(0%) saturate(126%) hue-rotate(4deg) brightness(109%) contrast(101%); */
 }
