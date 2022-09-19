@@ -49,7 +49,6 @@ def like_story(request):
         pk = int(request.POST.get('storypk'))
         story = get_object_or_404(story_models.Story, pk=pk)
         
-        
         if story.likes.filter(pk=request.user.pk).exists():
             story.likes.remove(request.user)
             story.like_count -= 1

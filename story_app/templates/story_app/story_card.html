@@ -5,7 +5,7 @@
     <article class="story-card content-container">
         <a href="{% url 'author:detailed_author' story.author_id.username story.author_id.id %}">
         <header class="story-card__header ff-sub-title fs-body-3 text-alt-secondary">
-            {% for author in following_users %}
+            {% for author in user_extra %}
                 {% if author.user == story.author_id %}
                 <img class="icon-xsm icon-round" src="/{{ author.cover_image }}" alt="">
 
@@ -54,8 +54,8 @@
 
                                 {% if request.user in story.likes.all %}
                                 <button id="like-story-button" onclick="reply_click(this.value)" value="{{story.pk}}">
-                                <div class="button-pill button-pill-md">
-                                    {% csrf_token %}
+                                    <div class="button-pill button-pill-md">
+                                        {% csrf_token %}
                                         <img class="icon-xxsm svg-icon-primary" id="{{story.pk}}-like-story-icon" src="{% static 'svg/like-icon-filled.svg' %}" alt="">
                                         <span id="{{story.pk}}-like-count">{{story.like_count}}</span>
                                     </div>

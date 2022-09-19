@@ -158,3 +158,29 @@
         </main>
     </main>
 {% endblock %}
+
+{% block scripts %}
+<script>
+    function reply_click(storyClicked){
+        const story = storyClicked
+        $.ajax({
+            type: 'POST',
+            url: '{% url "story:like_story_ajax" %}',
+            data: {
+                storypk: storyClicked,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            cache: false,
+            success: function(json) {
+                document.getElementById(`${story}-like-count`).innerHTML = json['result'];
+                document.getElementById(`${story}-like-story-icon`).src = json['liked']
+                console.log('success')
+            },
+            error: function(xhr, errmsg, err) {
+                
+            }
+        });
+    }
+</script>
+{% endblock %}

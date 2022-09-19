@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, TemplateView, DetailView, ListView, UpdateView
 from django.contrib.auth import get_user_model
 
@@ -20,6 +20,31 @@ from django.contrib.auth import models as authmodels
 
 from . import forms
 
+@login_required
+def follow_author(request):
+    if request.POST.get('action') == 'post':
+        result = ''
+        followed = ''
+        pk = int(request.POST.get('authorpk'))
+        author = get_object_or_404(author_models.UserExtra, pk=pk)
+        current_user = get_object_or_404(author_models.UserExtra, user=request.user)
+
+        if author.followers.filter(pk=request.user.pk).exists():
+            author.followers.remove(request.user)
+            current_user.following.remove(author.user.pk)
+            author.follower_count -= 1
+            result = author.follower_count
+            followed = 'follow'
+            author.save()
+        else:
+            author.followers.add(request.user)
+            current_user.following.add(author.user.pk)
+            author.follower_count += 1
+            result = author.follower_count
+            followed = 'following'
+            author.save()
+        
+        return JsonResponse({'result':result, 'followed':followed})
 
 
 # Create your views here.
@@ -84,8 +109,9 @@ class AuthorHomePageView(LoginRequiredMixin, TemplateView):
         following_users = [user for user in author_models.UserExtra.objects.select_related('user') if user.user in current_user.following.all()]
         following_user_ids = [user.user for user in author_models.UserExtra.objects.select_related('user') if user.user in current_user.following.all()]
         following_stories = [story for story in story_models.Story.objects.select_related('author_id').order_by('-published_date') if story.author_id in following_user_ids]
+
         context["current_user"] = current_user
-        context['following_users'] = following_users
+        context['user_extra'] = following_users
         context['following_stories'] = following_stories
         return context
 

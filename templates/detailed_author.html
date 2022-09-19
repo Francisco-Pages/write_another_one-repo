@@ -25,25 +25,38 @@
                                         </div>
                                         <div class="alt-author-card__name-footer text-alt-secondary">
                                             <div>
-                                                {{object.username}}
+                                                @{{object.username}}
                                                 
                                             </div>
                                             
                                             <div>
-                                                {{object.followers.count}} Followers
+                                                <span id="{{ object_extra.pk }}-follower-count">{{object_extra.follower_count}}</span> Followers
                                             </div>
                                         </div>
                                     </div>
                                     <div class="button-container">
-    
                                         {% if request.user == object %}
                                         <div class="button-pill">
                                             write
                                         </div>
                                         {% else %}
-                                        <div class="button-pill">
-                                            Follow
-                                        </div>
+                                        {% if request.user in object_extra.followers.all %}
+                                        <button id="follow-author-button" onclick="author_click(this.value)" value="{{ object_extra.pk }}">
+                                            <div class="button-pill">
+                                                {% csrf_token %}
+                                                <!-- <span id="{{ object_extra.pk }}-follower-count">{{object_extra.follower_count}}</span> -->
+                                                <span id="{{ object_extra.pk }}-following-icon">Following</span>
+                                            </div>
+                                        </button>
+                                        {% else %}
+                                        <button id="follow-author-button" onclick="author_click(this.value)" value="{{ object_extra.pk }}">
+                                            <div class="button-pill">
+                                                {% csrf_token %}
+                                                <span id="{{ object_extra.pk }}-following-icon">Follow</span>
+                                                <!-- <span id="{{ object_extra.pk }}-follower-count">{{object_extra.follower_count}}</span> -->
+                                            </div>
+                                        </button>
+                                        {% endif %}
                                        {% endif %}
                                        
                                     </div>
@@ -86,24 +99,25 @@
                 <div class="story-card__container">
                     <article class="story-card content-container">
                         <a href="{% url 'author:detailed_author' story.author_id.username story.author_id.id %}">
-                        <header class="story-card__header ff-sub-title fs-body-3">
+                        <header class="story-card__header ff-sub-title fs-body-3 text-alt-secondary">
                             
-                            <img class="icon-xsm icon-round" src="/{{ object_extra.cover_image }}" alt="">
-                            
-                           
-                            <div>
+                                <img class="icon-xsm icon-round" src="/{{ object_extra.cover_image }}" alt="">
+                
+                                
+                            <div class="text-main">
                                 {{ story.author_id }}
                             </div>
                             <div>
                                 ·
                             </div>
-                            <div class="text-alt-secondary">
-                                    {{ story.published_date }}
-                                </div>
-                                
-                                
-                            </header>
+                            <div class="">
+                                {{ story.published_date }}
+                            </div>
+                            
+                            
+                        </header>
                         </a>
+                        
                         <main class="story-card__main-container">
                             <div class="story-card__text-container">
                                 <header class="story-card__title ff-title fs-heading-3 fw-bold">
@@ -111,69 +125,91 @@
                                             {{ story.title }}
                                         </a>
                                     </header>
-                                    <main class="story-card__description ff-read fs-body-3 fw-reg">
+                                    <main class="story-card__description ff-read fs-body-3 fw-reg text-secondary">
                                         {{ story.content | slice:":180" }}...
                                     </main>
-                                    <footer class="story-card__footer-container">
-                                        <footer class="story-card__footer">
-                                            
-                                            <div>
-                                                {% for tag in story.tags.all %}
-                                                <a href="{% url 'story:detailed-tag' tag.slug %}">
-                                                    <div class="tag-card__tag-icon">
-                                                        {{ tag.name }}
+                                <footer class="story-card__footer-container">
+                                    <footer class="story-card__footer">
+                                        
+                                        <div>
+                                            {% for tag in story.tags.all %}
+                                            <a href="{% url 'story:detailed-tag' tag.slug %}">
+                                                <div class="tag-card__tag-icon">
+                                                    {{ tag.name }}
+                                                </div>
+                                            </a>
+                                            {% endfor %}
+                
+                                        </div>
+                                        
+                                        <div class="story-card__buttons">
+                                            <div class="button-container">
+                
+                                                {% if request.user in story.likes.all %}
+                                                <button id="like-story-button" onclick="reply_click(this.value)" value="{{story.pk}}">
+                                                    <div class="button-pill button-pill-md">
+                                                        {% csrf_token %}
+                                                        <img class="icon-xxsm svg-icon-primary" id="{{story.pk}}-like-story-icon" src="{% static 'svg/like-icon-filled.svg' %}" alt="">
+                                                        <span id="{{story.pk}}-like-count">{{story.like_count}}</span>
                                                     </div>
-                                                </a>
-                                                {% endfor %}
-    
-                                            </div>
-                                            
-                                            <div class="story-card__buttons">
-                                                <div class="button-container">
-                                                    <div class="dropdown">
-                                                        <div class="" type="button" data-toggle="dropdown" >
-                                                            <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/more-icon.svg' %}" alt="">
+                                                </button>
+                                                {% else %}
+                                                <button id="like-story-button" onclick="reply_click(this.value)" value="{{story.pk}}">
+                                                    <div class="button-pill button-pill-md">
+                                                        {% csrf_token %}
+                                                            <img class="icon-xxsm svg-icon-primary" id="{{story.pk}}-like-story-icon" src="{% static 'svg/like-icon.svg' %}" alt="">
+                                                            <span id="{{story.pk}}-like-count">{{story.like_count}}</span>
                                                         </div>
-                                                        <div class="dropdown-menu fs-body-4">
-                                                        {% if request.user == story.author_id %}
-                                                        <a class="dropdown-item" href="{% url 'story:update-story' story.author_id story.slug story.pk %}">Edit</a>
-                                                        {% else %}
-                                                        <a class="dropdown-item" href="">Block</a>
-                                                        {% endif %}
-
-                                                        <a class="dropdown-item" href="#">Delete</a>
-                                                        </div>
+                                                    </button>
+                                                {% endif %}
+                
+                                                <div class="dropdown">
+                                                    <div class="" type="button" data-toggle="dropdown" >
+                                                        <img class="icon-xsm svg-icon-primary" src="{% static 'svg/more-icon.svg' %}" alt="">
                                                     </div>
-                                                    <div class="dropdown">
-                                                        <div class="" type="button" data-toggle="dropdown" >
-                                                            <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/bookmark-add.svg' %}" alt="">
-                                                        </div>
-                                                        <div class="dropdown-menu fs-body-4">
-                                                        <a class="dropdown-item" href="#">btn 1</a>
-                                                        
-                                                        <a class="dropdown-item" href="#">btn 2</a>
-                                                        </div>
+                                                    <div class="dropdown-menu fs-body-4">
+                                                    {% if request.user == story.author_id %}
+                                                    <a class="dropdown-item" href="{% url 'story:update-story' story.author_id story.slug story.pk %}">Edit</a>
+                                                    {% else %}
+                                                    <a class="dropdown-item" href="">Block</a>
+                                                    {% endif %}
+                
+                                                    <a class="dropdown-item" href="#">Delete</a>
+                                                    </div>
+                                                </div>
+                                                <div class="dropdown">
+                                                    <div class="" type="button" data-toggle="dropdown" >
+                                                        <img class="icon-xsm svg-icon-primary" src="{% static 'svg/bookmark-add.svg' %}" alt="">
+                                                    </div>
+                                                    <div class="dropdown-menu fs-body-4">
+                                                    <a class="dropdown-item" href="#">btn 1</a>
+                                                    
+                                                    <a class="dropdown-item" href="#">btn 2</a>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </footer>
+                                            
+                                        </div>
                                     </footer>
-                                </div>
-                                
-                                <div class="story-card__image-container">
-                                    <img class="story-card__image" src="/{{ story.cover_image }}" alt="">
-                                </div>
-                            </main>
+                                </footer>
+                            </div>
                             
-                            
-                            
-                        </article>
-                    </div> 
+                            <div class="story-card__image-container">
+                                <img class="story-card__image" src="/{{ story.cover_image}}" alt="">
+                            </div>
+                        </main>
+                        
+                        
+                    </article>
+                </div> 
+                
+                
                 <div class="flex-container">
                     <div class="content-container divider-item">
                         
                     </div>
                 </div>
+                
             
                 {% endfor %}
                 
@@ -182,4 +218,53 @@
             </div>
         </main>
     </main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function reply_click(storyClicked){
+        const story = storyClicked
+        $.ajax({
+            type: 'POST',
+            url: '{% url "story:like_story_ajax" %}',
+            data: {
+                storypk: storyClicked,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            cache: false,
+            success: function(json) {
+                document.getElementById(`${story}-like-count`).innerHTML = json['result'];
+                document.getElementById(`${story}-like-story-icon`).src = json['liked']
+                console.log('success')
+            },
+            error: function(xhr, errmsg, err) {
+                
+            }
+        });
+    }
+
+    function author_click(authorClicked){
+        console.log("click registered")
+        const author = authorClicked
+        $.ajax({
+            type: 'POST',
+            url: '{% url "author:follow_author" %}',
+            data: {
+                authorpk: authorClicked,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            cache: false,
+            success: function(json) {
+                document.getElementById(`${author}-follower-count`).innerHTML = json['result'];
+                document.getElementById(`${author}-following-icon`).innerHTML = json['followed']
+                console.log('success')
+            },
+            error: function(xhr, errmsg, err) {
+                
+            }
+        });
+    }
+</script>
 {% endblock %}
