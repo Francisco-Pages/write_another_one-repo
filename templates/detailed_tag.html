@@ -22,10 +22,10 @@
                             </div>
                         </div>
                         <div class="button-container">
-                            <div class="button-pill fw-bold">
+                            <div>
                                 Pin
                             </div>
-                            <img class="icon-xsm" id="svg-icon-primary" src="{% static 'wao_project/svg/drop-down-button.svg' %}" alt="">
+                            <img class="icon-xsm" id="svg-icon-primary" src="{% static '/svg/drop-down-button.svg' %}" alt="">
                         </div>
                     </header>
                     <main class="header-feed__main-container">
@@ -160,27 +160,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-    function reply_click(storyClicked){
-        const story = storyClicked
-        $.ajax({
-            type: 'POST',
-            url: '{% url "story:like_story_ajax" %}',
-            data: {
-                storypk: storyClicked,
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                action: 'post'
-            },
-            cache: false,
-            success: function(json) {
-                document.getElementById(`${story}-like-count`).innerHTML = json['result'];
-                document.getElementById(`${story}-like-story-icon`).src = json['liked']
-                console.log('success')
-            },
-            error: function(xhr, errmsg, err) {
-                
-            }
-        });
-    }
-</script>
+
 {% endblock %}

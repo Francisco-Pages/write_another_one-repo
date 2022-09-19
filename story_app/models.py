@@ -84,7 +84,8 @@ class StoryList(models.Model):
     name = models.CharField(max_length=300, default='list name')
     description = models.CharField(max_length=1200, default='list description')
     stories = models.ManyToManyField(Story)
-    pinners = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='pinned_by')
+    pinners = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='pinned_by', blank=True)
+    pinner_count = models.BigIntegerField(default='0')
     created_date = models.DateTimeField(default=now)
 
     def __str__(self):

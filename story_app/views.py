@@ -40,6 +40,33 @@ def detailed_list(request):
 def explore(request):
     return render(request, 'explore.html')
 
+@login_required
+def pin_list(request):
+    if request.POST.get('action') == 'post':
+        result = ''
+        pinned = ''
+        pk = int(request.POST.get('listpk'))
+        list_obj = get_object_or_404(story_models.StoryList, pk=pk)
+        current_user = get_object_or_404(author_models.UserExtra, user=request.user)
+
+        if list_obj.pinners.filter(pk=request.user.pk).exists():
+            list_obj.pinners.remove(request.user)
+            current_user.pinned_lists.remove(list_obj)
+            list_obj.pinner_count -= 1
+            result = list_obj.pinner_count
+            pinned = 'Pin'
+            list_obj.save()
+        else:
+            list_obj.pinners.add(request.user)
+            current_user.pinned_lists.add(list_obj)
+            list_obj.pinner_count += 1
+            result = list_obj.pinner_count
+            pinned = 'Pinned'
+            list_obj.save()
+        print(list_obj.name)
+        print(current_user)
+        return JsonResponse({'result':result, 'pinned':pinned})
+
 
 @login_required
 def like_story(request):

@@ -53,6 +53,25 @@
                                         <div class="list-card__title fs-heading-4 fw-bold">
                                             {{list.name}}
                                         </div>
+                                        <div class="button-container">
+                                            {% if request.user in list.pinners.all %}
+                                            <button id="pin-list-button" onclick="pinList(this.value)" value="{{list.pk}}">
+                                                <div class="button-pill button-pill-sm fw-bold">
+                                                    {% csrf_token %}
+                                                    <span id="{{ list.pk }}-pinned">Pinned</span>
+                                                </div>
+                                            </button>
+                                            
+                                            {% else %}
+                                            <button id="pin-list-button" onclick="pinList(this.value)" value="{{list.pk}}">
+                                                <div class="button-pill button-pill-md fw-bold">
+                                                    {% csrf_token %}
+                                                    <span id="{{ list.pk }}-pinned">Pin</span>
+                                                </div>
+                                            </button>
+                                            
+                                            {% endif %}
+                                        </div>
                                         
                                     </header>
                                     <main class="list-card__description fs-body-3 text-secondary">
@@ -66,17 +85,21 @@
 
                                     <div class="list-card__footer-info">
                                         
-                                        <a class="list-card__author" href="{% url 'author:detailed_author' current_user.user.username current_user.user.id %}">
-                                            <div class="list-card__author">
+                                        <div class="list-card__author">
+                                            <a class="list-card__author" href="{% url 'author:detailed_author' current_user.user.username current_user.user.id %}">
                                                 <img class="icon-xsm icon-round" src="/{{ current_user.cover_image }}" alt="">
-                                                <div class="ff-sub-title fs-body-3 text-main">
-                                                    {{ list.user.username }}
+                                                <div class="text-main">
+                                                    @{{ list.user.username }}
                                                 </div>
-                                                <div class="button-container">
-                                                    ·
-                                                </div>
+
+                                            </a>
+                                            
+                                            <div class="button-container">
+                                                ·
                                             </div>
+                                           
                                             <div class="list-card__footer-about">
+                                                
                                                 
                                                 <div class="button-container">
                                                     {{ list.stories.all.count}} stories
@@ -86,14 +109,15 @@
                                                     ·
                                                 </div>
                                                 <div class="button-container">
-                                                    {{list.pinners.count}} pins
+                                                    <span id="{{list.pk}}-pin-count">{{list.pinner_count}}</span> Pins
                                                 </div>
                                                 
                                             </div>
-                                        </a>
+                                        </div>
                                     </div>
 
                                     <div class="button-container">
+                                        
                                         <div class="button-container">
                                             <div class="dropdown">
                                                 <div class="" type="button" data-toggle="dropdown" >
@@ -141,4 +165,31 @@
             </div>
         </main>
     </main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function pinList(listClicked){
+        const list = listClicked
+        
+        $.ajax({
+            type: 'POST',
+            url: '{% url "story:pin_list" %}',
+            data: {
+                listpk: listClicked,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            cache: false,
+            success: function(json) {
+                document.getElementById(`${list}-pin-count`).innerHTML = json['result'];
+                document.getElementById(`${list}-pinned`).innerHTML = json['pinned']
+                console.log('success')
+            },
+            error: function(xhr, errmsg, err) {
+                
+            }
+        });
+    }
+</script>
 {% endblock %}
