@@ -47,31 +47,14 @@
                 <div class="list-card__container">
                     <article class="list-card content-container">
                         <div class="list-card__main-container">
-                            <a href="{% url 'story:detailed_list' list.user list.slug list.pk %}">
-                                <div class="list-card__text-container">
-                                    <header class="list-card__header">
+                            <div class="list-card__text-container">
+                                <header class="list-card__header">
+                                        <a href="{% url 'story:detailed_list' list.user list.slug list.pk %}">
                                         <div class="list-card__title fs-heading-4 fw-bold">
                                             {{list.name}}
                                         </div>
-                                        <div class="button-container">
-                                            {% if request.user in list.pinners.all %}
-                                            <button id="pin-list-button" onclick="pinList(this.value)" value="{{list.pk}}">
-                                                <div class="button-pill button-pill-sm fw-bold">
-                                                    {% csrf_token %}
-                                                    <span id="{{ list.pk }}-pinned">Pinned</span>
-                                                </div>
-                                            </button>
-                                            
-                                            {% else %}
-                                            <button id="pin-list-button" onclick="pinList(this.value)" value="{{list.pk}}">
-                                                <div class="button-pill button-pill-md fw-bold">
-                                                    {% csrf_token %}
-                                                    <span id="{{ list.pk }}-pinned">Pin</span>
-                                                </div>
-                                            </button>
-                                            
-                                            {% endif %}
-                                        </div>
+                                        </a>
+                                        
                                         
                                     </header>
                                     <main class="list-card__description fs-body-3 text-secondary">
@@ -79,7 +62,6 @@
                                     </main>
                                     
                                 </div>
-                            </a>
                             <footer class="list-card__footer-container text-alt-secondary">
                                 <div class="list-card__footer">
 
@@ -117,6 +99,26 @@
                                     </div>
 
                                     <div class="button-container">
+                                        <div class="button-container">
+                                            {% if request.user in list.pinners.all %}
+                                            <button id="pin-list-button" onclick="pinList(this.value)" value="{{list.pk}}">
+                                                <div class="">
+                                                    {% csrf_token %}
+                                                    <img class="icon-xsm" id="{{ list.pk }}-pinned" src="{% static 'svg/in-list-icon.svg' %}">
+                                                    
+                                                </div>
+                                            </button>
+                                            
+                                            {% else %}
+                                            <button id="pin-list-button" onclick="pinList(this.value)" value="{{list.pk}}">
+                                                <div class="">
+                                                    {% csrf_token %}
+                                                    <img class="icon-xsm" id="{{ list.pk }}-pinned" src="{% static 'svg/add-to-list-icon.svg' %}">
+                                                </div>
+                                            </button>
+                                            
+                                            {% endif %}
+                                        </div>
                                         
                                         <div class="button-container">
                                             <div class="dropdown">
@@ -183,7 +185,7 @@
             cache: false,
             success: function(json) {
                 document.getElementById(`${list}-pin-count`).innerHTML = json['result'];
-                document.getElementById(`${list}-pinned`).innerHTML = json['pinned']
+                document.getElementById(`${list}-pinned`).src = json['pinned']
                 console.log('success')
             },
             error: function(xhr, errmsg, err) {

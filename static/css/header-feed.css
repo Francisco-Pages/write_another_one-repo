@@ -5,7 +5,7 @@
     margin: 0 auto;
     padding-bottom: 1rem;
     /* margin-bottom: 4rem; */
-    border-bottom: 2px solid var(--border-primary);
+    border-bottom: 1px solid var(--border-primary);
     flex-shrink: 1;
 }
 .header-feed__title-container {

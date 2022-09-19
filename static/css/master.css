@@ -14,7 +14,7 @@
     --light-text-inverted: hsl(0, 0%, 100%);
     --light-text-accent: hsl(139,59%,55%);
     
-    --light-border-primary: hsl(0,0%,92%);
+    --light-border-primary: hsl(0,0%,80%);
     --light-border-secondary: hsl(202,69%,14%);
 
     --light-svg-primary: invert(11%) sepia(58%) saturate(933%) hue-rotate(164deg) brightness(100%) contrast(94%);
@@ -375,7 +375,7 @@ UTILITY CLASSES
     gap: 1rem;
     border-radius: 99rem;
     padding: 0.8rem 1.6rem;
-    border: 1px solid var(--border-secondary);
+    border: 1px solid var(--border-primary);
     color: var(--text-main);
 }
 
@@ -548,7 +548,7 @@ UTILITY CLASSES
 
 .divider-section {
     flex-grow: 1;
-    border-bottom: 2px solid var(--border-secondary);
+    border-bottom: 1px solid var(--border-secondary);
     /* min-width: 74rem; */
     margin: 3rem auto 3rem auto;
 
@@ -557,7 +557,7 @@ UTILITY CLASSES
 .divider-item {
     display: flex;
     flex-grow: 1;
-    border-bottom: 2px solid var(--border-primary);
+    border-bottom: 1px solid var(--border-primary);
     /* min-width: 74rem; */
     margin: 3rem auto 3rem auto;
 }

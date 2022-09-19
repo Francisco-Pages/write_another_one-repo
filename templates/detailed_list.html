@@ -29,17 +29,19 @@
                         <div class="button-container">
                             {% if request.user in object.pinners.all %}
                             <button id="pin-list-button" onclick="pinList(this.value)" value="{{object.pk}}">
-                                <div class="button-pill fw-bold">
+                                <div class="icon-sm">
                                     {% csrf_token %}
-                                    <span id="{{ object.pk }}-pinned">Pinned</span>
+                                    
+                                    <img id="{{ object.pk }}-pinned" src="{% static 'svg/in-list-icon.svg' %}" alt="">
                                 </div>
                             </button>
                             <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/drop-down-button.svg' %}" alt="">
                             {% else %}
                             <button id="pin-list-button" onclick="pinList(this.value)" value="{{object.pk}}">
-                                <div class="button-pill fw-bold">
+                                <div class="icon-sm">
                                     {% csrf_token %}
-                                    <span id="{{ object.pk }}-pinned">Pin</span>
+                                    
+                                    <img id="{{ object.pk }}-pinned" src="{% static 'svg/add-to-list-icon.svg' %}" alt="">
                                 </div>
                             </button>
                             <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/drop-down-button.svg' %}" alt="">
@@ -196,7 +198,7 @@
             cache: false,
             success: function(json) {
                 document.getElementById(`${list}-pin-count`).innerHTML = json['result'];
-                document.getElementById(`${list}-pinned`).innerHTML = json['pinned']
+                document.getElementById(`${list}-pinned`).src = json['pinned']
                 console.log('success')
             },
             error: function(xhr, errmsg, err) {

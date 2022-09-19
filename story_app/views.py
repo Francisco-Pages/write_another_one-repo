@@ -54,14 +54,14 @@ def pin_list(request):
             current_user.pinned_lists.remove(list_obj)
             list_obj.pinner_count -= 1
             result = list_obj.pinner_count
-            pinned = 'Pin'
+            pinned = '/static/svg/add-to-list-icon.svg'
             list_obj.save()
         else:
             list_obj.pinners.add(request.user)
             current_user.pinned_lists.add(list_obj)
             list_obj.pinner_count += 1
             result = list_obj.pinner_count
-            pinned = 'Pinned'
+            pinned = '/static/svg/in-list-icon.svg'
             list_obj.save()
         print(list_obj.name)
         print(current_user)
