@@ -48,7 +48,7 @@ def like_story(request):
         liked = ''
         pk = int(request.POST.get('storypk'))
         story = get_object_or_404(story_models.Story, pk=pk)
-        print(story.pk)
+        
         
         if story.likes.filter(pk=request.user.pk).exists():
             story.likes.remove(request.user)
@@ -62,7 +62,7 @@ def like_story(request):
             result = story.like_count
             liked = "/static/svg/like-icon-filled.svg"
             story.save()
-        print(result)
+        
         return JsonResponse({'result':result, 'liked':liked})
 
 
