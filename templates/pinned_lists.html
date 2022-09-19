@@ -28,17 +28,13 @@
                     
                 
                     <footer class="header-feed__footer-container">
-                        <div class="header-feed__footer-tab--active">
+                        <div class="header-feed__footer-tab">
                             <a href="{% url 'story:author-list' request.user %}">
-
                                 Your Lists
                             </a>
                         </div>
-                        <div class="header-feed__footer-tab">
-                            <a href="{% url 'story:pinned-lists' current_user.pk %}">
-
-                                Pinned
-                            </a>
+                        <div class="header-feed__footer-tab--active">
+                            Pinned
                         </div>
                         <div class="header-feed__footer-tab">
                             Find more lists

@@ -23,5 +23,6 @@ urlpatterns = [
     path('update-story/<author_id>/<slug>/<pk>/', views.StoryUpdateView.as_view(), name='update-story'),
     path('like/', views.like_story, name="like_story_ajax"),
     path('pin-list/', views.pin_list, name="pin_list"),
+    path('pinned-lists/<owner>/', views.PinnedListsView.as_view(), name='pinned-lists'),
 
 ]

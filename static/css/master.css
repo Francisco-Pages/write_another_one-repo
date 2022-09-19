@@ -2,7 +2,7 @@
     /* LIGHT THEME */
     /* changed light-background-primary from (white) hsl(0,0%,100%) */
     /* hsl(45,31%,95%); */
-    --light-background-primary: hsl(0,0%,100%);
+    --light-background-primary: hsl(45,31%,97%);
     --light-background-secondary: hsl(0, 0%, 96%);
     --light-background-alt-secondary: hsl(0, 0%, 90%);
     --light-background-inverted: hsl(202,69%,14%);

@@ -159,6 +159,23 @@ class ListsListView(LoginRequiredMixin,ListView):
         self.user_lists = story_models.StoryList.objects.all().select_related('user')
         return [user_list for user_list in self.user_lists if user_list.user == self.request.user]
 
+class PinnedListsView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('login')
+    # model = story_models.StoryList
+    template_name = 'pinned_lists.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_user = author_models.UserExtra.objects.get(user=self.request.user)
+        context['current_user'] = current_user
+        return context
+
+    def get_queryset(self, **kwargs):
+        self.user_lists = author_models.UserExtra.objects.get(user=self.request.user.pk)
+        return self.user_lists.pinned_lists.all()
+
+    
+
 class ListCreateView(LoginRequiredMixin,CreateView):
     login_url = reverse_lazy('login')
     template_name = 'create_list.html'
