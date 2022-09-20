@@ -40,6 +40,32 @@ def detailed_list(request):
 def explore(request):
     return render(request, 'explore.html')
 
+
+def follow_tag(request):
+    if request.POST.get('action') == 'post':
+        result = ''
+        followed = ''
+        pk = int(request.POST.get('tagpk'))
+        tag = get_object_or_404(Tag, pk=pk)
+        tag_counter = get_object_or_404(story_models.TagsFollowed, pk=pk)
+        current_user = get_object_or_404(author_models.UserExtra, user=request.user)
+
+        if current_user.tags.filter(pk=pk).exists():
+            current_user.tags.remove(pk)
+            tag_counter.follower_count -= 1
+            result = tag_counter.follower_count
+            followed = "Follow"
+            tag_counter.save()
+        else:
+            current_user.tags.add(pk)
+            tag_counter.follower_count += 1
+            result = tag_counter.follower_count
+            followed = "Following"
+            tag_counter.save()
+        return JsonResponse({'result':result, 'followed':followed})
+
+
+
 @login_required
 def pin_list(request):
     if request.POST.get('action') == 'post':
@@ -63,8 +89,6 @@ def pin_list(request):
             result = list_obj.pinner_count
             pinned = '/static/svg/in-list-icon.svg'
             list_obj.save()
-        print(list_obj.name)
-        print(current_user)
         return JsonResponse({'result':result, 'pinned':pinned})
 
 
@@ -129,8 +153,21 @@ class WriteStoryCreateView(LoginRequiredMixin, CreateView):
         self.object = form.save(commit=False)
         self.object.author_id = self.request.user
         self.object.save()
+        
         user = author_models.UserExtra.objects.get(user=self.request.user)
         user.stories.add(self.object)
+        print(self.object.tags)
+        # tags = self.object.tags
+        # for tag in tags:
+        #     tag_extra = story_models.TagsFollowed.objects.filter(pk=tag.pk).exists()
+        #     if tag_extra:
+        #         existing_tag = story_models.objects.get(pk=tag.pk)
+        #         existing_tag.follower_count += 1
+        #         existing_tag.save()
+        #     else:
+        #         new_tag = story_models.TagsFollowed.objects.create(pk=tag.pk, follower_count=1)
+        #         new_tag.save()
+
         return super().form_valid(form)
     
 class StoryUpdateView(LoginRequiredMixin, UpdateView):
@@ -179,7 +216,7 @@ class PinnedListsView(LoginRequiredMixin, ListView):
 class ListCreateView(LoginRequiredMixin,CreateView):
     login_url = reverse_lazy('login')
     template_name = 'create_list.html'
-    success_url = reverse_lazy("home")
+    # success_url = reverse_lazy("author-list")
     
     model = story_models.StoryList
     fields = ['name', 'description']
@@ -197,6 +234,10 @@ class ListCreateView(LoginRequiredMixin,CreateView):
         user = author_models.UserExtra.objects.get(user=self.request.user)
         user.lists.add(self.object)
         return super().form_valid(form)
+
+    def get_success_url(self, **kwargs):    
+        return reverse_lazy('story:author-list', kwargs = {'owner':self.request.user.username})     
+
 
 class ListUpdateView(LoginRequiredMixin, UpdateView):
     model = story_models.StoryList
@@ -251,6 +292,8 @@ class TagDetailView(LoginRequiredMixin,DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         current_user = author_models.UserExtra.objects.get(user=self.request.user)
+        tag_extra = story_models.TagsFollowed.objects.get(pk=self.object.pk)
+        context['tag_extra'] = tag_extra
         context['current_user'] = current_user
         return context
 

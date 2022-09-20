@@ -47,7 +47,7 @@
                     </main>
                     <main class="header-feed__main-container text-main">
                         
-                        {% for tag in current_user.following_tags.all %}
+                        {% for tag in current_user.tags.all %}
                         <a href="{% url 'story:detailed-tag' tag.slug %}">
                             <div class="tag-card__tag-icon-lg">
                                 {{tag.name}}

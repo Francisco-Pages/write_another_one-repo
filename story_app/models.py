@@ -136,16 +136,12 @@ class LikedStory(models.Model):
     liked_date = models.DateTimeField(default=now)
 
 class TagsFollowed(models.Model):
-    user = models.ForeignKey(
-                                settings.AUTH_USER_MODEL,
-                                null=True,
+    tag = models.OneToOneField(Tag,
                                 default=None,
-                                on_delete=models.CASCADE
+                                on_delete=models.CASCADE,
+                                primary_key=True
                             )
-    tag = models.ForeignKey(Tag,
-                                default=None,
-                                on_delete=models.CASCADE
-                            )
+    follower_count = models.BigIntegerField(default='0')
     date_followed = models.DateTimeField(default=now)
 
     

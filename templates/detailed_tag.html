@@ -22,23 +22,33 @@
                             </div>
                         </div>
                         <div class="button-container">
-                            <div>
-                                Pin
-                            </div>
-                            <img class="icon-xsm" id="svg-icon-primary" src="{% static '/svg/drop-down-button.svg' %}" alt="">
+                            {% if object in current_user.tags.all %}
+                            <button id="follow-tag-button" onclick="followTag(this.value)" value="{{object.pk}}">
+                                
+                                {% csrf_token %}
+                                <div id="{{ object.pk }}-followed">Following</div>
+                               
+                            </button>
+                            {% else %}
+                            <button id="follow-tag-button" onclick="followTag(this.value)" value="{{object.pk}}">
+                                
+                                {% csrf_token %}
+                                <div id="{{ object.pk }}-followed">Follow</div>
+                               
+                            </button>
+                            {% endif %}
+                            <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/drop-down-button.svg' %}" alt="">
                         </div>
                     </header>
                     <main class="header-feed__main-container">
-                        <div class="text-container-start">
-                            {{ object.description }}
-                        </div>
+                        
                     </main>
                     
                 
                     <footer class="header-feed__footer-container">
                         
                         <div class="header-feed__footer-item button-container">
-                            237k pins
+                            <span id="{{ object.pk }}-follower-count">{{tag_extra.follower_count}}</span>Followers
                         </div>
 
                     </footer>
@@ -160,5 +170,27 @@
 {% endblock %}
 
 {% block scripts %}
-
+<script>
+    function followTag(tagClicked){
+        const tag = tagClicked
+        $.ajax({
+            type: 'POST',
+            url: '{% url "story:follow_tag" %}',
+            data: {
+                tagpk: tagClicked,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            cache: false,
+            success: function(json) {
+                document.getElementById(`${tag}-follower-count`).innerHTML = json['result'];
+                document.getElementById(`${tag}-followed`).innerHTML = json['followed']
+                console.log('success')
+            },
+            error: function(xhr, errmsg, err) {
+                
+            }
+        });
+    }
+</script>
 {% endblock %}

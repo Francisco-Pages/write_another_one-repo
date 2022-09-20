@@ -9,7 +9,7 @@ from django.forms import ModelForm
 class StoryUpdateForm(ModelForm):
     class Meta:
         model = story_models.Story
-        fields = ['title','content', 'cover_image']
+        fields = ['title','content','tags', 'cover_image']
 
 class ListUpdateForm(ModelForm):
     class Meta:

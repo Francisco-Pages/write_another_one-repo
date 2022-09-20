@@ -13,5 +13,6 @@ urlpatterns = [
     path('home/', views.AuthorHomePageView.as_view(), name='author_home'),
     # path('home/<username>/<pk>', views.AuthorHomePageView.as_view(), name='author_home'),
     path('update/<slug>/<pk>/', views.UserExtraUpdateView.as_view(), name='update-user-extra'), 
-    path('follow-author/', views.follow_author, name="follow_author")
+    path('follow-author/', views.follow_author, name="follow_author"),
+    
 ]

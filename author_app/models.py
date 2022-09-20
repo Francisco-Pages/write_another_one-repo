@@ -27,7 +27,7 @@ class UserExtra(models.Model):
     stories = models.ManyToManyField(story_models.Story)
     lists = models.ManyToManyField(story_models.StoryList, related_name='created_lists')
     pinned_lists = models.ManyToManyField(story_models.StoryList, related_name='pinned_lists')
-    following_tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag)
     followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='followers', blank=True)
     follower_count = models.BigIntegerField(default=0)
     following = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='following', blank=True)
