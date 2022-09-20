@@ -74,7 +74,143 @@
                 
                 {% for story in following_stories %}
                 
-                {% include 'story_app/story_card.html' %}
+                <div class="story-card__container">
+                    <article class="story-card content-container">
+                        <a href="{% url 'author:detailed_author' story.author_id.username story.author_id.id %}">
+                        <header class="story-card__header ff-sub-title fs-body-3 text-alt-secondary">
+                            {% for author in user_extra %}
+                                {% if author.user == story.author_id %}
+                                <img class="icon-xsm icon-round" src="/{{ author.cover_image }}" alt="">
+                
+                                {% endif %}
+                            {% endfor %}
+                            <div class="text-main">
+                                {{ story.author_id }}
+                            </div>
+                            <div>
+                                ·
+                            </div>
+                            <div class="">
+                                {{ story.published_date }}
+                            </div>
+                            
+                            
+                        </header>
+                        </a>
+                        
+                        <main class="story-card__main-container">
+                            <div class="story-card__text-container">
+                                <header class="story-card__title ff-title fs-heading-3 fw-bold">
+                                        <a href="{% url 'story:detailed_story' story.author_id story.slug story.pk %}">
+                                            {{ story.title }}
+                                        </a>
+                                    </header>
+                                    <main class="story-card__description ff-read fs-body-3 fw-reg text-secondary">
+                                        {{ story.content | slice:":180" }}...
+                                    </main>
+                                <footer class="story-card__footer-container">
+                                    <footer class="story-card__footer">
+                                        
+                                        <div>
+                                            {% for tag in story.tags.all %}
+                                            <a href="{% url 'story:detailed-tag' tag.slug %}">
+                                                <div class="tag-card__tag-icon">
+                                                    {{ tag.name }}
+                                                </div>
+                                            </a>
+                                            {% endfor %}
+                
+                                        </div>
+                                        
+                                        <div class="story-card__buttons">
+                                            <div class="button-container">
+                
+                                                {% if request.user in story.likes.all %}
+                                                <button id="like-story-button" onclick="storyClick(this.value)" value="{{story.pk}}">
+                                                    <div class="button-pill button-pill-md">
+                                                        {% csrf_token %}
+                                                        <img class="icon-xxsm svg-icon-primary" id="{{story.pk}}-like-story-icon" src="{% static 'svg/like-icon-filled.svg' %}" alt="">
+                                                        <span id="{{story.pk}}-like-count">{{story.like_count}}</span>
+                                                    </div>
+                                                </button>
+                                                {% else %}
+                                                <button id="like-story-button" onclick="storyClick(this.value)" value="{{story.pk}}">
+                                                    <div class="button-pill button-pill-md">
+                                                        {% csrf_token %}
+                                                        <img class="icon-xxsm svg-icon-primary" id="{{story.pk}}-like-story-icon" src="{% static 'svg/like-icon.svg' %}" alt="">
+                                                        <span id="{{story.pk}}-like-count">{{story.like_count}}</span>
+                                                    </div>
+                                                </button>
+                                                {% endif %}
+                
+                                                <div class="dropdown">
+                                                    <div class="" type="button" data-toggle="dropdown" >
+                                                        <img class="icon-xsm svg-icon-primary" src="{% static 'svg/more-icon.svg' %}" alt="">
+                                                    </div>
+                                                    <div class="dropdown-menu fs-body-4">
+                                                    {% if request.user == story.author_id %}
+                                                    <a class="dropdown-item" href="{% url 'story:update-story' story.author_id story.slug story.pk %}">Edit</a>
+                                                    {% else %}
+                                                    <a class="dropdown-item" href="">Block</a>
+                                                    {% endif %}
+                                                    <a class="dropdown-item" href="#">Delete</a>
+                                                    </div>
+                                                </div>
+                                                
+                
+                                                <div class="dropdown">
+                                                    
+                                                    <div class="" type="button" data-toggle="dropdown">
+                                                        <img id="" class="icon-xsm svg-icon-primary" src="{% static 'svg/bookmark-add.svg' %}" alt="">
+                                                    </div>
+                                                    <div class="dropdown-menu fs-body-4">
+                                                        {% for list in current_user.lists.all %}
+                                                        {% if story in list.stories.all %}
+                                                        <div class="dropdown-item">
+                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}{{list.pk}}">
+                                                                {% csrf_token %}
+                                                                <img class="icon-xsm" id="{{story.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon-filled.svg' %}" alt="">
+                                                                <span>{{list}}</span>
+                                                            </button>
+                                                        
+                                                        </div>
+                                                        {% else %}
+                                                        <div class="dropdown-item">
+                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}{{list.pk}}">
+                                                                {% csrf_token %}
+                                                                <img class="icon-xsm" id="{{story.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon.svg' %}" alt="">
+                                                                <span>{{list}}</span>
+                                                            </button>
+                                                        
+                                                        </div>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </footer>
+                                </footer>
+                            </div>
+                            
+                            <div class="story-card__image-container">
+                                <img class="story-card__image" src="/{{ story.cover_image}}" alt="">
+                            </div>
+                        </main>
+                        
+                        
+                    </article>
+                </div> 
+                
+                
+                <div class="flex-container">
+                    <div class="content-container divider-item">
+                        
+                    </div>
+                </div>
+                
                 
                 {% endfor %}
 
@@ -86,9 +222,34 @@
 {% endblock %}
     
 {% block scripts %}
-<script>
+<script defer>
+    function addStoryToList(objectClicked){
+        const story = objectClicked.slice(0,2);
+        const list = objectClicked.slice(2);
+        console.log(list,story)
+        $.ajax({
+            type: 'POST',
+            url: '{% url "story:add_story_to_list" %}',
+            data: {
+                listpk: list,
+                storypk: story,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            cache: false,
+            success: function(json){
+                document.getElementById(`${story}-in-${list}`).src = json['added']
+                console.log('success')
+            },
+            error: function(xhr, errmsg, err){
+                console.log(`${xhr} | ${errmsg} | ${err}`)
+            }
+        })
+    }
+    
     function storyClick(storyClicked){
         const story = storyClicked
+        console.log(story)
         $.ajax({
             type: 'POST',
             url: '{% url "story:like_story_ajax" %}',
@@ -108,5 +269,10 @@
             }
         });
     }
+
+
 </script>
+
+
+ 
 {% endblock %}

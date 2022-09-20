@@ -109,7 +109,7 @@ class AuthorHomePageView(LoginRequiredMixin, TemplateView):
         following_users = [user for user in author_models.UserExtra.objects.select_related('user') if user.user in current_user.following.all()]
         following_user_ids = [user.user for user in author_models.UserExtra.objects.select_related('user') if user.user in current_user.following.all()]
         following_stories = [story for story in story_models.Story.objects.select_related('author_id').order_by('-published_date') if story.author_id in following_user_ids]
-
+        
         context["current_user"] = current_user
         context['user_extra'] = following_users
         context['following_stories'] = following_stories

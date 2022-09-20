@@ -24,6 +24,7 @@ urlpatterns = [
     path('like/', views.like_story, name="like_story_ajax"),
     path('pin-list/', views.pin_list, name="pin_list"),
     path('pinned-lists/<owner>/', views.PinnedListsView.as_view(), name='pinned-lists'),
-    path('follow-tag', views.follow_tag, name="follow_tag"),
+    path('follow-tag/', views.follow_tag, name="follow_tag"),
+    path('add-story-to-list/', views.add_story_to_list, name="add_story_to_list"),
 
 ]

@@ -41,6 +41,31 @@ def explore(request):
     return render(request, 'explore.html')
 
 
+def add_story_to_list(request):
+    if request.POST.get('action') =='post':
+        added = ''
+        story_pk = int(request.POST.get('storypk'))
+        list_pk = int(request.POST.get('listpk'))
+        story = get_object_or_404(story_models.Story, pk=story_pk)
+        current_user = get_object_or_404(author_models.UserExtra, user=request.user)
+        list_obj = get_object_or_404(current_user.lists.all(), pk=list_pk)
+        
+        if list_obj.stories.filter(pk=story.pk).exists():
+            list_obj.stories.remove(story.pk)
+            added = "/static/svg/check-box-icon.svg"
+            list_obj.save()
+        
+        else:
+            list_obj.stories.add(story.pk)
+            added = "/static/svg/check-box-icon-filled.svg"
+            list_obj.save()
+        print()
+        print(story_pk, list_pk)
+        print()
+        return JsonResponse({'added':added})
+
+
+
 def follow_tag(request):
     if request.POST.get('action') == 'post':
         result = ''
@@ -193,8 +218,8 @@ class ListsListView(LoginRequiredMixin,ListView):
 
 
     def get_queryset(self, **kwargs):
-        self.user_lists = story_models.StoryList.objects.all().select_related('user')
-        return [user_list for user_list in self.user_lists if user_list.user == self.request.user]
+        self.user_extra = author_models.UserExtra.objects.get(user=self.request.user)
+        return [user_list for user_list in self.user_extra.lists.all()]
 
 class PinnedListsView(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('login')
