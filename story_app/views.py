@@ -64,7 +64,31 @@ def add_story_to_list(request):
         print()
         return JsonResponse({'added':added})
 
+class RecommendationsFeedView(LoginRequiredMixin, TemplateView):
+    login_url = reverse_lazy('login')
+    template_name = 'recommendations_feed.html'
+    # model = author_models.UserExtra
+        
+   
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
+        current_user = author_models.UserExtra.objects.get(user=self.request.user)
+        following_users = [user for user in author_models.UserExtra.objects.select_related('user') if user.user in current_user.following.all()]
+        
+        tags_stories = []
+        for story in story_models.Story.objects.select_related('author_id').filter(~Q(author_id=self.request.user)).order_by('-published_date'):
+            for tag in current_user.tags.all():
+                if tag in story.tags.all():
+                    tags_stories.append(story)
+                    break
+                
+
+        context['tags_stories'] = tags_stories
+        context["current_user"] = current_user
+        context['user_extra'] = following_users
+        
+        return context
 
 def follow_tag(request):
     if request.POST.get('action') == 'post':

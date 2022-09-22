@@ -26,5 +26,6 @@ urlpatterns = [
     path('pinned-lists/<owner>/', views.PinnedListsView.as_view(), name='pinned-lists'),
     path('follow-tag/', views.follow_tag, name="follow_tag"),
     path('add-story-to-list/', views.add_story_to_list, name="add_story_to_list"),
+    path('recommendations/', views.RecommendationsFeedView.as_view(), name="recommendations_feed")
 
 ]

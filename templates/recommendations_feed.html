@@ -59,13 +59,13 @@
                         <!-- <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/next.svg' %}" alt=""> -->
                     </main>
                     <footer class="header-feed__footer-container">
-                        <div class="header-feed__footer-tab--active">
-                            Following
-                        </div>
                         <div class="header-feed__footer-tab">
-                            <a href="{% url 'story:recommendations_feed' %}">
-                                Recommendations
+                            <a href="{% url 'home' %}">
+                                Following
                             </a>
+                        </div>
+                        <div class="header-feed__footer-tab--active">
+                            Recommendations
                         </div>
                         
                     </footer>
@@ -74,7 +74,7 @@
             <div class="main__content">
 
                 
-                {% for story in following_stories %}
+                {% for story in tags_stories %}
                 
                 <div class="story-card__container">
                     <article class="story-card content-container">

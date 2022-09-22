@@ -6,17 +6,20 @@
     --light-background-secondary: hsl(0, 0%, 96%);
     --light-background-alt-secondary: hsl(0, 0%, 90%);
     --light-background-inverted: hsl(202,69%,14%);
-    --light-background-accent: hsl(139,59%,55%);
+    --light-background-accent: hsl(119,71%,31%);
     
     --light-text-main: hsl(0,0%,0%);
     --light-text-secondary: hsl(171,7%,34%);
     --light-text-alt-secondary: hsl(0,0%,51%);
     --light-text-inverted: hsl(0, 0%, 100%);
-    --light-text-accent: hsl(139,59%,55%);
+    --light-text-accent: hsl(119,71%,31%);
     
     --light-border-primary: hsl(0,0%,80%);
     --light-border-secondary: hsl(202,69%,14%);
 
+    /* very dark blue: invert(11%) sepia(58%) saturate(933%) hue-rotate(164deg) brightness(100%) contrast(94%) */
+    /* sharp green: invert(21%) sepia(76%) saturate(5552%) hue-rotate(128deg) brightness(100%) contrast(82%); */
+    --light-svg-accent: invert(21%) sepia(76%) saturate(5552%) hue-rotate(128deg) brightness(100%) contrast(82%);
     --light-svg-primary: invert(11%) sepia(58%) saturate(933%) hue-rotate(164deg) brightness(100%) contrast(94%);
     --light-svg-secondary: invert(100%) sepia(100%) saturate(0%) hue-rotate(151deg) brightness(104%) contrast(101%);
 
@@ -66,7 +69,7 @@
 
     --svg-primary: var(--light-svg-primary);
     --svg-secondary: var(--light-svg-secondary);
-
+    --svg-accent: var(--light-svg-accent);
         
     /* --background-primary: var(--dark-background-primary);
     --background-secondary: var(--dark-background-secondary);
@@ -414,6 +417,10 @@ UTILITY CLASSES
 
 .svg-icon-secondary {
     filter: var(--svg-secondary);
+}
+
+.svg-icon-accent {
+    filter: var(--svg-accent);
 }
 
 
