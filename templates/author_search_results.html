@@ -9,25 +9,13 @@
                 <div class="header-feed content-container">
                     <div class="search-bar-container">
                         
-                        <form class="search-bar" action="{% url 'story:story-search-results' %}" method="GET">
+                        <form class="search-bar" action="{% url 'story:author-search-results' %}" method="GET">
                             <img class="icon-xsm" src="{% static 'svg/search-icon.svg' %}" alt="">
                             <input type="text" name="q" id="" placeholder="search">
                         </form>
                         
                         
-                        <div class="button-container">
-                            <div class="button-container">
-                                <div class="button-pill ">
-                                    Filter
-                                </div>
-                            </div>
-                            <div class="button-container">
-                                <div class="button-pill">
-                                    Sort
-                                </div>
-                            </div>
-
-                        </div>
+                        
 
                     </div>
                     <header class="header-feed__title-container">
@@ -50,9 +38,10 @@
                         <div class="header-feed__footer-tab">
                             Lists
                         </div>
-                        <div class="header-feed__footer-tab">
-                            Tags
-                        </div>
+                        <form class="header-feed__footer-tab" action="{% url 'story:tag_search_results' %}" method="GET">
+                            <input type="hidden" name="q" value="{{query}}">
+                            <input type="submit" value="Tags">
+                        </form>
                     </footer>
                 </div>
             </header>

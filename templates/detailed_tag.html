@@ -22,7 +22,7 @@
                             </div>
                         </div>
                         <div class="button-container">
-                            {% if object in current_user.tags.all %}
+                            {% if object.tag in current_user.tags.all %}
                             <button id="follow-tag-button" onclick="followTag(this.value)" value="{{object.pk}}">
                                 
                                 {% csrf_token %}
@@ -49,6 +49,9 @@
                         
                         <div class="header-feed__footer-item button-container">
                             <span id="{{ object.pk }}-follower-count">{{tag_extra.follower_count}}</span>Followers
+                        </div>
+                        <div class="header-feed__footer-item button-container">
+                            <span id="{{ object.pk }}-story-count">{{tag_extra.story_count}}</span>Stories
                         </div>
 
                     </footer>

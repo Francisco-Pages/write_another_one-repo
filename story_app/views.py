@@ -8,6 +8,7 @@ from django.http import Http404, HttpResponseRedirect, JsonResponse
 from taggit.models import Tag
 from django.db.models import Q, F
 from . import forms
+import datetime
 
 
 
@@ -96,7 +97,7 @@ def follow_tag(request):
         followed = ''
         pk = int(request.POST.get('tagpk'))
         tag = get_object_or_404(Tag, pk=pk)
-        tag_counter = get_object_or_404(story_models.TagsFollowed, pk=pk)
+        tag_counter = get_object_or_404(story_models.TagsExtra, pk=pk)
         current_user = get_object_or_404(author_models.UserExtra, user=request.user)
 
         if current_user.tags.filter(pk=pk).exists():
@@ -105,12 +106,15 @@ def follow_tag(request):
             result = tag_counter.follower_count
             followed = "Follow"
             tag_counter.save()
+            current_user.save()
         else:
             current_user.tags.add(pk)
             tag_counter.follower_count += 1
             result = tag_counter.follower_count
             followed = "Following"
             tag_counter.save()
+            current_user.save()
+        
         return JsonResponse({'result':result, 'followed':followed})
 
 
@@ -205,18 +209,6 @@ class WriteStoryCreateView(LoginRequiredMixin, CreateView):
         
         user = author_models.UserExtra.objects.get(user=self.request.user)
         user.stories.add(self.object)
-        print(self.object.tags)
-        # tags = self.object.tags
-        # for tag in tags:
-        #     tag_extra = story_models.TagsFollowed.objects.filter(pk=tag.pk).exists()
-        #     if tag_extra:
-        #         existing_tag = story_models.objects.get(pk=tag.pk)
-        #         existing_tag.follower_count += 1
-        #         existing_tag.save()
-        #     else:
-        #         new_tag = story_models.TagsFollowed.objects.create(pk=tag.pk, follower_count=1)
-        #         new_tag.save()
-
         return super().form_valid(form)
     
 class StoryUpdateView(LoginRequiredMixin, UpdateView):
@@ -341,7 +333,7 @@ class TagDetailView(LoginRequiredMixin,DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         current_user = author_models.UserExtra.objects.get(user=self.request.user)
-        tag_extra = story_models.TagsFollowed.objects.get(pk=self.object.pk)
+        tag_extra = story_models.TagsExtra.objects.get(pk=self.object.pk)
         context['tag_extra'] = tag_extra
         context['current_user'] = current_user
         return context
@@ -351,23 +343,21 @@ class StorySearchResultsView(LoginRequiredMixin, ListView):
     template_name = 'story_search_results.html'
     login_url = reverse_lazy('login')
 
-    extra_context = {
-        'user_extras': author_models.UserExtra.objects.all().select_related('user'),
-    }
-
+    
     def get_queryset(self):  
         query = self.request.GET.get("q")
         object_list = story_models.Story.objects.order_by('-published_date').filter(~Q(author_id=self.request.user)).filter(
-            Q(content__icontains=query)
+            Q(title__icontains=query) | Q(content__icontains=query) 
         )
+        
         return object_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        current_user = author_models.UserExtra.objects.get(user=self.request.user)
-        query = self.request.GET.get("q")
-        context['current_user'] = current_user
-        context['query'] = query
+        
+        context['user_extras'] = author_models.UserExtra.objects.select_related('user')
+        context['current_user'] = author_models.UserExtra.objects.get(user=self.request.user)
+        context['query'] = self.request.GET.get("q")
         return context
         
 
@@ -379,7 +369,7 @@ class AuthorSearchResultsView(LoginRequiredMixin, ListView):
     def get_queryset(self):  
         query = self.request.GET.get("q")
         object_list = author_models.UserExtra.objects.filter(~Q(user=self.request.user)).filter(
-            Q(user__username__icontains=query)
+            Q(user__username__icontains=query) | Q(user__first_name__icontains=query) | Q(user__last_name__icontains=query)
         )
         return object_list
 
@@ -391,7 +381,25 @@ class AuthorSearchResultsView(LoginRequiredMixin, ListView):
         context['current_user'] = current_user
         return context
 
+class TagSearchResultsView(LoginRequiredMixin, ListView):
+    model = story_models.TagsExtra()
+    template_name = 'tag_search_results.html'
+    login_url = reverse_lazy('login')
 
+    def get_queryset(self):  
+        query = self.request.GET.get("q")
+        object_list = story_models.TagsExtra.objects.filter(
+            Q(tag__name__icontains=query)
+        )
+        return object_list
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get("q")
+        context['current_user'] = author_models.UserExtra.objects.get(user=self.request.user)
+        return context
+    
     
 class SearchPageView(LoginRequiredMixin,TemplateView):
     template_name = 'story_search_results.html'

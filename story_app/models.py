@@ -108,17 +108,6 @@ class StoryList(models.Model):
 
     class Meta:
         ordering = ['created_date']
-
-
-# class ListedStory(models.Model):
-#     story_list = models.ForeignKey(StoryList, related_name="parent_list", on_delete=models.CASCADE, default=None)
-#     story = models.ForeignKey(Story, related_name="listed_story", on_delete=models.CASCADE)
-
-#     def __str__(self):
-#         return self.story.title
-
-#     class Meta:
-#         unique_together = ("story_list","story")
     
 
 class LikedStory(models.Model):
@@ -135,13 +124,15 @@ class LikedStory(models.Model):
                             )
     liked_date = models.DateTimeField(default=now)
 
-class TagsFollowed(models.Model):
+class TagsExtra(models.Model):
     tag = models.OneToOneField(Tag,
                                 default=None,
                                 on_delete=models.CASCADE,
                                 primary_key=True
                             )
     follower_count = models.BigIntegerField(default='0')
-    date_followed = models.DateTimeField(default=now)
+    story_count = models.BigIntegerField(default='0')
+    description = models.CharField(max_length=300, default='')
+    date_created = models.DateTimeField(default=now)
 
     

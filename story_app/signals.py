@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.dispatch import receiver
 from . import models as story_models
 from author_app import models as author_models
-from taggit.models import Tag
+from taggit.models import Tag, TaggedItem
 
 # @receiver(m2m_changed, sender=story_models.Story)
 # def create_profile(sender, instance, created, **kwargs):
@@ -15,4 +15,11 @@ from taggit.models import Tag
 def create_profile(sender, instance, created, **kwargs):
     if created:
         created_tag = Tag.objects.get(pk=instance.pk)
-        story_models.TagsFollowed.objects.create(pk=created_tag.pk)
+        story_models.TagsExtra.objects.create(pk=created_tag.pk)
+
+@receiver(post_save, sender=TaggedItem)
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        selected = story_models.TagsExtra.objects.get(pk=instance.tag)
+        selected.story_count += 1
+        selected.save()

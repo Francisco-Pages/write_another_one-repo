@@ -19,6 +19,7 @@ urlpatterns = [
     path('tag/<slug>/', views.TagDetailView.as_view(), name='detailed-tag'),
     path('search/stories/', views.StorySearchResultsView.as_view(), name='story-search-results'),
     path('search/authors/', views.AuthorSearchResultsView.as_view(), name='author-search-results'),
+    path('search/tags', views.TagSearchResultsView.as_view(), name='tag_search_results'),
     path('explore/', views.SearchPageView.as_view(), name='explore'),
     path('update-story/<author_id>/<slug>/<pk>/', views.StoryUpdateView.as_view(), name='update-story'),
     path('like/', views.like_story, name="like_story_ajax"),
@@ -26,6 +27,6 @@ urlpatterns = [
     path('pinned-lists/<owner>/', views.PinnedListsView.as_view(), name='pinned-lists'),
     path('follow-tag/', views.follow_tag, name="follow_tag"),
     path('add-story-to-list/', views.add_story_to_list, name="add_story_to_list"),
-    path('recommendations/', views.RecommendationsFeedView.as_view(), name="recommendations_feed")
+    path('recommendations/', views.RecommendationsFeedView.as_view(), name="recommendations_feed"),
 
 ]

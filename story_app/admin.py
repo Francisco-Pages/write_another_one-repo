@@ -10,4 +10,4 @@ admin.site.register(models.StoryList)
 # admin.site.register(models.ListedStory)
 
 admin.site.register(models.LikedStory)
-admin.site.register(models.TagsFollowed)
+admin.site.register(models.TagsExtra)
