@@ -22,7 +22,7 @@
                             </div>
                         </div>
                         <div class="button-container">
-                            {% if object.tag in current_user.tags.all %}
+                            {% if object in current_user.tags.all %}
                             <button id="follow-tag-button" onclick="followTag(this.value)" value="{{object.pk}}">
                                 
                                 {% csrf_token %}

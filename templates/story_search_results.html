@@ -40,9 +40,10 @@
                         <div class="header-feed__footer-tab">
                             Lists
                         </div>
-                        <div class="header-feed__footer-tab">
-                            Tags
-                        </div>
+                        <form class="header-feed__footer-tab" action="{% url 'story:tag_search_results' %}" method="GET">
+                            <input type="hidden" name="q" value="{{query}}">
+                            <input type="submit" value="Tags">
+                        </form>
                     </footer>
                 </div>
             </header>
