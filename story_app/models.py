@@ -5,6 +5,7 @@ from taggit.models import Tag
 from django.conf import settings
 from django.template.defaultfilters import slugify
 from django.contrib.contenttypes.fields import GenericRelation
+import misaka
 
 from django.utils.timezone import now
 
@@ -17,7 +18,8 @@ class Story(models.Model):
                                     on_delete=models.CASCADE
                                 )
     title = models.CharField(max_length=300, default='title')
-    content = models.CharField(max_length=12000, default='story')
+    content = models.TextField(max_length=12000, default='story')
+    content_html = models.TextField(editable=False, default='Tell your story.')
     tags = TaggableManager()
     slug = models.SlugField(null=False)
     editable = models.BooleanField(default=False)
@@ -36,9 +38,10 @@ class Story(models.Model):
         from django.urls import reverse
         return reverse('detailed_story', kwargs={'author_id':self.author_id, 'pk' : self.pk, 'slug':self.slug})
     
-    def save(self, *args, **kwargs):  
+    def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
+        self.content_html = misaka.html(self.content)
         return super().save(*args, **kwargs)
 
 

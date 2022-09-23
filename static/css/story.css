@@ -82,7 +82,9 @@
 .story__content {
     max-width: 74ch;
     margin: 10rem auto 10rem auto;
-   
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
 }
 
 

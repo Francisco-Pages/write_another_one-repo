@@ -3,9 +3,6 @@ from django.contrib.auth.forms import UserCreationForm
 from . import models as story_models
 from django.forms import ModelForm
 
-
-
-
 class StoryUpdateForm(ModelForm):
     class Meta:
         model = story_models.Story

@@ -38,6 +38,7 @@ INTERNAL_IPS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'misaka',
     'hitcount',
     'debug_toolbar',
     'taggit',
