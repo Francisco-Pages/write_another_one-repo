@@ -17,9 +17,9 @@ class Story(models.Model):
                                     default=None, 
                                     on_delete=models.CASCADE
                                 )
-    title = models.CharField(max_length=300, default='title')
-    content = models.TextField(max_length=12000, default='story')
-    content_html = models.TextField(editable=False, default='Tell your story.')
+    title = models.TextField(max_length=300, default='Title')
+    content = models.TextField(max_length=12000, default='Tell your story.')
+    content_html = models.TextField(editable=False, default='')
     tags = TaggableManager()
     slug = models.SlugField(null=False)
     editable = models.BooleanField(default=False)

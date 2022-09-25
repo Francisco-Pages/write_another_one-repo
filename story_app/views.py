@@ -192,9 +192,7 @@ class WriteStoryCreateView(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
     success_url = reverse_lazy("home")
     template_name = "write.html"
-
-    model = story_models.Story
-    fields = ['title', 'content', 'tags', 'cover_image']
+    form_class = forms.StoryCreateForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -216,6 +214,15 @@ class StoryUpdateView(LoginRequiredMixin, UpdateView):
     form_class = forms.StoryUpdateForm
     # success_url = reverse_lazy("detailed_author")
     template_name = 'write.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_user = author_models.UserExtra.objects.get(user=self.request.user)
+        content_height = len(self.object.content)/1.8
+        context['current_user'] = current_user
+        context['content_height'] = content_height if content_height > 52 else 52
+        
+        return context
 
     def get_success_url(self, **kwargs):    
         return reverse_lazy('author:detailed_author', kwargs = {'slug':self.object.author_id, 'pk':self.object.author_id.pk})     

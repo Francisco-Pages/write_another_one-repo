@@ -1,9 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block head %}
+<style>
+    .editor__content {
+        height: {{content_height}}
+    }
+</style>
+{% endblock %}
+
 {% block content %}
+
 <form class="flex-container" method="POST" enctype="multipart/form-data">
     <main class="layout__main-container">
+        
         <main class="main">
 
             <header class="main__header">
@@ -22,7 +32,7 @@
                         
                         <div class="button-container">
                             
-                            <button class="button-pill" type="submit">Publish</button>
+                            <a href="#" class="button-pill" data-toggle="modal" data-target="#exampleModal">Publish</a>
                             
                         </div>
                     </div>
@@ -33,26 +43,47 @@
                 
                 <div class="write__main-container">
 
-                    <!-- <div class="write__title-container">
-                        <div class="editor__title ff-read fs-heading-2 text-alt-secondary" contenteditable="true">
-                            
-                            {{form.title}}
-
-                            
-                            
-                        </div>
-                    </div>
-                    <div class="write__content-container">
-                        <div class="editor__content ff-read fs-body-1 text-alt-secondary" contenteditable="true">
-                            {{form.content}}
-                        </div>
-                    </div>     -->
+                    {% csrf_token %}
                     
-          
+                    <div class="write__title-container ff-read fs-heading-2 text-alt-secondary">
+                        {{form.title}}
+                    </div>
+                
+                
+                    <div class="write__content-container ff-read fs-body-1 text-alt-secondary">
+                        {{form.content}}
+                    </div>
+                    
+                    
+                    
+                
 
-                        {% csrf_token %}
-              
-                        {{ form.as_p }}
+                    
+
+                    <div class="modal" tabindex="-1" id="exampleModal">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">Modal title</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body write__modal-body">
+                                <div>
+                                    {{form.tags}}
+                                </div>
+                                <div>
+                                    {{form.cover_image}}
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button class="button-pill" type="submit">Publish</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
               
                         
               
