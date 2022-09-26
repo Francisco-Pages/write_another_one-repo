@@ -64,21 +64,26 @@
                         <div class="modal-dialog modal-dialog-centered">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title">Modal title</h5>
+                              <div class="fw-bold fs-body-1 modal-title">Confirm</div>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
                             <div class="modal-body write__modal-body">
+                                
                                 <div>
-                                    {{form.tags}}
+                                    <span>{{form.tags.label}}: </span><span>{{form.tags}}</span>
                                 </div>
                                 <div>
-                                    {{form.cover_image}}
+                                    <span>Add a cover to your story: </span><span>{{form.cover_image}}</span>
+                                            
+                                        
+                                        
+                                    
                                 </div>
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="button" class="button-pill" data-dismiss="modal">Close</button>
                               <button class="button-pill" type="submit">Publish</button>
                             </div>
                           </div>
