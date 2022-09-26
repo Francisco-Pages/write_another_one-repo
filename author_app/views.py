@@ -43,7 +43,7 @@ def follow_author(request):
             result = author.follower_count
             followed = 'following'
             author.save()
-        
+
         return JsonResponse({'result':result, 'followed':followed})
 
 

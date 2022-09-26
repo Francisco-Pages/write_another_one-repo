@@ -28,9 +28,10 @@
                     
                     <footer class="header-feed__footer-container">
                         
-                        <div class="header-feed__footer-tab">
-                            Stories
-                        </div>
+                        <form class="header-feed__footer-tab" action="{% url 'story:story-search-results' %}" method="GET">
+                            <input type="hidden" name="q" value="{{query}}">
+                            <input type="submit" value="Stories">
+                        </form>
                         
                         <form class="header-feed__footer-tab" action="{% url 'story:author-search-results' %}" method="GET">
                             <input type="hidden" name="q" value="{{query}}">

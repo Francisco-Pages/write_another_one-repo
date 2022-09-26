@@ -48,7 +48,7 @@
                                         {% else %}
                                         {% if request.user in object_extra.followers.all %}
                                         <button id="follow-author-button" onclick="authorClick(this.value)" value="{{ object_extra.pk }}">
-                                            <div class="button-pill button-pill-md">
+                                            <div class="button-pill button-green">
                                                 {% csrf_token %}
                                                 <!-- <span id="{{ object_extra.pk }}-follower-count">{{object_extra.follower_count}}</span> -->
                                                 <span id="{{ object_extra.pk }}-following-icon">Following</span>
@@ -56,7 +56,7 @@
                                         </button>
                                         {% else %}
                                         <button id="follow-author-button" onclick="authorClick(this.value)" value="{{ object_extra.pk }}">
-                                            <div class="button-pill button-pill-md">
+                                            <div class="button-pill button-green">
                                                 {% csrf_token %}
                                                 <span id="{{ object_extra.pk }}-following-icon">Follow</span>
                                                 <!-- <span id="{{ object_extra.pk }}-follower-count">{{object_extra.follower_count}}</span> -->
@@ -236,51 +236,3 @@
     </main>
 {% endblock %}
 
-{% block scripts %}
-<script>
-    function storyClick(storyClicked){
-        const story = storyClicked
-        $.ajax({
-            type: 'POST',
-            url: '{% url "story:like_story_ajax" %}',
-            data: {
-                storypk: storyClicked,
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                action: 'post'
-            },
-            cache: false,
-            success: function(json) {
-                document.getElementById(`${story}-like-count`).innerHTML = json['result'];
-                document.getElementById(`${story}-like-story-icon`).src = json['liked']
-                console.log('success')
-            },
-            error: function(xhr, errmsg, err) {
-                
-            }
-        });
-    }
-
-    function authorClick(authorClicked){
-        console.log("click registered")
-        const author = authorClicked
-        $.ajax({
-            type: 'POST',
-            url: '{% url "author:follow_author" %}',
-            data: {
-                authorpk: authorClicked,
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                action: 'post'
-            },
-            cache: false,
-            success: function(json) {
-                document.getElementById(`${author}-follower-count`).innerHTML = json['result'];
-                document.getElementById(`${author}-following-icon`).innerHTML = json['followed']
-                console.log('success')
-            },
-            error: function(xhr, errmsg, err) {
-                
-            }
-        });
-    }
-</script>
-{% endblock %}

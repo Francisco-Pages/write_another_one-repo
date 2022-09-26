@@ -71,23 +71,38 @@
                                                 @{{object.author_id}}
                                             </div>
                                             <div>
-                                                57k Followers
+                                                <span id="{{user_extras.pk}}-follower-count">{{user_extras.follower_count}}</span> Followers
                                             </div>
     
                                         </div>
                                         </a>
                                     </div>
                                     <div class="button-container">
+                                    
     
                                         {% if request.user.pk == object.author_id.pk %}
-                                        <div class="button-pill">
-                                            Write
+                                        <div class="button-pill button-green">
+                                            <a href="{% url 'story:write' %}">Write</a>
                                         </div>
                                         {% else %}
-                                        <div class="button-pill">
-                                            Follow
-                                        </div>
-                                       {% endif %}
+                                        
+                                        {% if request.user in user_extras.followers.all %}
+                                        <button id="follow-author-button" onclick="authorClick(this.value)" value="{{ user_extras.pk }}">
+                                            <div class="button-pill button-green ">
+                                                
+                                                {% csrf_token %}
+                                                <span id="{{ user_extras.pk }}-following-icon">Following</span>
+                                            </div>
+                                        </button>
+                                        {% else %}
+                                        <button id="follow-author-button" onclick="authorClick(this.value)" value="{{ user_extras.pk }}">
+                                            <div class="button-pill button-green ">
+                                                {% csrf_token %}
+                                                <span id="{{ user_extras.pk }}-following-icon">Follow</span>
+                                            </div>
+                                        </button>
+                                        {% endif %}
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <a href="{% url 'author:detailed_author' object.author_id.username object.author_id.id %}">
@@ -110,115 +125,32 @@
                 </div>
 
                 <div class="story__footer-section">
+                    {% for story in stories_by_author %}
                     <div class="alt-story-card">
                         <header class="alt-story-card__image-container">
-                            <img class="alt-story-card__image" src="story-image.webp" alt="">
+                            <img class="alt-story-card__image" src="/{{story.cover_image}}" alt="">
                         </header>
                         <main class="alt-story-card__main-container">
                             <div class="alt-story-card__title ff-title fs-heading-4 fw-bold">
-                                Title of The Story  and other stuff
+                                {{story.title}}
                             </div>
                             <div class="alt-story-card__description ff-read fs-body-2">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit adipisci ut delectus. Consequatur sapiente?
+                                {{story.content | slice:":120"}}...
                             </div>
                             <div class="alt-story-card__author">
                                 
-                                <img class="icon-sm icon-round" src="story-image.webp" alt="">
+                                <img class="icon-sm icon-round" src="/{{user_extras.cover_image}}" alt="">
                                 <div class="ff-sub-title fs-body-3">
-                                    Francisco Pages
+                                    {{story.author_id.username}}
                                 </div>
                             </div>
                         </main>
-                        
                     </div>
-                    <div class="alt-story-card">
-                        <header class="alt-story-card__image-container">
-                            <img class="alt-story-card__image" src="story-image.webp" alt="">
-                        </header>
-                        <main class="alt-story-card__main-container">
-                            <div class="alt-story-card__title ff-title fs-heading-4 fw-bold">
-                                Title of The Story  and other stuff
-                            </div>
-                            <div class="alt-story-card__description ff-read fs-body-2">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit adipisci ut delectus. Consequatur sapiente?
-                            </div>
-                            <div class="alt-story-card__author">
-                                
-                                <img class="icon-sm icon-round" src="story-image.webp" alt="">
-                                <div class="ff-sub-title fs-body-3">
-                                    Francisco Pages
-                                </div>
-                            </div>
-                        </main>
-                        
-                    </div>
-                    <div class="alt-story-card">
-                        <header class="alt-story-card__image-container">
-                            <img class="alt-story-card__image" src="story-image.webp" alt="">
-                        </header>
-                        <main class="alt-story-card__main-container">
-                            <div class="alt-story-card__title ff-title fs-heading-4 fw-bold">
-                                Title of The Story  and other stuff
-                            </div>
-                            <div class="alt-story-card__description ff-read fs-body-2">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit adipisci ut delectus. Consequatur sapiente?
-                            </div>
-                            <div class="alt-story-card__author">
-                                
-                                <img class="icon-sm icon-round" src="story-image.webp" alt="">
-                                <div class="ff-sub-title fs-body-3">
-                                    Francisco Pages
-                                </div>
-                            </div>
-                        </main>
-                        
-                    </div>
-                    <div class="alt-story-card">
-                        <header class="alt-story-card__image-container">
-                            <img class="alt-story-card__image" src="story-image.webp" alt="">
-                        </header>
-                        <main class="alt-story-card__main-container">
-                            <div class="alt-story-card__title ff-title fs-heading-4 fw-bold">
-                                Title of The Story  and other stuff
-                            </div>
-                            <div class="alt-story-card__description ff-read fs-body-2">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit adipisci ut delectus. Consequatur sapiente?
-                            </div>
-                            <div class="alt-story-card__author">
-                                
-                                <img class="icon-sm icon-round" src="story-image.webp" alt="">
-                                <div class="ff-sub-title fs-body-3">
-                                    Francisco Pages
-                                </div>
-                            </div>
-                        </main>
-                        
-                    </div>
+                    {% endfor %}
+                    
                     
                 </div>
-                <div class="story__footer-section">
-                    <div class="alt-story-card">
-                        <header class="alt-story-card__image-container">
-                            <img class="alt-story-card__image" src="story-image.webp" alt="">
-                        </header>
-                        <main class="alt-story-card__main-container">
-                            <div class="alt-story-card__title ff-title fs-heading-4 fw-bold">
-                                Title of The Story  and other stuff
-                            </div>
-                            <div class="alt-story-card__description ff-read fs-body-2">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit adipisci ut delectus. Consequatur sapiente?
-                            </div>
-                            <div class="alt-story-card__author">
-                                
-                                <img class="icon-sm icon-round" src="story-image.webp" alt="">
-                                <div class="ff-sub-title fs-body-3">
-                                    Francisco Pages
-                                </div>
-                            </div>
-                        </main>
-                        
-                    </div>
-                </div>
+                
             </footer>
         </main>
     </main>

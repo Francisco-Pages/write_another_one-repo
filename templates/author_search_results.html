@@ -77,7 +77,7 @@
                                             ·
                                         </div>
                                         <div>
-                                            {{author.followers.all.count}} Followers
+                                            <span id="{{author.pk}}-follower-count">{{author.follower_count}}</span> Followers
                                         </div>
                                     </div>
 
@@ -89,9 +89,22 @@
                             
                         </main>
                         <footer class="author-card__buttons button-container">
-                            <div class="button-pill button-green">
-                                Follow
-                            </div>
+                            {% if request.user in author.followers.all %}
+                            <button id="follow-author-button" onclick="authorClick(this.value)" value="{{ author.pk }}">
+                                <div class="button-pill button-green">
+                                    
+                                    {% csrf_token %}
+                                    <span id="{{ author.pk }}-following-icon">Following</span>
+                                </div>
+                            </button>
+                            {% else %}
+                            <button id="follow-author-button" onclick="authorClick(this.value)" value="{{ author.pk }}">
+                                <div class="button-pill button-green">
+                                    {% csrf_token %}
+                                    <span id="{{ author.pk }}-following-icon">Follow</span>
+                                </div>
+                            </button>
+                            {% endif %}
                         </footer>
                     </article>
                 </div>

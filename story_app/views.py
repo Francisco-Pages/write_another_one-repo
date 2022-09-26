@@ -185,9 +185,11 @@ class StoryDetailView(LoginRequiredMixin, HitCountDetailView):
         context = super().get_context_data(**kwargs)
         user_extras = author_models.UserExtra.objects.get(user=self.object.author_id)
         current_user = author_models.UserExtra.objects.get(user=self.request.user)
+        stories_by_author = user_extras.stories.all().order_by('-published_date')[:4]
+        context['stories_by_author'] = stories_by_author
         context['user_extras'] = user_extras
         context['current_user'] = current_user
-        context.update({'popular_posts': story_models.Story.objects.order_by('-hit_count_generic__hits')[:3],})
+        # context.update({'popular_posts': story_models.Story.objects.order_by('-hit_count_generic__hits')[:3],})
         return context
     
 
