@@ -139,25 +139,13 @@
                                                 <button id="like-story-button" onclick="storyClick(this.value)" value="{{story.pk}}">
                                                     <div class="button-pill button-pill-md">
                                                         {% csrf_token %}
-                                                        <img class="icon-xxsm svg-icon-primary" id="{{story.pk}}-like-story-icon" src="{% static 'svg/like-icon.svg' %}" alt="">
+                                                        <img class="icon-xxsm svg-icon-accent" id="{{story.pk}}-like-story-icon" src="{% static 'svg/like-icon.svg' %}" alt="">
                                                         <span id="{{story.pk}}-like-count">{{story.like_count}}</span>
                                                     </div>
                                                 </button>
                                                 {% endif %}
                 
-                                                <div class="dropdown">
-                                                    <div class="" type="button" data-toggle="dropdown" >
-                                                        <img class="icon-xsm svg-icon-primary" src="{% static 'svg/more-icon.svg' %}" alt="">
-                                                    </div>
-                                                    <div class="dropdown-menu fs-body-4">
-                                                    {% if request.user == story.author_id %}
-                                                    <a class="dropdown-item" href="{% url 'story:update-story' story.author_id story.slug story.pk %}">Edit</a>
-                                                    {% else %}
-                                                    <a class="dropdown-item" href="">Block</a>
-                                                    {% endif %}
-                                                    <a class="dropdown-item" href="#">Delete</a>
-                                                    </div>
-                                                </div>
+                                                
                                                 
                 
                                                 <div class="dropdown">
@@ -223,7 +211,7 @@
 
 {% endblock %}
     
-{% block scripts %}
+<!-- {% block scripts %}
 <script defer>
     function addStoryToList(objectClicked){
         const story = objectClicked.slice(0,2);
@@ -277,4 +265,4 @@
 
 
  
-{% endblock %}
+{% endblock %} -->

@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load bootstrap4 %}
 
-{% block content %}
+
 <form class="flex-container" method="POST" enctype="multipart/form-data">
     <main class="layout__main-container">
         <main class="main">
@@ -32,22 +33,6 @@
             <main class="main__content col-container">
                 
                 <div class="write__main-container">
-
-                    <!-- <div class="write__title-container">
-                        <div class="editor__title ff-read fs-heading-2 text-alt-secondary" contenteditable="true">
-                            
-                            {{form.title}}
-
-                            
-                            
-                        </div>
-                    </div>
-                    <div class="write__content-container">
-                        <div class="editor__content ff-read fs-body-1 text-alt-secondary" contenteditable="true">
-                            {{form.content}}
-                        </div>
-                    </div>     -->
-                    
           
 
                         {% csrf_token %}
@@ -61,4 +46,73 @@
             </main>
         </main>
     </form>
+
+
+
+
+
+
+{% block content %}
+    <main class="layout__main-container">
+        <main class="main">
+            
+            <header class="main__header">
+                <div class="header-feed content-container">
+                    <header class="header-feed__title-container">
+                        <div class="header-feed__title fs-heading-4 fw-bold text-main">
+                            New List
+                        </div>
+                        
+                        
+                    </header>
+                    
+                
+                    <footer class="header-feed__footer-container">
+                        
+                    </footer>
+                </div>
+            </header>
+            
+            
+            
+            <div class="main__content col-container">
+                <div class="content-container centered-container">
+                    <form class="form" action="" method="POST" enctype="multipart/form-data">
+                        {% bootstrap_form form %}
+                        
+                        {% csrf_token %}
+                        
+                        <div class="button-container">
+                            <button type="submit" class="button-pill">Update</button>
+
+                        </div>
+                        
+                    </form>
+                    
+                        <!-- <form method="post">
+                            {% csrf_token %}
+                            <div class="fs-heading-4">
+                                <div>
+                                    Are you sure you want to delete "{{object}}"?
+                                </div> 
+                                <div>
+                                    There is not turning back from this.
+                                </div> 
+                            </div>
+                            <div class="button-container">
+                                <button type="submit" class="button-pill">Delete</button>
+                                
+                                <a class="button-pill" href="{% url 'author:detailed_author' request.user request.user.pk %}">No, take me back!</a>
+                            </div>
+    
+                        </form> -->
+    
+                    </div>
+                </div>
+                
+
+                    
+            </div>
+        </main>
+    </main>
 {% endblock %}

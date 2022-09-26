@@ -71,14 +71,7 @@
                             
                         </a>
                     </div>
-                    <div class="navbar__button-container">
-                        <a href="{% url 'story:explore' %}">
-                            <div class="button-round">
-                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/search-icon.svg' %}" alt="">
-                                
-                            </div>        
-                        </a>
-                    </div>
+                    
                     <div class="navbar__button-container">
                         <a href="{% url 'story:author-list' request.user %}">
                             <div class="button-round">
@@ -149,8 +142,78 @@
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 
-{% block scripts %}
+<script defer>
+    function pinList(listClicked){
+        const list = listClicked
+        
+        $.ajax({
+            type: 'POST',
+            url: '{% url "story:pin_list" %}',
+            data: {
+                listpk: listClicked,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            cache: false,
+            success: function(json) {
+                document.getElementById(`${list}-pin-count`).innerHTML = json['result'];
+                document.getElementById(`${list}-pinned`).src = json['pinned']
+                console.log('success')
+            },
+            error: function(xhr, errmsg, err) {
+                
+            }
+        });
+    }
+    
+    function addStoryToList(objectClicked){
+        const story = objectClicked.slice(0,2);
+        const list = objectClicked.slice(2);
+        console.log(list,story)
+        $.ajax({
+            type: 'POST',
+            url: '{% url "story:add_story_to_list" %}',
+            data: {
+                listpk: list,
+                storypk: story,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            cache: false,
+            success: function(json){
+                document.getElementById(`${story}-in-${list}`).src = json['added']
+                console.log('success')
+            },
+            error: function(xhr, errmsg, err){
+                console.log(`${xhr} | ${errmsg} | ${err}`)
+            }
+        })
+    }
+    
+    function storyClick(storyClicked){
+        const story = storyClicked
+        console.log(story)
+        $.ajax({
+            type: 'POST',
+            url: '{% url "story:like_story_ajax" %}',
+            data: {
+                storypk: storyClicked,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            cache: false,
+            success: function(json) {
+                document.getElementById(`${story}-like-count`).innerHTML = json['result'];
+                document.getElementById(`${story}-like-story-icon`).src = json['liked']
+                console.log('success')
+            },
+            error: function(xhr, errmsg, err) {
+                
+            }
+        });
+    }
 
-{% endblock %}
+
+</script>
 <!-- <script src="{% static 'js/master.js' %}"></script> -->
 </html>

@@ -35,6 +35,9 @@
     /* max-width: 52rem; */
     /* min-width: 20rem; */
 }
+.story-card__description {
+    max-width: 54rem;
+}
 
 @media (max-width: 580px) {
     .story-card__description {

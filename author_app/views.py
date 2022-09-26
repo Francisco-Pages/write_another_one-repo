@@ -56,15 +56,19 @@ class SignUp(CreateView):
 class UserExtraUpdateView(UpdateView):
     model = author_models.UserExtra
     form_class = forms.UserExtraUpdateForm
-    success_url = reverse_lazy("home")
+    # success_url = reverse_lazy("home")
     template_name = 'author_app/user_update_form.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_user = author_models.UserExtra.objects.get(user=self.request.user)
+        context['current_user'] = current_user
+        return context
 
+    def get_success_url(self, **kwargs):    
+        return reverse_lazy('author:detailed_author', kwargs = {'slug':self.object.user, 'pk':self.object.user.pk})     
+    
 
-# @login_required(login_url="/author/login/")
-# def author(request):
-#     # current_user = request.user
-#     return render(request, 'author.html')
 
 class AuthorTemplateView(LoginRequiredMixin, TemplateView):
     login_url = reverse_lazy('login')

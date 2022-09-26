@@ -22,7 +22,7 @@ class UserExtra(models.Model):
                             default=None, 
                             on_delete=models.CASCADE
                         )
-    about_user = models.CharField(max_length=300, default='About author')
+    about_user = models.TextField(max_length=300, default='About author')
     cover_image = models.ImageField(upload_to="static/media/author_images", default='static/svg/profile-icon.svg')
     stories = models.ManyToManyField(story_models.Story)
     lists = models.ManyToManyField(story_models.StoryList, related_name='created_lists')

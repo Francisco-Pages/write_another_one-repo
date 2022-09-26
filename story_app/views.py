@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import DetailView, CreateView, ListView, TemplateView, UpdateView
+from django.views.generic import DetailView, CreateView, ListView, TemplateView, UpdateView, DeleteView
 from hitcount.views import HitCountDetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -227,6 +227,14 @@ class StoryUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self, **kwargs):    
         return reverse_lazy('author:detailed_author', kwargs = {'slug':self.object.author_id, 'pk':self.object.author_id.pk})     
         
+class StoryDeleteView(DeleteView):
+    model = story_models.Story 
+    template_name = 'story_confirm_delete.html'
+
+    def get_success_url(self, **kwargs):    
+        return reverse_lazy('author:detailed_author', kwargs = {'slug':self.object.author_id, 'pk':self.object.author_id.pk})     
+        
+
 
 class ListsListView(LoginRequiredMixin,ListView):
     login_url = reverse_lazy('login')

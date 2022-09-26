@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+
     <main class="layout__main-container">
         <main class="main">
             
@@ -48,7 +49,7 @@
                                         {% else %}
                                         {% if request.user in object_extra.followers.all %}
                                         <button id="follow-author-button" onclick="authorClick(this.value)" value="{{ object_extra.pk }}">
-                                            <div class="button-pill button-pill-md">
+                                            <div class="button-pill">
                                                 {% csrf_token %}
                                                 <!-- <span id="{{ object_extra.pk }}-follower-count">{{object_extra.follower_count}}</span> -->
                                                 <span id="{{ object_extra.pk }}-following-icon">Following</span>
@@ -56,7 +57,7 @@
                                         </button>
                                         {% else %}
                                         <button id="follow-author-button" onclick="authorClick(this.value)" value="{{ object_extra.pk }}">
-                                            <div class="button-pill button-pill-md">
+                                            <div class="button-pill">
                                                 {% csrf_token %}
                                                 <span id="{{ object_extra.pk }}-following-icon">Follow</span>
                                                 <!-- <span id="{{ object_extra.pk }}-follower-count">{{object_extra.follower_count}}</span> -->
@@ -146,7 +147,7 @@
                                                 <button id="like-story-button" onclick="storyClick(this.value)" value="{{story.pk}}">
                                                     <div class="button-pill button-pill-md">
                                                         {% csrf_token %}
-                                                        <img class="icon-xxsm svg-icon-accent" id="{{story.pk}}-like-story-icon" src="{% static 'svg/like-icon-filled.svg' %}" alt="">
+                                                        <img class="icon-xxsm svg-icon-primary" id="{{story.pk}}-like-story-icon" src="{% static 'svg/like-icon-filled.svg' %}" alt="">
                                                         <span id="{{story.pk}}-like-count">{{story.like_count}}</span>
                                                     </div>
                                                 </button>
@@ -154,53 +155,34 @@
                                                 <button id="like-story-button" onclick="storyClick(this.value)" value="{{story.pk}}">
                                                     <div class="button-pill button-pill-md">
                                                         {% csrf_token %}
-                                                            <img class="icon-xxsm svg-icon-accent" id="{{story.pk}}-like-story-icon" src="{% static 'svg/like-icon.svg' %}" alt="">
+                                                            <img class="icon-xxsm svg-icon-primary" id="{{story.pk}}-like-story-icon" src="{% static 'svg/like-icon.svg' %}" alt="">
                                                             <span id="{{story.pk}}-like-count">{{story.like_count}}</span>
                                                         </div>
                                                     </button>
                                                 {% endif %}
-                                                {% if request.user == story.author_id %}
+                
                                                 <div class="dropdown">
                                                     <div class="" type="button" data-toggle="dropdown" >
                                                         <img class="icon-xsm svg-icon-primary" src="{% static 'svg/more-icon.svg' %}" alt="">
                                                     </div>
                                                     <div class="dropdown-menu fs-body-4">
-                                                    
-                                                        <a class="dropdown-item" href="{% url 'story:update-story' story.author_id story.slug story.pk %}">Edit</a>
-                                                        <a class="dropdown-item" href="{% url 'story:delete-story' story.slug story.pk %}">Delete</a>
-                                                
+                                                    {% if request.user == story.author_id %}
+                                                    <a class="dropdown-item" href="{% url 'story:update-story' story.author_id story.slug story.pk %}">Edit</a>
+                                                    {% else %}
+                                                    <a class="dropdown-item" href="">Block</a>
+                                                    {% endif %}
                 
+                                                    <a class="dropdown-item" href="#">Delete</a>
                                                     </div>
                                                 </div>
-                                                {% endif %}
                                                 <div class="dropdown">
-                                                    
-                                                    <div class="" type="button" data-toggle="dropdown">
-                                                        <img id="" class="icon-xsm svg-icon-primary" src="{% static 'svg/bookmark-add.svg' %}" alt="">
+                                                    <div class="" type="button" data-toggle="dropdown" >
+                                                        <img class="icon-xsm svg-icon-primary" src="{% static 'svg/bookmark-add.svg' %}" alt="">
                                                     </div>
                                                     <div class="dropdown-menu fs-body-4">
-                                                        {% for list in current_user.lists.all %}
-                                                        {% if story in list.stories.all %}
-                                                        <div class="dropdown-item">
-                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}{{list.pk}}">
-                                                                {% csrf_token %}
-                                                                <img class="icon-xsm" id="{{story.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon-filled.svg' %}" alt="">
-                                                                <span>{{list}}</span>
-                                                            </button>
-                                                        
-                                                        </div>
-                                                        {% else %}
-                                                        <div class="dropdown-item">
-                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}{{list.pk}}">
-                                                                {% csrf_token %}
-                                                                <img class="icon-xsm" id="{{story.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon.svg' %}" alt="">
-                                                                <span>{{list}}</span>
-                                                            </button>
-                                                        
-                                                        </div>
-                                                        {% endif %}
-                                                        {% endfor %}
-                                                        
+                                                    <a class="dropdown-item" href="#">btn 1</a>
+                                                    
+                                                    <a class="dropdown-item" href="#">btn 2</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -234,53 +216,4 @@
             </div>
         </main>
     </main>
-{% endblock %}
-
-{% block scripts %}
-<script>
-    function storyClick(storyClicked){
-        const story = storyClicked
-        $.ajax({
-            type: 'POST',
-            url: '{% url "story:like_story_ajax" %}',
-            data: {
-                storypk: storyClicked,
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                action: 'post'
-            },
-            cache: false,
-            success: function(json) {
-                document.getElementById(`${story}-like-count`).innerHTML = json['result'];
-                document.getElementById(`${story}-like-story-icon`).src = json['liked']
-                console.log('success')
-            },
-            error: function(xhr, errmsg, err) {
-                
-            }
-        });
-    }
-
-    function authorClick(authorClicked){
-        console.log("click registered")
-        const author = authorClicked
-        $.ajax({
-            type: 'POST',
-            url: '{% url "author:follow_author" %}',
-            data: {
-                authorpk: authorClicked,
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                action: 'post'
-            },
-            cache: false,
-            success: function(json) {
-                document.getElementById(`${author}-follower-count`).innerHTML = json['result'];
-                document.getElementById(`${author}-following-icon`).innerHTML = json['followed']
-                console.log('success')
-            },
-            error: function(xhr, errmsg, err) {
-                
-            }
-        });
-    }
-</script>
 {% endblock %}

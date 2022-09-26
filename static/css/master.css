@@ -635,3 +635,21 @@ UTILITY CLASSES
     gap: 2rem;
 }
 
+
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    /* gap: 1rem; */
+}
+
+#id_about_user {
+    font-size: var(--fs-body-1);
+}
+
+#id_name {
+    font-size: var(--fs-body-1);
+}
+#id_description {
+    font-size: var(--fs-body-1);
+}
