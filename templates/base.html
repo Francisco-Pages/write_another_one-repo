@@ -143,6 +143,28 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 
 <script defer>
+    function followTag(tagClicked){
+        const tag = tagClicked
+        $.ajax({
+            type: 'POST',
+            url: '{% url "story:follow_tag" %}',
+            data: {
+                tagpk: tagClicked,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            cache: false,
+            success: function(json) {
+                document.getElementById(`${tag}-follower-count`).innerHTML = json['result'];
+                document.getElementById(`${tag}-followed`).innerHTML = json['followed']
+                console.log('success')
+            },
+            error: function(xhr, errmsg, err) {
+                
+            }
+        });
+    }
+    
     function pinList(listClicked){
         const list = listClicked
         
@@ -165,7 +187,7 @@
             }
         });
     }
-    
+
     function addStoryToList(objectClicked){
         const story = objectClicked.slice(0,2);
         const list = objectClicked.slice(2);

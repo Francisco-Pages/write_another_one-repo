@@ -60,9 +60,7 @@ def add_story_to_list(request):
             list_obj.stories.add(story.pk)
             added = "/static/svg/check-box-icon-filled.svg"
             list_obj.save()
-        print()
-        print(story_pk, list_pk)
-        print()
+        
         return JsonResponse({'added':added})
 
 class RecommendationsFeedView(LoginRequiredMixin, TemplateView):
