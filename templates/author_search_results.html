@@ -21,7 +21,7 @@
                     <header class="header-feed__title-container">
                         <div class="header-feed__title fs-heading-3 fw-bold text-main">
                             <span class="text-secondary">{{ object_list.all.count }} Results for</span> 
-                            <span>{{query}}</span>
+                            <span>"{{query}}"</span>
                         </div>
                         
                     </header>
@@ -58,11 +58,12 @@
                             <main class="author-card__text-container">
                                 
                                 <div class="author-card__author-info text-secondary">
-                                    <div class="ff-sub-title fs-body-2 text-main fw-bold">
-                                        {{author.user.first_name | capfirst}} {{author.user.last_name | capfirst}}
+                                    <a href="{% url 'author:detailed_author' author.user.username author.user.pk %}">
+                                        <div class="ff-sub-title fs-body-2 text-main fw-bold">
+                                            {{author.user.first_name | capfirst}} {{author.user.last_name | capfirst}}
 
-                                    </div>
-                                    
+                                        </div>
+                                    </a>
                                     <div class="author-card__info-container">
                                         <div>
                                             @{{author.user.username}}

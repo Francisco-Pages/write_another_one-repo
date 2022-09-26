@@ -38,7 +38,8 @@
                     </div>
                 </div>
                 <div class="story__content ff-read fs-body-1">
-                    {{object.content_html | safe}}                       
+                    {{object.content_html | safe}}
+                </b>                    
                 </div>
                 <div class="flex-container">
                     <div class="divider-section">
@@ -119,8 +120,8 @@
                     </div>
                 </div>
                 <div class="flex-container">
-                    <div class="divider-section">
-
+                    <div class="divider-section fs-body-1 ff-sub-title">
+                        More by {{object.author_id.first_name | capfirst}}
                     </div>
                 </div>
 
