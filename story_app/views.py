@@ -45,6 +45,7 @@ def explore(request):
 def add_story_to_list(request):
     if request.POST.get('action') =='post':
         added = ''
+        added_in_list = ''
         story_pk = int(request.POST.get('storypk'))
         list_pk = int(request.POST.get('listpk'))
         story = get_object_or_404(story_models.Story, pk=story_pk)
@@ -54,14 +55,19 @@ def add_story_to_list(request):
         if list_obj.stories.filter(pk=story.pk).exists():
             list_obj.stories.remove(story.pk)
             added = "/static/svg/check-box-icon.svg"
+            added_in_list = "/static/svg/add-item-icon.svg"
             list_obj.save()
         
         else:
             list_obj.stories.add(story.pk)
             added = "/static/svg/check-box-icon-filled.svg"
+            added_in_list = "/static/svg/remove-item-icon.svg"
             list_obj.save()
         
-        return JsonResponse({'added':added})
+        print()
+        print(story_pk, list_pk)
+        print()
+        return JsonResponse({'added':added, 'added_in_list':added_in_list})
 
 class RecommendationsFeedView(LoginRequiredMixin, TemplateView):
     login_url = reverse_lazy('login')
@@ -335,8 +341,10 @@ class ListDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         current_user = author_models.UserExtra.objects.get(user=self.request.user)
         user_extras = author_models.UserExtra.objects.all().select_related('user') 
+        list_owner = author_models.UserExtra.objects.get(user=self.object.user)
         context['current_user'] = current_user
         context['user_extras'] = user_extras
+        context['list_owner'] = list_owner
         return context
 
 

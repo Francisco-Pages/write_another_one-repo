@@ -15,11 +15,9 @@
                                 {{object.name | capfirst}}
                             </div>
                             <div class="header-feed__owner">
-                                {% for user_extra in user_extras %}
-                                {% if object.user.pk == user_extra.user.pk %}
-                                <img class="icon-sm icon-round" src="/{{ user_extra.cover_image }}" alt="">
-                                {% endif %}
-                                {% endfor %}
+                                
+                                <img class="icon-sm icon-round" src="/{{ list_owner.cover_image }}" alt="">
+                                
                                 
                                 <div class="ff-sub-title fs-body-3">
                                     {{object.user.get_full_name}}
@@ -35,7 +33,7 @@
                                     <img id="{{ object.pk }}-pinned" src="{% static 'svg/in-list-icon.svg' %}" alt="">
                                 </div>
                             </button>
-                            <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/drop-down-button.svg' %}" alt="">
+
                             {% else %}
                             <button id="pin-list-button" onclick="pinList(this.value)" value="{{object.pk}}">
                                 <div class="icon-sm">
@@ -44,8 +42,9 @@
                                     <img id="{{ object.pk }}-pinned" src="{% static 'svg/add-to-list-icon.svg' %}" alt="">
                                 </div>
                             </button>
-                            <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/drop-down-button.svg' %}" alt="">
+                            
                             {% endif %}
+                            
                         </div>
                     </header>
                     <main class="header-feed__main-container">
@@ -144,6 +143,7 @@
                                                         </div>
                                                     </button>
                                                 {% endif %}
+                                                
                                                 {% if request.user == story.author_id %}
                                                 <div class="dropdown">
                                                     <div class="" type="button" data-toggle="dropdown" >
@@ -158,16 +158,22 @@
                                                     </div>
                                                 </div>
                                                 {% endif %}
-                                                <div class="dropdown">
-                                                    <div class="" type="button" data-toggle="dropdown" >
-                                                        <img class="icon-xsm svg-icon-primary" src="{% static 'svg/bookmark-add.svg' %}" alt="">
-                                                    </div>
-                                                    <div class="dropdown-menu fs-body-4">
-                                                    <a class="dropdown-item" href="#">btn 1</a>
+
+                                                {% if story in object.stories.all %}
+                                                
+                                                    <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}{{object.pk}}">
+                                                        {% csrf_token %}
+                                                        <img class="icon-xsm" id="{{story.pk}}-in-{{object.pk}}" src="{% static 'svg/remove-item-icon.svg' %}" alt="">
+                                                    </button>
+                                                {% else %}
+                                                    <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}{{object.pk}}">
+                                                        {% csrf_token %}
+                                                        <img class="icon-xsm" id="{{story.pk}}-in-{{object.pk}}" src="{% static 'svg/add-item-icon.svg' %}" alt="">
+                                                        
+                                                    </button>
+                                                {% endif %}
+                                                
                                                     
-                                                    <a class="dropdown-item" href="#">btn 2</a>
-                                                    </div>
-                                                </div>
                                             </div>
 
                                         </div>

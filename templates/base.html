@@ -204,6 +204,7 @@
             cache: false,
             success: function(json){
                 document.getElementById(`${story}-in-${list}`).src = json['added']
+                document.getElementById(`${story}-in-${list}`).src = json['added_in_list']
                 console.log('success')
             },
             error: function(xhr, errmsg, err){
