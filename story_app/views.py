@@ -382,15 +382,22 @@ class AuthorSearchResultsView(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('login')
 
     def get_queryset(self):  
-        query = self.request.GET.get("q")
+        if self.request.GET.get('q') == None:
+            query = ''
+        else:
+            query = self.request.GET.get("q")
+        
         object_list = author_models.UserExtra.objects.filter(~Q(user=self.request.user)).filter(
             Q(user__username__icontains=query) | Q(user__first_name__icontains=query) | Q(user__last_name__icontains=query)
-        )
+        ).order_by('-follower_count')
         return object_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        query = self.request.GET.get("q")
+        if self.request.GET.get('q') == None:
+            query = 'Recommended'
+        else:
+            query = self.request.GET.get("q")
         current_user = author_models.UserExtra.objects.get(user=self.request.user)
         context['query'] = query
         context['current_user'] = current_user
