@@ -130,13 +130,11 @@
                                                     <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/more-icon.svg' %}" alt="">
                                                 </div>
                                                 <div class="dropdown-menu fs-body-4">
-                                                {% if request.user == list.user %}
+                                                
                                                 <a class="dropdown-item" href="{% url 'story:update-list' list.user list.slug list.pk %}">Edit</a>
-                                                {% else %}
-                                                <a class="dropdown-item" href="">Block</a>
-                                                {% endif %}
+                                                
 
-                                                <a class="dropdown-item" href="#">Delete</a>
+                                                <a class="dropdown-item" href="{% url 'story:delete-list' list.user list.slug list.pk %}">Delete</a>
                                                 </div>
                                             </div>
                                             

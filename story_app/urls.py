@@ -29,4 +29,5 @@ urlpatterns = [
     path('add-story-to-list/', views.add_story_to_list, name="add_story_to_list"),
     path('recommendations/', views.RecommendationsFeedView.as_view(), name="recommendations_feed"),
     path('delete/<slug>/<pk>', views.StoryDeleteView.as_view(), name="delete-story"),
+    path('delete/<owner>/<slug>/<pk>', views.ListDeleteView.as_view(), name="delete-list"),
 ]

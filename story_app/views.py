@@ -250,6 +250,14 @@ class ListsListView(LoginRequiredMixin,ListView):
         self.user_extra = author_models.UserExtra.objects.get(user=self.request.user)
         return [user_list for user_list in self.user_extra.lists.all()]
 
+class ListDeleteView(DeleteView):
+    model = story_models.StoryList 
+    template_name = 'list_confirm_delete.html'
+
+    def get_success_url(self, **kwargs):    
+        return reverse_lazy('story:author-list', kwargs = {'owner':self.request.user.username})     
+        
+
 class PinnedListsView(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('login')
     # model = story_models.StoryList
