@@ -317,6 +317,7 @@ class ListUpdateView(LoginRequiredMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         current_user = author_models.UserExtra.objects.get(user=self.request.user)
         context['current_user'] = current_user
+        context['update_list'] = self.object.name
         return context
 
     def get_success_url(self, **kwargs):    

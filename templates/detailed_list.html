@@ -15,14 +15,14 @@
                                 {{object.name | capfirst}}
                             </div>
                             <div class="header-feed__owner">
-                                
-                                <img class="icon-sm icon-round" src="/{{ list_owner.cover_image }}" alt="">
-                                
-                                
-                                <div class="ff-sub-title fs-body-3">
-                                    {{object.user.get_full_name}}
+                                <a class="button-container" href="{% url 'author:detailed_author' object.user object.user.pk %}">
+                                    <img class="icon-sm icon-round" src="/{{ list_owner.cover_image }}" alt="">
+
+                                    <div class="ff-sub-title fs-body-3">
+                                        {{object.user}}
+                                    </div>
+                                </a>
                                 </div>
-                            </div>
                         </div>
                         <div class="button-container">
                             {% if request.user in object.pinners.all %}
