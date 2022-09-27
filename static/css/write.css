@@ -38,17 +38,19 @@
 .editor__title {
     width: 70rem;
     padding: 1rem;
-    height: 10rem;
+    height: 7rem;
     background-color: var(--background-primary);
     color: var(--text-alt-secondary);
+    /* border-left: 2px solid var(--border-primary); */
 }
 
 .editor__content {
     padding: 1rem;
-    /* height: 5rem; */
+    height: 5rem;
     width: 70rem;
     background-color: var(--background-primary);
     color: var(--text-alt-secondary);
+    /* border-left: 2px solid var(--border-primary); */
 }
 
 .write__modal-body{

@@ -30,6 +30,7 @@
                     </header>
                     <main class="header-feed__main-container">
                         {% for user in user_extra %}
+                        {% if forloop.counter < 10 %}
                         <div class="button-container">
                             <a href="{% url 'author:detailed_author' user.user.username user.user.id %}">
                                 <img class="icon-md icon-round" src="/{{ user.cover_image }}" alt="">
@@ -38,7 +39,9 @@
                                 9+
                             </div> -->
                         </div>
+                        {% else %}
 
+                        {% endif %}
                         {% endfor %}
                         <div class="button-container">
                             <a href="{% url 'story:author-search-results' %}">
@@ -51,11 +54,15 @@
                     <main class="header-feed__main-container text-main">
                         
                         {% for tag in current_user.tags.all %}
+                        {% if forloop.counter < 6 %}
                         <a href="{% url 'story:detailed-tag' tag.slug %}">
                             <div class="tag-card__tag-icon-lg">
                                 {{tag.name}}
                             </div>
                         </a>
+                        {% else %}
+                        
+                        {% endif %}
                         
                         {% endfor %}
                         

@@ -128,23 +128,29 @@
                 <div class="story__footer-section">
                     {% for story in stories_by_author %}
                     <div class="alt-story-card">
-                        <header class="alt-story-card__image-container">
-                            <img class="alt-story-card__image" src="/{{story.cover_image}}" alt="">
-                        </header>
+                        <a href="{% url 'story:detailed_story' story.author_id story.slug story.pk %}">
+                            <header class="alt-story-card__image-container">
+                                <img class="alt-story-card__image" src="/{{story.cover_image}}" alt="">
+                            </header>
+                        </a>
                         <main class="alt-story-card__main-container">
-                            <div class="alt-story-card__title ff-title fs-heading-4 fw-bold">
-                                {{story.title}}
-                            </div>
-                            <div class="alt-story-card__description ff-read fs-body-2">
-                                {{story.content | slice:":120"}}...
-                            </div>
-                            <div class="alt-story-card__author">
-                                
-                                <img class="icon-sm icon-round" src="/{{user_extras.cover_image}}" alt="">
-                                <div class="ff-sub-title fs-body-3">
-                                    {{story.author_id.username}}
+                            <a href="{% url 'story:detailed_story' story.author_id story.slug story.pk %}">
+                                <div class="alt-story-card__title ff-title fs-heading-4 fw-bold">
+                                    {{story.title}}
                                 </div>
-                            </div>
+                                <div class="alt-story-card__description ff-read fs-body-2">
+                                    {{story.content | slice:":120"}}...
+                                </div>
+ 
+                            </a>
+                            <a href="{% url 'author:detailed_author' story.author_id.username story.author_id.id %}">
+                            <div class="alt-story-card__author">
+                                    <img class="icon-sm icon-round" src="/{{user_extras.cover_image}}" alt="">
+                                    <div class="ff-sub-title fs-body-3">
+                                        {{story.author_id.username}}
+                                    </div>
+                                </div>
+                            </a>
                         </main>
                     </div>
                     {% endfor %}
