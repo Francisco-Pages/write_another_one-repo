@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from os import getenv 
 import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,9 +27,11 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 SECRET_KEY = 'django-insecure-_90e(hy0ofr20p@x3x8vxp$gdodd_w$m1i&kq50y==8vgym(be'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = getenv("IS_DEVELOPMENT", True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    # getenv("APP_HOST")
+]
 # IP ADDRESS: '192.168.86.20', '127.0.0.1', 'localhost'
 INTERNAL_IPS = [
     # ...
@@ -134,7 +138,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_ROOT = ''
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
@@ -143,8 +147,8 @@ STATICFILES_DIRS = [
 
 
 # ADD THE FOLLOWING LINES HERE
-# MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-# MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL = '/media/'
 
 # APPEND THIS LINE TO END OF URL PATHS IN PROJECT URLS.PY
 # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

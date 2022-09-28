@@ -18,6 +18,8 @@ from django.urls import path, include
 from . import views
 from story_app import views as story_views
 from author_app import views as author_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -30,4 +32,5 @@ urlpatterns = [
     path('author/', include("django.contrib.auth.urls")),
     path('__debug__/', include('debug_toolbar.urls')),
     # path('author', author_views.author, name='author'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
+  + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
