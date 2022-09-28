@@ -9,7 +9,7 @@
                 <header class="story__header">
                     <div class="story__header-left-container">
                         <div class="story__image-container">
-                            <img src="/{{ object.cover_image }}" alt="">
+                            <img src="{{ object.cover_image.url }}" alt="">
                             
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                         <div class="alt-author-card">
                             <header class="alt-author-card__image-container">
                                 <a href="{% url 'author:detailed_author' object.author_id.username object.author_id.id %}">
-                                    <img class="icon-xl icon-round" src="/{{ user_extras.cover_image }}" alt="">
+                                    <img class="icon-xl icon-round" src="{{ user_extras.cover_image.url }}" alt="">
                                 </a>
     
                             </header>
@@ -130,7 +130,7 @@
                     <div class="alt-story-card">
                         <a href="{% url 'story:detailed_story' story.author_id story.slug story.pk %}">
                             <header class="alt-story-card__image-container">
-                                <img class="alt-story-card__image" src="/{{story.cover_image}}" alt="">
+                                <img class="alt-story-card__image" src="{{story.cover_image.url}}" alt="">
                             </header>
                         </a>
                         <main class="alt-story-card__main-container">
@@ -145,7 +145,7 @@
                             </a>
                             <a href="{% url 'author:detailed_author' story.author_id.username story.author_id.id %}">
                             <div class="alt-story-card__author">
-                                    <img class="icon-sm icon-round" src="/{{user_extras.cover_image}}" alt="">
+                                    <img class="icon-sm icon-round" src="{{user_extras.cover_image.url}}" alt="">
                                     <div class="ff-sub-title fs-body-3">
                                         {{story.author_id.username}}
                                     </div>

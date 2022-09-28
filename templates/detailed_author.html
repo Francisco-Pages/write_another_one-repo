@@ -11,7 +11,7 @@
                         <div class="alt-author-card">
                             <header class="alt-author-card__image-container">
                             
-                                <img class="icon-xl icon-round" src="/{{ object_extra.cover_image }}" alt="">
+                                <img class="icon-xl icon-round" src="{{ object_extra.cover_image.url }}" alt="">
                                 
     
                             </header>
@@ -98,7 +98,7 @@
                         <a href="{% url 'author:detailed_author' story.author_id.username story.author_id.id %}">
                         <header class="story-card__header ff-sub-title fs-body-3 text-alt-secondary">
                             
-                                <img class="icon-xsm icon-round" src="/{{ object_extra.cover_image }}" alt="">
+                                <img class="icon-xsm icon-round" src="{{ object_extra.cover_image.url }}" alt="">
                 
                                 
                             <div class="text-main">
@@ -211,7 +211,7 @@
                             </div>
                             
                             <div class="story-card__image-container">
-                                <img class="story-card__image" src="/{{ story.cover_image}}" alt="">
+                                <img class="story-card__image" src="{{ story.cover_image.url}}" alt="">
                             </div>
                         </main>
                         

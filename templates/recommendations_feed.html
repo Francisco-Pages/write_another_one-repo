@@ -32,7 +32,7 @@
                         {% for user in user_extra %}
                         <div class="button-container">
                             <a href="{% url 'author:detailed_author' user.user.username user.user.id %}">
-                                <img class="icon-md icon-round" src="/{{ user.cover_image }}" alt="">
+                                <img class="icon-md icon-round" src="{{ user.cover_image.url }}" alt="">
                             </a>
                             <!-- <div class="fs-body-5 icon-notification">
                                 9+
@@ -82,7 +82,7 @@
                         <header class="story-card__header ff-sub-title fs-body-3 text-alt-secondary">
                             {% for author in user_extra %}
                                 {% if author.user == story.author_id %}
-                                <img class="icon-xsm icon-round" src="/{{ author.cover_image }}" alt="">
+                                <img class="icon-xsm icon-round" src="{{ author.cover_image.url }}" alt="">
                 
                                 {% endif %}
                             {% endfor %}
@@ -198,7 +198,7 @@
                             </div>
                             
                             <div class="story-card__image-container">
-                                <img class="story-card__image" src="/{{ story.cover_image}}" alt="">
+                                <img class="story-card__image" src="{{ story.cover_image.url}}" alt="">
                             </div>
                         </main>
                         

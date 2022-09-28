@@ -23,7 +23,7 @@ class UserExtra(models.Model):
                             on_delete=models.CASCADE
                         )
     about_user = models.TextField(max_length=300, default='About author')
-    cover_image = models.ImageField(upload_to="static/media/author_images", default='static/svg/profile-icon.svg')
+    cover_image = models.ImageField(upload_to="author_images", default='')
     stories = models.ManyToManyField(story_models.Story)
     lists = models.ManyToManyField(story_models.StoryList, related_name='created_lists')
     pinned_lists = models.ManyToManyField(story_models.StoryList, related_name='pinned_lists')

@@ -73,7 +73,7 @@
                             <header class="story-card__header ff-sub-title fs-body-3">
                                 {% for user_extra in user_extras %}
                                 {% if story.author_id.pk == user_extra.user.pk %}
-                                <img class="icon-sm icon-round" src="/{{ user_extra.cover_image }}" alt="">
+                                <img class="icon-sm icon-round" src="{{ user_extra.cover_image.url }}" alt="">
                             
                                 {% endif %}
                                 {% endfor %}
@@ -186,7 +186,7 @@
                             </div>
 
                             <div class="story-card__image-container">
-                                <img class="story-card__image" src="/{{story.cover_image}}" alt="">
+                                <img class="story-card__image" src="{{story.cover_image.url}}" alt="">
                             </div>
                         </main>
                         

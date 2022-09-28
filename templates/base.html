@@ -97,11 +97,9 @@
                 </main>
                 <footer class="navbar__profile-container">
                     {% if request.user.is_authenticated %}
-
-                
                         <div class="navbar__button-container">
                             <a href="{% url 'author:detailed_author' request.user request.user.pk %}">
-                                <img class="icon-md icon-round"  src="/{{current_user.cover_image}}" alt="">
+                                <img class="icon-md icon-round"  src="{{current_user.cover_image.url}}" alt="">
                             </a>
                         </div>
                     

@@ -69,7 +69,7 @@
                                         
                                         <div class="list-card__author">
                                             <a class="list-card__author" href="{% url 'author:detailed_author' current_user.user.username current_user.user.id %}">
-                                                <img class="icon-xsm icon-round" src="/{{ current_user.cover_image }}" alt="">
+                                                <img class="icon-xsm icon-round" src="{{ current_user.cover_image.url }}" alt="">
                                                 <div class="text-main">
                                                     @{{ list.user.username }}
                                                 </div>

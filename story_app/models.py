@@ -27,7 +27,7 @@ class Story(models.Model):
     published_date = models.DateTimeField(default=now)
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',
      related_query_name='hit_count_generic_relation')
-    cover_image = models.ImageField(upload_to="static/media/story_images", default='none')
+    cover_image = models.ImageField(upload_to="story_images", default='')
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_by', blank=True)
     like_count = models.BigIntegerField(default=0)
 
