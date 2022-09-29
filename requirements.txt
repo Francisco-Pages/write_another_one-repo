@@ -18,5 +18,5 @@ pycparser==2.21
 Pygments==2.13.0
 pytz==2022.1
 soupsieve==2.3.2.post1
-sqlparse==0.4.1
+sqlparse==0.4.3
 typing_extensions==4.1.1
