@@ -1,0 +1,16 @@
+.main {
+    /* max-width: 80rem; */
+    display: flex;
+    flex-direction: column;
+    /* gap: 3rem; */
+}
+
+.main__header {
+    /* position: sticky; 
+    top: 0px */
+    margin: 4rem 0 0 0;
+}
+
+.main__content {
+    margin: 2rem;
+}

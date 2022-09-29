@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+
+{% block content %}
+    <main class="layout__main-container">
+        <main class="main">
+            
+            <header class="main__header">
+                <div class="header-feed content-container">
+                    <header class="header-feed__title-container">
+                        <div class="header-feed__title fs-heading-4 fw-bold text-main">
+                            Settings
+                        </div>
+                        
+                        
+                    </header>
+                    
+                
+                    <footer class="header-feed__footer-container">
+                        
+                    </footer>
+                </div>
+            </header>
+            
+            
+            
+            <div class="main__content col-container">
+                <div class="content-container centered-container">
+                    <form class="form" action="" method="POST" enctype="multipart/form-data">
+                        {% bootstrap_form form %}
+                        
+                        {% csrf_token %}
+                        
+                        <div class="button-container">
+                            <button type="submit" class="button-pill">Update</button>
+
+                        </div>
+                        
+                    </form>
+
+                </div>
+                
+
+                    
+            </div>
+        </main>
+    </main>
+{% endblock %}
+
+
+

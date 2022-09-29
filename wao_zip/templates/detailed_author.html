@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <main class="layout__main-container">
+        <main class="main">
+            
+            <header class="main__header">
+                <div class="header-feed content-container">
+                    <div class="alt-author-card__container">
+                        <div class="alt-author-card">
+                            <header class="alt-author-card__image-container">
+                            
+                                <img class="icon-xl icon-round" src="{{ object_extra.cover_image.url }}" alt="">
+                                
+    
+                            </header>
+                            <main class="alt-author-card__main-container">
+                                <div class="alt-author-card__author-name">
+                                    <div class="alt-author-card__info">
+    
+                                        <div class="ff-sub-title fs-body-1 fw-bold">
+                                            {{object.first_name | capfirst}}
+                                            {{object.last_name | capfirst}}
+                                        </div>
+                                        <div class="alt-author-card__name-footer text-alt-secondary">
+                                            <div>
+                                                @{{object.username}}
+                                                
+                                            </div>
+                                            
+                                            <div>
+                                                <span id="{{ object_extra.pk }}-follower-count">{{object_extra.follower_count}}</span> Followers
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="button-container">
+                                        {% if request.user == object %}
+                                        <div>
+                                            
+                                            <a href="{% url 'author:update-user-extra' current_user.user current_user.pk %}">
+                                                <img class="icon-xsm svg-icon-primary" src="{% static 'svg/settings-wheel-icon.svg' %}" alt="">
+                                            </a> 
+                                         </div>
+                                        <div class="button-pill">
+                                            <a href="{% url 'story:write' %}">Write</a>
+                                        </div>
+                                        {% else %}
+                                        {% if request.user in object_extra.followers.all %}
+                                        <button id="follow-author-button" onclick="authorClick(this.value)" value="{{ object_extra.pk }}">
+                                            <div class="button-pill button-green">
+                                                {% csrf_token %}
+                                                <!-- <span id="{{ object_extra.pk }}-follower-count">{{object_extra.follower_count}}</span> -->
+                                                <span id="{{ object_extra.pk }}-following-icon">Following</span>
+                                            </div>
+                                        </button>
+                                        {% else %}
+                                        <button id="follow-author-button" onclick="authorClick(this.value)" value="{{ object_extra.pk }}">
+                                            <div class="button-pill button-green">
+                                                {% csrf_token %}
+                                                <span id="{{ object_extra.pk }}-following-icon">Follow</span>
+                                                <!-- <span id="{{ object_extra.pk }}-follower-count">{{object_extra.follower_count}}</span> -->
+                                            </div>
+                                        </button>
+                                        {% endif %}
+                                       {% endif %}
+                                       
+                                    </div>
+                                </div>
+    
+                                
+                                <div class="alt-author-card__description fs-body-3 text-secondary">
+                                    {{object_extra.about_user}}
+                                </div>
+                                
+                                
+                            </main>
+                            
+                        </div>
+                    </div>
+                    
+                    <footer class="header-feed__footer-container">
+                        <div class="header-feed__footer-tab--active">
+                            Stories
+                        </div>
+                        
+                    </footer>
+                </div>
+            </header>
+            
+            
+            <div class="main__content col-container">
+
+                {% for story in stories %}
+                
+                <div class="story-card__container">
+                    <article class="story-card content-container">
+                        <a href="{% url 'author:detailed_author' story.author_id.username story.author_id.id %}">
+                        <header class="story-card__header ff-sub-title fs-body-3 text-alt-secondary">
+                            
+                                <img class="icon-xsm icon-round" src="{{ object_extra.cover_image.url }}" alt="">
+                
+                                
+                            <div class="text-main">
+                                {{ story.author_id }}
+                            </div>
+                            <div>
+                                ·
+                            </div>
+                            <div class="">
+                                {{ story.published_date }}
+                            </div>
+                            
+                            
+                        </header>
+                        </a>
+                        
+                        <main class="story-card__main-container">
+                            <div class="story-card__text-container">
+                                <header class="story-card__title ff-title fs-heading-3 fw-bold">
+                                        <a href="{% url 'story:detailed_story' story.author_id story.slug story.pk %}">
+                                            {{ story.title }}
+                                        </a>
+                                    </header>
+                                    <main class="story-card__description ff-read fs-body-3 fw-reg text-secondary">
+                                        {{ story.content | slice:":180" }}...
+                                    </main>
+                                <footer class="story-card__footer-container">
+                                    <footer class="story-card__footer">
+                                        
+                                        <div>
+                                            {% for tag in story.tags.all %}
+                                            <a href="{% url 'story:detailed-tag' tag.slug %}">
+                                                <div class="tag-card__tag-icon">
+                                                    {{ tag.name }}
+                                                </div>
+                                            </a>
+                                            {% endfor %}
+                
+                                        </div>
+                                        
+                                        <div class="story-card__buttons">
+                                            <div class="button-container">
+                
+                                                {% if request.user in story.likes.all %}
+                                                <button id="like-story-button" onclick="storyClick(this.value)" value="{{story.pk}}">
+                                                    <div class="button-pill button-pill-md">
+                                                        {% csrf_token %}
+                                                        <img class="icon-xxsm svg-icon-accent" id="{{story.pk}}-like-story-icon" src="{% static 'svg/like-icon-filled.svg' %}" alt="">
+                                                        <span id="{{story.pk}}-like-count">{{story.like_count}}</span>
+                                                    </div>
+                                                </button>
+                                                {% else %}
+                                                <button id="like-story-button" onclick="storyClick(this.value)" value="{{story.pk}}">
+                                                    <div class="button-pill button-pill-md">
+                                                        {% csrf_token %}
+                                                            <img class="icon-xxsm svg-icon-accent" id="{{story.pk}}-like-story-icon" src="{% static 'svg/like-icon.svg' %}" alt="">
+                                                            <span id="{{story.pk}}-like-count">{{story.like_count}}</span>
+                                                        </div>
+                                                    </button>
+                                                {% endif %}
+                                                {% if request.user == story.author_id %}
+                                                <div class="dropdown">
+                                                    <div class="" type="button" data-toggle="dropdown" >
+                                                        <img class="icon-xsm svg-icon-primary" src="{% static 'svg/more-icon.svg' %}" alt="">
+                                                    </div>
+                                                    <div class="dropdown-menu fs-body-4">
+                                                    
+                                                        <a class="dropdown-item" href="{% url 'story:update-story' story.author_id story.slug story.pk %}">Edit</a>
+                                                        <a class="dropdown-item" href="{% url 'story:delete-story' story.slug story.pk %}">Delete</a>
+                                                
+                
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                <div class="dropdown">
+                                                    
+                                                    <div class="" type="button" data-toggle="dropdown">
+                                                        <img id="" class="icon-xsm svg-icon-primary" src="{% static 'svg/bookmark-add.svg' %}" alt="">
+                                                    </div>
+                                                    <div class="dropdown-menu fs-body-4">
+                                                        {% for list in current_user.lists.all %}
+                                                        {% if story in list.stories.all %}
+                                                        <div class="dropdown-item">
+                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}{{list.pk}}">
+                                                                {% csrf_token %}
+                                                                <img class="icon-xsm" id="{{story.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon-filled.svg' %}" alt="">
+                                                                <span>{{list}}</span>
+                                                            </button>
+                                                        
+                                                        </div>
+                                                        {% else %}
+                                                        <div class="dropdown-item">
+                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}{{list.pk}}">
+                                                                {% csrf_token %}
+                                                                <img class="icon-xsm" id="{{story.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon.svg' %}" alt="">
+                                                                <span>{{list}}</span>
+                                                            </button>
+                                                        
+                                                        </div>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </footer>
+                                </footer>
+                            </div>
+                            
+                            <div class="story-card__image-container">
+                                <img class="story-card__image" src="{{ story.cover_image.url}}" alt="">
+                            </div>
+                        </main>
+                        
+                        
+                    </article>
+                </div> 
+                
+                
+                <div class="flex-container">
+                    <div class="content-container divider-item">
+                        
+                    </div>
+                </div>
+                
+            
+                {% endfor %}
+                
+
+                    
+            </div>
+        </main>
+    </main>
+{% endblock %}
+

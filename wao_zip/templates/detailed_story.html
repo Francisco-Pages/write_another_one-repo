@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load hitcount_tags %}
+
+{% block content %}
+    <main class="layout__main-container">
+        <main class="story">
+            <header class="story__header-main-container">
+                <header class="story__header">
+                    <div class="story__header-left-container">
+                        <div class="story__image-container">
+                            <img src="{{ object.cover_image.url }}" alt="">
+                            
+                        </div>
+                    </div>
+                    <div class="story__header-right-container">
+                        <div class="story__header-text-container">
+
+                            <div class="story__header-text ff-title fs-heading-1">
+                                {{object.title}}
+                            </div>
+                            
+                            
+                            
+                            <div class="story__header-text ff-sub-title fs-body-3 fw-reg ">
+                                By {{object.author_id.get_full_name}}
+                            </div>
+                        </div>
+                        
+                    </div>
+                </header>
+            </header>
+            
+            <main class="story__main-container">
+                <div class="flex-container">
+                    <div class="divider-item">
+                        <p>Views: {% get_hit_count for object %}</p>
+                    </div>
+                </div>
+                <div class="story__content ff-read fs-body-1">
+                    {{object.content_html | safe}}
+                </b>                    
+                </div>
+                <div class="flex-container">
+                    <div class="divider-section">
+
+                    </div>
+                </div>
+
+            </main>
+            <footer class="story__footer-container">
+                <div class="story__footer-section">
+                    <div class="alt-author-card__container">
+                        <div class="alt-author-card">
+                            <header class="alt-author-card__image-container">
+                                <a href="{% url 'author:detailed_author' object.author_id.username object.author_id.id %}">
+                                    <img class="icon-xl icon-round" src="{{ user_extras.cover_image.url }}" alt="">
+                                </a>
+    
+                            </header>
+                            <main class="alt-author-card__main-container">
+                                <div class="alt-author-card__author-name">
+                                    <div class="alt-author-card__info">
+                                        <a href="{% url 'author:detailed_author' object.author_id.username object.author_id.id %}">
+                                        <div class="ff-sub-title fs-body-1 fw-bold">
+                                            {{object.author_id.first_name | capfirst}}
+                                            {{object.author_id.last_name | capfirst}}
+    
+                                        </div>
+                                        <div class="alt-author-card__name-footer text-alt-secondary">
+                                            <div>
+                                                @{{object.author_id}}
+                                            </div>
+                                            <div>
+                                                <span id="{{user_extras.pk}}-follower-count">{{user_extras.follower_count}}</span> Followers
+                                            </div>
+    
+                                        </div>
+                                        </a>
+                                    </div>
+                                    <div class="button-container">
+                                    
+    
+                                        {% if request.user.pk == object.author_id.pk %}
+                                        <div class="button-pill button-green">
+                                            <a href="{% url 'story:write' %}">Write</a>
+                                        </div>
+                                        {% else %}
+                                        
+                                        {% if request.user in user_extras.followers.all %}
+                                        <button id="follow-author-button" onclick="authorClick(this.value)" value="{{ user_extras.pk }}">
+                                            <div class="button-pill button-green ">
+                                                
+                                                {% csrf_token %}
+                                                <span id="{{ user_extras.pk }}-following-icon">Following</span>
+                                            </div>
+                                        </button>
+                                        {% else %}
+                                        <button id="follow-author-button" onclick="authorClick(this.value)" value="{{ user_extras.pk }}">
+                                            <div class="button-pill button-green ">
+                                                {% csrf_token %}
+                                                <span id="{{ user_extras.pk }}-following-icon">Follow</span>
+                                            </div>
+                                        </button>
+                                        {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <a href="{% url 'author:detailed_author' object.author_id.username object.author_id.id %}">
+                                    <div class="alt-author-card__description fs-body-3 text-secondary">
+                                        {{user_extras.about_user}}
+                                    </div>
+                                </a>
+                             
+                                
+    
+                            </main>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-container">
+                    <div class="divider-section fs-body-1 ff-sub-title">
+                        More by {{object.author_id.first_name | capfirst}}
+                    </div>
+                </div>
+
+                <div class="story__footer-section">
+                    {% for story in stories_by_author %}
+                    <div class="alt-story-card">
+                        <a href="{% url 'story:detailed_story' story.author_id story.slug story.pk %}">
+                            <header class="alt-story-card__image-container">
+                                <img class="alt-story-card__image" src="{{story.cover_image.url}}" alt="">
+                            </header>
+                        </a>
+                        <main class="alt-story-card__main-container">
+                            <a href="{% url 'story:detailed_story' story.author_id story.slug story.pk %}">
+                                <div class="alt-story-card__title ff-title fs-heading-4 fw-bold">
+                                    {{story.title}}
+                                </div>
+                                <div class="alt-story-card__description ff-read fs-body-2">
+                                    {{story.content | slice:":120"}}...
+                                </div>
+ 
+                            </a>
+                            <a href="{% url 'author:detailed_author' story.author_id.username story.author_id.id %}">
+                            <div class="alt-story-card__author">
+                                    <img class="icon-sm icon-round" src="{{user_extras.cover_image.url}}" alt="">
+                                    <div class="ff-sub-title fs-body-3">
+                                        {{story.author_id.username}}
+                                    </div>
+                                </div>
+                            </a>
+                        </main>
+                    </div>
+                    {% endfor %}
+                    
+                    
+                </div>
+                
+            </footer>
+        </main>
+    </main>
+{% endblock %}

@@ -1,0 +1,45 @@
+.tag-card__tag-icon {
+    display: inline-block;
+    border-radius: 99rem;
+    padding: 0.2rem 0.8rem;
+    background-color: var(--background-alt-secondary);
+    color: var(--text-primary);
+}
+.tag-card__tag-icon-lg {
+    display: inline-block;
+    border-radius: 99rem;
+    padding: 0.8rem 1.6rem;
+    /* background-color: var(--background-secondary); */
+    background-color: var(--background-alt-secondary);
+    color: var(--text-primary);
+}
+
+.tag-card__container {
+    flex-grow: 1;
+    /* padding-top: 1rem; */
+}
+.tag-card {
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem auto 0 auto;
+    align-items: center;
+    border-radius: 99rem;
+    padding: 0.8rem 2rem;
+    /* background-color: var(--background-secondary); */
+    background-color: var(--background-alt-secondary);
+    color: var(--text-primary);
+    
+}
+.tag-card__left-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    
+}
+.tag-card__text-container {
+    /* min-width: 54rem; */
+}
+.tag-card__footer {
+    display: flex;
+    gap: 1rem;
+}

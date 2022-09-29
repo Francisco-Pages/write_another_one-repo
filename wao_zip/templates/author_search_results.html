@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <main class="layout__main-container">
+        <main class="main">
+
+            <header class="main__header text-secondary">
+                <div class="header-feed content-container">
+                    <div class="search-bar-container">
+                        
+                        <form class="search-bar" action="{% url 'story:author-search-results' %}" method="GET">
+                            <img class="icon-xsm" src="{% static 'svg/search-icon.svg' %}" alt="">
+                            <input type="text" name="q" id="" placeholder="search">
+                        </form>
+                        
+                        
+                        
+
+                    </div>
+                    <header class="header-feed__title-container">
+                        <div class="header-feed__title fs-heading-3 fw-bold text-main">
+                            <span class="text-secondary">{{ object_list.all.count }} Results for</span> 
+                            <span>"{{query}}"</span>
+                        </div>
+                        
+                    </header>
+                    
+                    <footer class="header-feed__footer-container">
+                        
+                        <form class="header-feed__footer-tab" action="{% url 'story:story-search-results' %}" method="GET">
+                            <input type="hidden" name="q" value="{{query}}">
+                            <input type="submit" value="Stories">
+                        </form>
+                        <div class="header-feed__footer-tab--active">
+                            Authors
+                        </div>
+                        
+                        <form class="header-feed__footer-tab" action="{% url 'story:tag_search_results' %}" method="GET">
+                            <input type="hidden" name="q" value="{{query}}">
+                            <input type="submit" value="Tags">
+                        </form>
+                    </footer>
+                </div>
+            </header>
+            
+            
+            <div class="main__content col-container">
+                {% for author in object_list %}
+               
+                
+                <div class="author-card__container">
+                    <article class="author-card content-container">
+                        <main class="author-card__main-container">
+                            <!-- <header class="author-card__icon-container"> -->
+                            <img class="icon-md icon-round" src="{{ author.cover_image.url }}" alt="">
+                            <!-- </header> -->
+                            <main class="author-card__text-container">
+                                
+                                <div class="author-card__author-info text-secondary">
+                                    <a href="{% url 'author:detailed_author' author.user.username author.user.pk %}">
+                                        <div class="ff-sub-title fs-body-2 text-main fw-bold">
+                                            {{author.user.first_name | capfirst}} {{author.user.last_name | capfirst}}
+
+                                        </div>
+                                    </a>
+                                    <div class="author-card__info-container">
+                                        <div>
+                                            @{{author.user.username}}
+                                        </div>
+                                        <div>
+                                            ·
+                                        </div>
+                                        <div>
+                                            {{author.stories.all.count}} Stories
+                                        </div>
+                                        <div>
+                                            ·
+                                        </div>
+                                        <div>
+                                            <span id="{{author.pk}}-follower-count">{{author.follower_count}}</span> Followers
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="author-card__description fs-body-3 text-secondary">
+                                    {{ author.about_user }}
+                                </div>
+                            </main>
+                            
+                        </main>
+                        <footer class="author-card__buttons button-container">
+                            {% if request.user in author.followers.all %}
+                            <button id="follow-author-button" onclick="authorClick(this.value)" value="{{ author.pk }}">
+                                <div class="button-pill button-green">
+                                    
+                                    {% csrf_token %}
+                                    <span id="{{ author.pk }}-following-icon">Following</span>
+                                </div>
+                            </button>
+                            {% else %}
+                            <button id="follow-author-button" onclick="authorClick(this.value)" value="{{ author.pk }}">
+                                <div class="button-pill button-green">
+                                    {% csrf_token %}
+                                    <span id="{{ author.pk }}-following-icon">Follow</span>
+                                </div>
+                            </button>
+                            {% endif %}
+                        </footer>
+                    </article>
+                </div>
+                <div class="flex-container">
+                    <div class="content-container divider-item">
+
+                    </div>
+                </div>
+
+                {% endfor %}
+                
+                
+            </div>
+        </main>
+    </main>      
+{% endblock %}
