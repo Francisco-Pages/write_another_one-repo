@@ -97,27 +97,27 @@ def switcher(a,b):
         return a
     return b
 
-# DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': 'wao_db', 'wao_db'
-#        'USER': 'postgres','wao_db_master'
-#        'PASSWORD': 'Margarita68','u4VQgtFwx6HxfynzdhcA'
-#        'HOST': '127.0.0.1',
-#        'PORT': '5432',
-#    }
-# }
-
 DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.postgresql',
        'NAME': 'wao_db', 
-       'USER': 'wao_db_master',
-       'PASSWORD': 'u4VQgtFwx6HxfynzdhcA',
-       'HOST': 'waodatabase.cj7teflmxt4o.us-east-1.rds.amazonaws.com',
+       'USER': 'postgres',
+       'PASSWORD': 'Margarita68',
+       'HOST': '127.0.0.1',
        'PORT': '5432',
    }
 }
+
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'wao_db', 
+#        'USER': 'wao_db_master',
+#        'PASSWORD': 'u4VQgtFwx6HxfynzdhcA',
+#        'HOST': 'waodatabase.cj7teflmxt4o.us-east-1.rds.amazonaws.com',
+#        'PORT': '5432',
+#    }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
