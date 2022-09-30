@@ -92,21 +92,23 @@ WSGI_APPLICATION = 'wao_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-def switcher(a,b):
-    if a:
-        return a
-    return b
-
 DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql',
-       'NAME': 'wao_db', 
-       'USER': 'postgres',
-       'PASSWORD': 'Margarita68',
-       'HOST': '127.0.0.1',
-       'PORT': '5432',
-   }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'wao_db'          
+    }
 }
+
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'wao_db', 
+#        'USER': 'postgres',
+#        'PASSWORD': 'Margarita68',
+#        'HOST': '127.0.0.1',
+#        'PORT': '5432',
+#    }
+# }
 
 # DATABASES = {
 #    'default': {

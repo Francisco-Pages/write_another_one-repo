@@ -49,13 +49,13 @@
             <div class="main__content col-container">
             
             {% for tag in object_list %}
-            <a href="{% url 'story:detailed-tag' tag.tag.slug %}">
-                <div class="tag-card__container">
-                    <div class="content-container tag-card">
-                        <div class="tag-card__left-container">
-                            <div class="button-container">
-                                <img class="icon-sm" id="svg-icon-secondary" src="{% static 'svg/tag-icon.svg' %}" alt="">
-                            </div>
+            <div class="tag-card__container">
+                <div class="content-container tag-card">
+                    <div class="tag-card__left-container">
+                        <div class="button-container">
+                            <img class="icon-sm" id="svg-icon-secondary" src="{% static 'svg/tag-icon.svg' %}" alt="">
+                        </div>
+                        <a href="{% url 'story:detailed-tag' tag.tag.slug %}">
                             <div class="tag-card__text-container">
                                 <div class="fs-body-3 fw-bold">
                                     {{tag.tag.name}}
@@ -70,7 +70,8 @@
                                 </div>
                                 
                             </div>
-                        </div>
+                        </a>
+                    </div>
                         <div class="tag-card__follow-button button-container">
                             {% if tag.tag in current_user.tags.all %}
                             <button id="follow-tag-button" onclick="followTag(this.value)" value="{{tag.pk}}">
@@ -90,7 +91,6 @@
                         </div>
                     </div>
                 </div>
-            </a>
             
             {% endfor %}
                 

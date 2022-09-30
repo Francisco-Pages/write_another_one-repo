@@ -182,7 +182,7 @@
                                                         {% for list in current_user.lists.all %}
                                                         {% if story in list.stories.all %}
                                                         <div class="dropdown-item">
-                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}{{list.pk}}">
+                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}|{{list.pk}}">
                                                                 {% csrf_token %}
                                                                 <img class="icon-xsm" id="{{story.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon-filled.svg' %}" alt="">
                                                                 <span>{{list}}</span>
@@ -191,7 +191,7 @@
                                                         </div>
                                                         {% else %}
                                                         <div class="dropdown-item">
-                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}{{list.pk}}">
+                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}|{{list.pk}}">
                                                                 {% csrf_token %}
                                                                 <img class="icon-xsm" id="{{story.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon.svg' %}" alt="">
                                                                 <span>{{list}}</span>

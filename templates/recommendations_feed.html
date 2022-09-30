@@ -145,19 +145,20 @@
                                                 </button>
                                                 {% endif %}
                 
+                                                {% if request.user == story.author_id %}
                                                 <div class="dropdown">
                                                     <div class="" type="button" data-toggle="dropdown" >
                                                         <img class="icon-xsm svg-icon-primary" src="{% static 'svg/more-icon.svg' %}" alt="">
                                                     </div>
                                                     <div class="dropdown-menu fs-body-4">
-                                                    {% if request.user == story.author_id %}
-                                                    <a class="dropdown-item" href="{% url 'story:update-story' story.author_id story.slug story.pk %}">Edit</a>
-                                                    {% else %}
-                                                    <a class="dropdown-item" href="">Block</a>
-                                                    {% endif %}
-                                                    <a class="dropdown-item" href="#">Delete</a>
+                                                    
+                                                        <a class="dropdown-item" href="{% url 'story:update-story' story.author_id story.slug story.pk %}">Edit</a>
+                                                        <a class="dropdown-item" href="{% url 'story:delete-story' story.slug story.pk %}">Delete</a>
+                                                
+                
                                                     </div>
                                                 </div>
+                                                {% endif %}
                                                 
                 
                                                 <div class="dropdown">
@@ -169,7 +170,7 @@
                                                         {% for list in current_user.lists.all %}
                                                         {% if story in list.stories.all %}
                                                         <div class="dropdown-item">
-                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}{{list.pk}}">
+                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}|{{list.pk}}">
                                                                 {% csrf_token %}
                                                                 <img class="icon-xsm" id="{{story.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon-filled.svg' %}" alt="">
                                                                 <span>{{list}}</span>
@@ -178,7 +179,7 @@
                                                         </div>
                                                         {% else %}
                                                         <div class="dropdown-item">
-                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}{{list.pk}}">
+                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}|{{list.pk}}">
                                                                 {% csrf_token %}
                                                                 <img class="icon-xsm" id="{{story.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon.svg' %}" alt="">
                                                                 <span>{{list}}</span>
