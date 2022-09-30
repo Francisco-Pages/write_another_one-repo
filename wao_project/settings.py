@@ -24,22 +24,14 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = getenv('SECRET_KEY', "django-insecure-_90e(hy0ofr20p@x3x8vxp$gdodd_w$m1i&kq50y==8vgym(be") 
+SECRET_KEY = getenv('SECRET_KEY') 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = getenv("IS_DEVELOPMENT", True)
+DEBUG = getenv("IS_DEVELOPMENT", False)
 
 ALLOWED_HOSTS = [
-    getenv("APP_HOST", "127.0.0.1")
+    getenv("APP_HOST")
 ]
-# IP ADDRESS: '192.168.86.20', '127.0.0.1', 'localhost'
-# INTERNAL_IPS = [
-#     # ...
-#     "127.0.0.1",
-#     # ...
-# ]
-
-# Application definition
 
 INSTALLED_APPS = [
     'misaka',
@@ -99,27 +91,6 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': 'wao_db', 
-#        'USER': 'postgres',
-#        'PASSWORD': 'Margarita68',
-#        'HOST': '127.0.0.1',
-#        'PORT': '5432',
-#    }
-# }
-
-# DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': 'wao_db', 
-#        'USER': 'wao_db_master',
-#        'PASSWORD': 'u4VQgtFwx6HxfynzdhcA',
-#        'HOST': 'waodatabase.cj7teflmxt4o.us-east-1.rds.amazonaws.com',
-#        'PORT': '5432',
-#    }
-# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
