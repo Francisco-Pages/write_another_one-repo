@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-from os import getenv 
 import os
 
 
@@ -24,13 +23,13 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = getenv('SECRET_KEY') 
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = getenv("IS_DEVELOPMENT", False)
+DEBUG = os.getenv('IS_DEVELOPMENT', True)
 
 ALLOWED_HOSTS = [
-    getenv("APP_HOST")
+    os.getenv('APP_HOST')
 ]
 
 INSTALLED_APPS = [

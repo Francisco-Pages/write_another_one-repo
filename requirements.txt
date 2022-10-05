@@ -13,10 +13,10 @@ django-taggit==3.0.0
 houdini.py==0.1.0
 misaka==2.1.1
 Pillow==9.2.0
-# psycopg2 @ file:///Users/builder/ci_310/psycopg2_1642535040511/work
+psycopg2 @ file:///Users/builder/ci_310/psycopg2_1642535040511/work
 pycparser==2.21
 Pygments==2.13.0
-# pytz==2022.2.1
+pytz==2022.2.1
 soupsieve==2.3.2.post1
 sqlparse==0.4.3
-# typing_extensions @ file:///opt/conda/conda-bld/typing_extensions_1647553014482/work
+typing_extensions @ file:///opt/conda/conda-bld/typing_extensions_1647553014482/work
