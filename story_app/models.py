@@ -6,6 +6,8 @@ from django.conf import settings
 from django.template.defaultfilters import slugify
 from django.contrib.contenttypes.fields import GenericRelation
 import misaka
+from django_bleach.models import BleachField
+from bs4 import BeautifulSoup
 
 from django.utils.timezone import now
 
@@ -20,6 +22,7 @@ class Story(models.Model):
     title = models.TextField(max_length=300, default='Title')
     content = models.TextField(max_length=12000, default='Tell your story.')
     content_html = models.TextField(editable=False, default='')
+    content_minified = models.CharField(max_length=12000, editable=False, default='')
     tags = TaggableManager()
     slug = models.SlugField(null=False)
     editable = models.BooleanField(default=False)
@@ -42,6 +45,10 @@ class Story(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         self.content_html = misaka.html(self.content)
+
+        if not self.content_minified:
+            soup = BeautifulSoup(self.content, 'html.parser')
+            self.content_minified = soup.get_text()
         return super().save(*args, **kwargs)
 
 

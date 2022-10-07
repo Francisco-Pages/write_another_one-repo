@@ -35,13 +35,25 @@
     /* max-width: 52rem; */
     /* min-width: 20rem; */
 }
+.story-card__title {
+    max-width: 20ch;
+    word-wrap: break-word;
+    display: inline-block;
+}
 .story-card__description {
-    max-width: 54rem;
+    max-width: 60ch;
+    word-wrap: break-word;
+    display: inline-block;
 }
 
 @media (max-width: 580px) {
+    .story-card__title {
+        max-width: 15ch;
+        
+    }
     .story-card__description {
         display: none;
+        max-width: 40ch;
     }
 } 
 

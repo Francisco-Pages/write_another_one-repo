@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'hitcount',
     'debug_toolbar',
     'taggit',
+    'django_bleach',
     'bootstrap4',
     'author_app.apps.AuthorAppConfig',
     'story_app.apps.StoryAppConfig',

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
+
 {% block content %}
     <main class="layout__main-container">
         <main class="main">
@@ -123,7 +124,7 @@
                                         </a>
                                     </header>
                                     <main class="story-card__description ff-read fs-body-3 fw-reg text-secondary">
-                                        {{ story.content | slice:":180" }}...
+                                        {{ story.content_minified | slice:":180" }}...
                                     </main>
                                 <footer class="story-card__footer-container">
                                     <footer class="story-card__footer">
