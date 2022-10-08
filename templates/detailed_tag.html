@@ -106,13 +106,14 @@
                                     <footer class="story-card__footer">
                                         
                                         <div>
-                                            {% for tag in story.tags.all %}
-                                            <a href="{% url 'story:detailed-tag' tag.slug %}">
+                                            
+                                            
+                                            <a href="{% url 'story:detailed-tag' story.tags.all.first.slug %}">
                                                 <div class="tag-card__tag-icon">
-                                                    {{ tag.name }}
+                                                    {{ story.tags.all.first.name }}
                                                 </div>
                                             </a>
-                                            {% endfor %}
+                                            
 
                                         </div>
                                         
