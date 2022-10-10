@@ -52,9 +52,6 @@ def add_story_to_list(request):
         current_user = get_object_or_404(author_models.UserExtra, user=request.user)
         list_obj = get_object_or_404(current_user.lists.all(), pk=list_pk)
 
-        print()
-        print(story_pk, list_pk)
-        print()
         
         if list_obj.stories.filter(pk=story.pk).exists():
             list_obj.stories.remove(story.pk)
@@ -171,7 +168,7 @@ def like_story(request):
             result = story.like_count
             liked = "/static/svg/like-icon-filled.svg"
             story.save()
-        
+            
         return JsonResponse({'result':result, 'liked':liked})
 
 

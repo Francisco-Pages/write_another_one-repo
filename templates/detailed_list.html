@@ -107,7 +107,7 @@
                                     </header>
 
                                     <main class="story-card__description ff-read fs-body-3 fw-reg">
-                                        {{story.content | slice:":180" }}...
+                                        {{story.content_minified | slice:":180" }}...
                                     </main>
                                 <footer class="story-card__footer-container">
                                     <footer class="story-card__footer">
@@ -206,29 +206,3 @@
     </main>
 {% endblock %}
 
-{% block scripts %}
-<script>
-    function pinList(listClicked){
-        const list = listClicked
-        
-        $.ajax({
-            type: 'POST',
-            url: '{% url "story:pin_list" %}',
-            data: {
-                listpk: listClicked,
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                action: 'post'
-            },
-            cache: false,
-            success: function(json) {
-                document.getElementById(`${list}-pin-count`).innerHTML = json['result'];
-                document.getElementById(`${list}-pinned`).src = json['pinned']
-                console.log('success')
-            },
-            error: function(xhr, errmsg, err) {
-                
-            }
-        });
-    }
-</script>
-{% endblock %}

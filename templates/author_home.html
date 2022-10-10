@@ -136,7 +136,6 @@
                                         
                                         <div class="story-card__buttons">
                                             <div class="button-container">
-                
                                                 {% if request.user in story.likes.all %}
                                                 <button id="like-story-button" onclick="storyClick(this.value)" value="{{story.pk}}">
                                                     <div class="button-pill button-pill-md">
@@ -220,59 +219,3 @@
     
 
 {% endblock %}
-    
-<!-- {% block scripts %}
-<script defer>
-    function addStoryToList(objectClicked){
-        const story = objectClicked.slice(0,2);
-        const list = objectClicked.slice(2);
-        console.log(list,story)
-        $.ajax({
-            type: 'POST',
-            url: '{% url "story:add_story_to_list" %}',
-            data: {
-                listpk: list,
-                storypk: story,
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                action: 'post'
-            },
-            cache: false,
-            success: function(json){
-                document.getElementById(`${story}-in-${list}`).src = json['added']
-                console.log('success')
-            },
-            error: function(xhr, errmsg, err){
-                console.log(`${xhr} | ${errmsg} | ${err}`)
-            }
-        })
-    }
-    
-    function storyClick(storyClicked){
-        const story = storyClicked
-        console.log(story)
-        $.ajax({
-            type: 'POST',
-            url: '{% url "story:like_story_ajax" %}',
-            data: {
-                storypk: storyClicked,
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                action: 'post'
-            },
-            cache: false,
-            success: function(json) {
-                document.getElementById(`${story}-like-count`).innerHTML = json['result'];
-                document.getElementById(`${story}-like-story-icon`).src = json['liked']
-                console.log('success')
-            },
-            error: function(xhr, errmsg, err) {
-                
-            }
-        });
-    }
-
-
-</script>
-
-
- 
-{% endblock %} -->

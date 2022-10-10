@@ -100,7 +100,7 @@
                                     </header>
 
                                     <main class="story-card__description ff-read fs-body-3 fw-reg">
-                                        {{story.content | slice:":180" }}...
+                                        {{story.content_minified | slice:":180" }}...
                                     </main>
                                 <footer class="story-card__footer-container">
                                     <footer class="story-card__footer">
@@ -124,7 +124,7 @@
                                                     <div class="button-pill button-pill-md">
                                                         {% csrf_token %}
                                                         <img class="icon-xxsm svg-icon-accent" id="{{story.pk}}-like-story-icon" src="{% static 'svg/like-icon-filled.svg' %}" alt="">
-                                                        <span id="{{story.pk}}-like-count">{{story.like_count}}</span>
+                                                        <span id="{{story.pk}}-like-count">{{story.likes.count}}</span>
                                                     </div>
                                                 </button>
                                                 {% else %}
@@ -132,7 +132,7 @@
                                                     <div class="button-pill button-pill-md">
                                                         {% csrf_token %}
                                                         <img class="icon-xxsm svg-icon-accent" id="{{story.pk}}-like-story-icon" src="{% static 'svg/like-icon.svg' %}" alt="">
-                                                        <span id="{{story.pk}}-like-count">{{story.like_count}}</span>
+                                                        <span id="{{story.pk}}-like-count">{{story.likes.count}}</span>
                                                     </div>
                                                 </button>
                                                 {% endif %}
@@ -158,7 +158,7 @@
                                                         {% for list in current_user.lists.all %}
                                                         {% if story in list.stories.all %}
                                                         <div class="dropdown-item">
-                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}{{list.pk}}">
+                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}|{{list.pk}}">
                                                                 {% csrf_token %}
                                                                 <img class="icon-xsm" id="{{story.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon-filled.svg' %}" alt="">
                                                                 <span>{{list}}</span>
@@ -167,7 +167,7 @@
                                                         </div>
                                                         {% else %}
                                                         <div class="dropdown-item">
-                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}{{list.pk}}">
+                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}|{{list.pk}}">
                                                                 {% csrf_token %}
                                                                 <img class="icon-xsm" id="{{story.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon.svg' %}" alt="">
                                                                 <span>{{list}}</span>
@@ -210,30 +210,4 @@
 
         </main>
     </main>
-{% endblock %}
-
-{% block scripts %}
-<script>
-    function followTag(tagClicked){
-        const tag = tagClicked
-        $.ajax({
-            type: 'POST',
-            url: '{% url "story:follow_tag" %}',
-            data: {
-                tagpk: tagClicked,
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                action: 'post'
-            },
-            cache: false,
-            success: function(json) {
-                document.getElementById(`${tag}-follower-count`).innerHTML = json['result'];
-                document.getElementById(`${tag}-followed`).innerHTML = json['followed']
-                console.log('success')
-            },
-            error: function(xhr, errmsg, err) {
-                
-            }
-        });
-    }
-</script>
 {% endblock %}
