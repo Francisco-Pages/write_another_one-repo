@@ -20,7 +20,7 @@ class Story(models.Model):
                                     on_delete=models.CASCADE
                                 )
     title = models.TextField(max_length=300, default='Title')
-    content = models.TextField(max_length=12000, default='Tell your story.')
+    content = BleachField(max_length=12000, default='Tell your story.')
     content_html = models.TextField(editable=False, default='')
     content_minified = models.CharField(max_length=12000, editable=False, default='')
     tags = TaggableManager()
@@ -44,6 +44,7 @@ class Story(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
+        
         self.content_html = misaka.html(self.content)
 
         if not self.content_minified:

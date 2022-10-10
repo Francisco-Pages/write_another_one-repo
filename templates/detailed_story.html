@@ -38,10 +38,10 @@
                     </div>
                 </div>
                 <div class="story__content ff-read fs-body-1">
-                    <span >
+                    
 
                         {{ object.content_html | safe }}
-                    </span>
+                    
                                    
                 </div>
                 <div class="flex-container">
@@ -142,7 +142,7 @@
                                     {{story.title}}
                                 </div>
                                 <div class="alt-story-card__description ff-read fs-body-2">
-                                    {{story.content | slice:":120"}}...
+                                    {{story.content_minified | slice:":120"}}...
                                 </div>
  
                             </a>
