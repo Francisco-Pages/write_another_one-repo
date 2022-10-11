@@ -20,7 +20,7 @@
                                 <div class="alt-author-card__author-name">
                                     <div class="alt-author-card__info">
     
-                                        <div class="ff-sub-title fs-body-1 fw-bold">
+                                        <div class="ff-body fs-body-1 fw-bold">
                                             {{object.first_name | capfirst}}
                                             {{object.last_name | capfirst}}
                                         </div>
@@ -97,7 +97,7 @@
                 <div class="story-card__container">
                     <article class="story-card content-container">
                         <a href="{% url 'author:detailed_author' story.author_id.username story.author_id.id %}">
-                        <header class="story-card__header ff-sub-title fs-body-3 text-alt-secondary">
+                        <header class="story-card__header ff-body fs-body-3 text-alt-secondary">
                             
                                 <img class="icon-xsm icon-round" src="{{ object_extra.cover_image.url }}" alt="">
                 

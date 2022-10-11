@@ -70,7 +70,7 @@
                 <div class="story-card__container">
                     <article class="story-card content-container">
                         <a href="{% url 'author:detailed_author' story.author_id.username story.author_id.id %}">
-                            <header class="story-card__header ff-sub-title fs-body-3">
+                            <header class="story-card__header ff-body fs-body-3">
                                 {% for user_extra in user_extras %}
                                 {% if story.author_id.pk == user_extra.user.pk %}
                                 <img class="icon-sm icon-round" src="{{ user_extra.cover_image.url }}" alt="">
