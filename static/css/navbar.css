@@ -11,9 +11,9 @@
 }
 
 .navbar__logo-container {
-    
+    margin: 2rem 0 2rem 0;
     text-align: center;
-    font-size: 5rem;
+    /* font-size: 5rem; */
     /* min-height: 10rem; */
 }
 
@@ -49,11 +49,13 @@
         min-width: none;
         max-width: none;
         border-right: none;
+        border-bottom:  1px solid var(--border-primary);
         flex-grow: 1;
+        margin: 0 2rem 0 2rem ;
     }
     .navbar__logo-container {
         min-height: 0;
-        margin-left: 2rem;
+        margin: 0 2rem 0 2rem;
     }
     .navbar__buttons-container {
         flex-direction: row;

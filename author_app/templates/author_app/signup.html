@@ -9,10 +9,10 @@
 <main class="layout__main-container">
   <main class="main">
 
-    <header class="main__header text-secondary">
+    <header class="main__header">
       <div class="header-feed content-container">
         <header class="header-feed__title-container">
-          <div class="header-feed__title fs-heading-4 fw-bold text-primary">
+          <div class="header-feed__title fs-heading-4 fw-bold">
             Register
           </div>
         </header>
@@ -27,15 +27,18 @@
       <div class="flex-container">
 
       
-        <main class="content_container centered-container">
-          <form method="POST" class="">
+        <main class="content_container col-container centered-container">
+          <form method="POST" class="flex-container-1 col-container">
           
           
           {% csrf_token %}
 
           {{ form.as_p }}
 
-          <button type="submit" class="btn btn-primary">Sign Up</button>
+          <div class="button-container">
+            <button type="submit" class="button-pill button-green">Sign Up</button>
+
+          </div>
 
           </form>
         </main>

@@ -166,6 +166,8 @@ button, input[type="submit"], input[type="reset"] {
 /* BORDER STYLING */
 input {
     border: none;
+    padding: 0.8rem;
+    border-radius: 5px;
 }
 input:focus {
     outline: none;
@@ -403,10 +405,10 @@ UTILITY CLASSES
     color: var(--clr-constant-100);
 }
 
-.button-pill:hover {
+/* .button-pill:hover {
     color: var(--clr-constant-100);
     background-color: var(--background-accent);
-}
+} */
 .button-pill-md {
     border-radius: 99rem;
     padding: 0.3rem 1rem;
@@ -673,4 +675,10 @@ UTILITY CLASSES
     position: relative;
     right: 90px;
     top: 45px;
+}
+
+.text-input {
+    padding: 0.8rem;
+    border: 1px solid var(--border-secondary);
+    border-radius: 5px;
 }
