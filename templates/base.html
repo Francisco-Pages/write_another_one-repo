@@ -80,6 +80,16 @@
                             </div>        
                         </a>
                     </div>
+
+                    <div class="navbar__button-container">
+                        <a href="{% url 'story:tag_search_results' %}">
+
+                            <div class="button-round">
+                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/search-icon.svg' %}" alt="">
+                                
+                            </div>        
+                        </a>
+                    </div>
                     
                     {% if request.user.is_authenticated %}
                     <div class="navbar__button-container">

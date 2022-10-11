@@ -65,7 +65,12 @@
                         {% endif %}
                         
                         {% endfor %}
-                        
+                        <div class="button-container">
+                            <a href="{% url 'story:tag_search_results' %}">
+                                <img class="icon-xsm svg-icon-primary" src="{% static 'svg/add-icon.svg' %}" alt="">
+                            </a>
+                            
+                        </div>
                         <!-- <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/next.svg' %}" alt=""> -->
                     </main>
                     <footer class="header-feed__footer-container">
