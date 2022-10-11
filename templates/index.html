@@ -1,181 +1,48 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends "base.html" %}
+
+
 {% block content %}
-    
+
 <main class="layout__main-container">
-        {{request.user}}
-        {{request.session}}
-
-        <main class="main">
-
-            <header class="main__header text-secondary">
-                <div class="header-feed content-container">
-                    <header class="header-feed__title-container">
-                        <div class="header-feed__title fs-heading-4 fw-bold text-primary">
-                            Home
-                        </div>
-                        <div class="search-bar-container">
-                            <div class="search-bar">
-                                <img class="icon-xsm" src="{% static 'wao_project/svg/search-icon.svg' %}" alt="">
-                                <input type="text" name="" id="" placeholder="search">
-                            </div>
-                            
-
-                        </div>
-                        
-
-                    </header>
-                    <main class="header-feed__main-container">
-                        
-                        
-                        <div class="button-container">
-                            <img class="icon-md icon-round" src="story-image.webp" alt="">
-                            <div class="fs-body-5 icon-notification">
-                                9+
-                            </div>
-                        </div>
-                        
-                        <div class="button-container">
-                            
-                            <img class="icon-md icon-round" src="story-image.webp" alt="">
-                            <div class="fs-body-5 icon-notification ">
-                                1
-                            </div>
-                        </div>
-                        <div class="button-container">
-                            <img class="icon-md icon-round" src="story-image.webp" alt="">
-                            <div class="fs-body-5 icon-notification ">
-                                9+
-                            </div>
-                        </div>
-                        <div class="button-container">
-                            <img class="icon-md icon-round" src="story-image2.webp" alt="">
-                            <div class="fs-body-5 icon-notification ">
-                                3
-                            </div>
-                        </div>
-                        <div class="button-container">
-                            <img class="icon-md icon-round" src="story-image3.gif" alt="">
-                            <div class="fs-body-5 icon-notification ">
-                                2
-                            </div>
-                        </div>
-                        <div class="button-container">
-                            <img class="icon-md icon-round" src="story-image4.webp" alt="">
-                            <div class="fs-body-5 icon-notification ">
-                                7
-                            </div>
-                        </div>
-                        
-                        <div class="button-container">
-                            
-                            <img class="icon-xsm" id="svg-icon-primary" src="{% static 'wao_project/svg/add-icon.svg' %}" alt="">
-                            
-                        </div>
-
-                        
-                    </main>
-                    <main class="header-feed__main-container text-primary">
-                        {% for tag in tags_followed %}
-                        
-                        {% if tag.author_id == user %}
-                        <div class="tag-card__tag-icon-lg">
-                            {{tag}}
-                        </div>
-                        {% endif %}
-                        {% endfor %}
-                        
-                        
-                        
-                        <img class="icon-xsm" id="svg-icon-primary" src="{% static 'wao_project/svg/next.svg' %}" alt="">
-                    </main>
-                    <footer class="header-feed__footer-container">
-                        <div class="header-feed__footer-tab--active">
-                            Following
-                        </div>
-                        <div class="header-feed__footer-tab">
-                            Recommendations
-                        </div>
-                        {{authors_followed}}
-                    </footer>
-                </div>
-            </header>
+  <main class="main">
+    <header class="main__header">
+      <div class="header-feed text-container-thin">
+        <header class="header-feed__title-container">
+          <div class="header-feed__title fs-heading-2 fw-bold ff-title centered-container col-center-container">
             
-            <div class="main__content">
-                
-                {% for story in stories %}
-                
-                <a href="{% url 'story:detailed_story' story.author_id story.slug story.pk %}">
-                    <div class="story-card__container">
-                        <article class="story-card content-container">
-                            
-                            <header class="story-card__header ff-body fs-body-3">
-                                
-                                <img class="icon-sm icon-round" src="story-image.webp" alt="">
-                                <div>
-                                    {{ story.author_id }}
-                                </div>
-                                <div>
-                                    ·
-                                </div>
-                                <div class="text-alt-secondary">
-                                    {{ story.published_date }}
-                                </div>
-                                
-                                
-                            </header>
-                            <main class="story-card__main-container">
-                                <div class="story-card__text-container">
-                                    <header class="story-card__title ff-title fs-heading-3 fw-bold">
-                                        {{ story.title }}
-                                    </header>
-                                    <main class="story-card__description ff-read fs-body-3 fw-reg">
-                                        {{ story.content_minified | slice:":180" }}...
-                                    </main>
-                                    <footer class="story-card__footer-container">
-                                        <footer class="story-card__footer">
-                                            
-                                            <div>
-                                                {% for tag in story.tags.names %}
-                                                <div class="tag-card__tag-icon">
-                                                    {{ tag }}
-                                                </div>
-                                                {% endfor %}
-    
-                                            </div>
-                                            
-                                            <div class="story-card__buttons">
-                                                <div class="button-container">
-                                                    <img class="icon-xsm" id="svg-icon-primary" src="{% static 'wao_project/svg/more-icon.svg' %}" alt="">
-                                                    <img class="icon-xsm" id="svg-icon-primary" src="{% static 'wao_project/svg/bookmark-add.svg' %}" alt="">
-                                                </div>
-                                                
-                                            </div>
-                                        </footer>
-                                    </footer>
-                                </div>
-                                
-                                <div class="story-card__image-container">
-                                    <img src="story-image4.webp" alt="">
-                                </div>
-                            </main>
-                            
-                            
-                            
-                        </article>
-                    </div> 
-
-                </a>
-                <div class="flex-container">
-                    <div class="content-container divider-item">
-                        
-                    </div>
-                </div>
-                {% endfor %}
-                
+            
+            <div class="col-center-container">
+                <span class="the-title fs-body-3">The</span>
+                <span>Write</span>
             </div>
+            <span>Another One</span>
+         
+          </div>
+        </header>
+
+        <footer class="col-center-container fw-bold fs-body-4 ff-sub-title">
+            <div>&lt;&lt; Letter from the Editor &gt;&gt;</div>
+            <div class="fw-semi-bold">Francisco J. PAGES</div>
+        </footer>
+      </div>
+    </header>
+
+    <div class="main__content ">
+      <div class="flex-container">
+
+        <main class="content_container centered-container col-container text-container-thin fs-body-1 ff-read">
+            <span>Dear Reader,</span>
+            <br>
+            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, enim! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo quo voluptate architecto accusantium necessitatibus ipsa aliquid facilis ipsam fugiat tempora.</span>
+            <br>
+            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque praesentium nobis minima.</span>
+            <br>
+            <span></span>
         </main>
-    </main>
-    
+      </div>
+
+    </div>
+</main>
+
+
 {% endblock %}
-    
