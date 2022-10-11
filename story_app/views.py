@@ -168,7 +168,7 @@ def like_story(request):
             result = story.like_count
             liked = "/static/svg/like-icon-filled.svg"
             story.save()
-            
+
         return JsonResponse({'result':result, 'liked':liked})
 
 
@@ -425,7 +425,10 @@ class TagSearchResultsView(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('login')
 
     def get_queryset(self):  
-        query = self.request.GET.get("q")
+        if self.request.GET.get('q') == None:
+            query = ''
+        else:
+            query = self.request.GET.get("q")
         object_list = story_models.TagsExtra.objects.filter(
             Q(tag__name__icontains=query)
         )
@@ -434,7 +437,11 @@ class TagSearchResultsView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['query'] = self.request.GET.get("q")
+        if self.request.GET.get('q') == None:
+            query = 'Recommended'
+        else:
+            query = self.request.GET.get("q")
+        context['query'] = query
         context['current_user'] = author_models.UserExtra.objects.get(user=self.request.user)
         return context
     

@@ -60,14 +60,12 @@
                                 <div class="author-card__author-info text-secondary">
                                     <a href="{% url 'author:detailed_author' author.user.username author.user.pk %}">
                                         <div class="ff-body fs-body-2 text-main fw-bold">
-                                            {{author.user.first_name | capfirst}} {{author.user.last_name | capfirst}}
+                                            {{author}} 
 
                                         </div>
                                     </a>
                                     <div class="author-card__info-container">
-                                        <div>
-                                            @{{author.user.username}}
-                                        </div>
+                                        
                                         <div>
                                             ·
                                         </div>
@@ -78,7 +76,7 @@
                                             ·
                                         </div>
                                         <div>
-                                            <span id="{{author.pk}}-follower-count">{{author.follower_count}}</span> Followers
+                                            <span id="{{author.pk}}-follower-count">{{author.follower_count}}</span><span> Followers</span> 
                                         </div>
                                     </div>
 
