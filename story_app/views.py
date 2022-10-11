@@ -376,7 +376,11 @@ class StorySearchResultsView(LoginRequiredMixin, ListView):
 
     
     def get_queryset(self):  
-        query = self.request.GET.get("q")
+        if self.request.GET.get('q') == None:
+            query = ''
+        else:
+            query = self.request.GET.get("q")
+        
         object_list = story_models.Story.objects.order_by('-published_date').filter(~Q(author_id=self.request.user)).filter(
             Q(title__icontains=query) | Q(content__icontains=query) 
         )
@@ -385,10 +389,13 @@ class StorySearchResultsView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
+        if self.request.GET.get('q') == None:
+            query = ''
+        else:
+            query = self.request.GET.get("q")
         context['user_extras'] = author_models.UserExtra.objects.select_related('user')
         context['current_user'] = author_models.UserExtra.objects.get(user=self.request.user)
-        context['query'] = self.request.GET.get("q")
+        context['query'] = query
         return context
         
 
