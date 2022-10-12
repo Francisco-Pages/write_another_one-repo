@@ -1,7 +1,7 @@
 .header-feed {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 2rem;
     margin: 0 auto;
     padding-bottom: 1rem;
     /* margin-bottom: 4rem; */
@@ -15,7 +15,7 @@
 }
 .header-feed__title {
     display: flex;
-    gap: 1rem;
+    /* gap: 1rem; */
     /* align-items: center; */
 }
 
