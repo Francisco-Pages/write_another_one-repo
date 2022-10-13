@@ -157,9 +157,9 @@
                 
                                                 {% if request.user == story.author_id %}
                                                 <div class="dropdown">
-                                                    <div class="" data-toggle="dropdown" >
+                                                    <button class="" data-toggle="dropdown" >
                                                         <img class="icon-xsm svg-icon-primary" src="{% static 'svg/more-icon.svg' %}" alt="">
-                                                    </div>
+                                                    </button>
                                                     <div class="dropdown-menu fs-body-4">
                                                     
                                                         <a class="dropdown-item" href="{% url 'story:update-story' story.author_id story.slug story.pk %}">Edit</a>
@@ -173,27 +173,27 @@
                 
                                                 <div class="dropdown">
                                                     
-                                                    <div class="" data-toggle="dropdown">
+                                                    <button class="" data-toggle="dropdown">
                                                         <img id="" class="icon-xsm svg-icon-primary" src="{% static 'svg/bookmark-add.svg' %}" alt="">
-                                                    </div>
+                                                    </button>
                                                     <div class="dropdown-menu fs-body-4">
                                                         {% for list in current_user.lists.all %}
                                                         {% if story in list.stories.all %}
                                                         <div class="dropdown-item">
-                                                            <div class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}|{{list.pk}}">
+                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}|{{list.pk}}">
                                                                 {% csrf_token %}
                                                                 <img class="icon-xsm" id="{{story.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon-filled.svg' %}" alt="">
                                                                 <span>{{list}}</span>
-                                                            </div>
+                                                            </button>
                                                         
                                                         </div>
                                                         {% else %}
                                                         <div class="dropdown-item">
-                                                            <div class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}|{{list.pk}}">
+                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}|{{list.pk}}">
                                                                 {% csrf_token %}
                                                                 <img class="icon-xsm" id="{{story.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon.svg' %}" alt="">
                                                                 <span>{{list}}</span>
-                                                            </div>
+                                                            </button>
                                                         
                                                         </div>
                                                         {% endif %}
@@ -208,9 +208,9 @@
                                 </footer>
                             </div>
                             
-                            <div class="story-card__image-container">
+                            <a class="story-card__image-container" href="{% url 'story:detailed_story' story.author_id story.slug story.pk %}">
                                 <img class="story-card__image" src="{{ story.cover_image.url}}" alt="">
-                            </div>
+                            </a>
                         </main>
                         
                         
@@ -232,60 +232,4 @@
 
     
 
-{% endblock %}
-    
-{% block scripts %}
-<script defer>
-    function addStoryToList(objectClicked){
-        const story = objectClicked.slice(0,2);
-        const list = objectClicked.slice(2);
-        console.log(list,story)
-        $.ajax({
-            type: 'POST',
-            url: '{% url "story:add_story_to_list" %}',
-            data: {
-                listpk: list,
-                storypk: story,
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                action: 'post'
-            },
-            cache: false,
-            success: function(json){
-                document.getElementById(`${story}-in-${list}`).src = json['added']
-                console.log('success')
-            },
-            error: function(xhr, errmsg, err){
-                console.log(`${xhr} | ${errmsg} | ${err}`)
-            }
-        })
-    }
-    
-    function storyClick(storyClicked){
-        const story = storyClicked
-        console.log(story)
-        $.ajax({
-            type: 'POST',
-            url: '{% url "story:like_story_ajax" %}',
-            data: {
-                storypk: storyClicked,
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                action: 'post'
-            },
-            cache: false,
-            success: function(json) {
-                document.getElementById(`${story}-like-count`).innerHTML = json['result'];
-                document.getElementById(`${story}-like-story-icon`).src = json['liked']
-                console.log('success')
-            },
-            error: function(xhr, errmsg, err) {
-                
-            }
-        });
-    }
-
-
-</script>
-
-
- 
 {% endblock %}

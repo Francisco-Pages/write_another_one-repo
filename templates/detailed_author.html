@@ -161,9 +161,9 @@
                                                 {% endif %}
                                                 {% if request.user == story.author_id %}
                                                 <div class="dropdown">
-                                                    <div class="" type="button" data-toggle="dropdown" >
+                                                    <button class=""  data-toggle="dropdown" >
                                                         <img class="icon-xsm svg-icon-primary" src="{% static 'svg/more-icon.svg' %}" alt="">
-                                                    </div>
+                                                    </button>
                                                     <div class="dropdown-menu fs-body-4">
                                                     
                                                         <a class="dropdown-item" href="{% url 'story:update-story' story.author_id story.slug story.pk %}">Edit</a>
@@ -175,9 +175,9 @@
                                                 {% endif %}
                                                 <div class="dropdown">
                                                     
-                                                    <div class="" type="button" data-toggle="dropdown">
+                                                    <button class=""  data-toggle="dropdown">
                                                         <img id="" class="icon-xsm svg-icon-primary" src="{% static 'svg/bookmark-add.svg' %}" alt="">
-                                                    </div>
+                                                    </button>
                                                     <div class="dropdown-menu fs-body-4">
                                                         {% for list in current_user.lists.all %}
                                                         {% if story in list.stories.all %}
@@ -210,9 +210,9 @@
                                 </footer>
                             </div>
                             
-                            <div class="story-card__image-container">
+                            <a class="story-card__image-container" href="{% url 'story:detailed_story' story.author_id story.slug story.pk %}">
                                 <img class="story-card__image" src="{{ story.cover_image.url}}" alt="">
-                            </div>
+                            </a>
                         </main>
                         
                         

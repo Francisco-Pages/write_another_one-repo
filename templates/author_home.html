@@ -199,9 +199,9 @@
                                 </footer>
                             </div>
                             
-                            <div class="story-card__image-container">
+                            <a class="story-card__image-container" href="{% url 'story:detailed_story' story.author_id story.slug story.pk %}">
                                 <img class="story-card__image" src="{{ story.cover_image.url}}" alt="">
-                            </div>
+                            </a>
                         </main>
                         
                         

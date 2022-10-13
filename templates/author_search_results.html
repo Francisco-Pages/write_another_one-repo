@@ -88,20 +88,20 @@
                         </main>
                         <footer class="author-card__buttons button-container">
                             {% if request.user in author.followers.all %}
-                            <div id="follow-author-button" onclick="authorClick(this.value)" value="{{ author.pk }}">
+                            <button id="follow-author-button" onclick="authorClick(this.value)" value="{{ author.pk }}">
                                 <div class="button-pill button-green">
                                     
                                     {% csrf_token %}
                                     <span id="{{ author.pk }}-following-icon">Following</span>
                                 </div>
-                            </div>
+                            </button>
                             {% else %}
-                            <div id="follow-author-button" onclick="authorClick(this.value)" value="{{ author.pk }}">
+                            <button id="follow-author-button" onclick="authorClick(this.value)" value="{{ author.pk }}">
                                 <div class="button-pill button-green">
                                     {% csrf_token %}
                                     <span id="{{ author.pk }}-following-icon">Follow</span>
                                 </div>
-                            </div>
+                            </button>
                             {% endif %}
                         </footer>
                     </article>
