@@ -173,7 +173,11 @@
 <script defer>
 
     console.log(window.innerWidth)
-   
+    if(window.innerWidth < 900) {
+            document.querySelector("#dropdown-menu-id").className = 'dropleft show'
+    }else{
+            document.querySelector("#dropdown-menu-id").className = 'dropup show'
+    }
 
     window.addEventListener('resize', function(){
         if(window.innerWidth < 900) {
@@ -182,8 +186,6 @@
             document.querySelector("#dropdown-menu-id").className = 'dropup show'
         }
     });
-
-
 
     function authorClick(authorClicked){
     console.log("click registered")
