@@ -1,3 +1,5 @@
+# SETTINGS 
+
 """
 Django settings for wao_project project.
 
@@ -23,21 +25,22 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY',"django-insecure-_90e(hy0ofr20p@x3x8vxp$gdodd_w$m1i&kq50y==8vgym(be")
+SECRET_KEY = 'django-insecure-_90e(hy0ofr20p@x3x8vxp$gdodd_w$m1i&kq50y==8vgym(be'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('IS_DEVELOPMENT', True)
+DEBUG = False
 
 ALLOWED_HOSTS = [
-    os.getenv('APP_HOST','127.0.0.1')
+    'solopancho.pythonanywhere.com',
+    'webapp-1448417.pythonanywhere.com',
+    'writeanotherone.com',
+    'www.writeanotherone.com',
 ]
 
 INSTALLED_APPS = [
     'misaka',
     'hitcount',
-    'debug_toolbar',
     'taggit',
-    'django_bleach',
     'bootstrap4',
     'author_app.apps.AuthorAppConfig',
     'story_app.apps.StoryAppConfig',
@@ -87,7 +90,7 @@ WSGI_APPLICATION = 'wao_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'wao_db'          
+        'NAME': '/home/solopancho/wao_project/wao_db'
     }
 }
 
@@ -126,8 +129,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
+STATIC_ROOT = 'home/solopancho/wao_project/staticfiles'
+STATIC_URL =  '/static/'
 
 
 STATICFILES_DIRS = [
@@ -136,7 +139,7 @@ STATICFILES_DIRS = [
 
 
 # ADD THE FOLLOWING LINES HERE
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = '/home/solopancho/wao_project/media/'
 MEDIA_URL = '/media/'
 
 # APPEND THIS LINE TO END OF URL PATHS IN PROJECT URLS.PY
@@ -151,3 +154,21 @@ LOGOUT_REDIRECT_URL = 'home'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 TAGGIT_CASE_INSENSITIVE = True
+
+
+# WSGI 
+
+import os
+import sys
+
+# assuming your django settings file is at '/home/solopancho/mysite/mysite/settings.py'
+# and your manage.py is is at '/home/solopancho/mysite/manage.py'
+path = '/home/solopancho/wao_project'
+if path not in sys.path:
+    sys.path.append(path)
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'wao_project.settings'
+
+# then:
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
