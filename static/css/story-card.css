@@ -25,35 +25,37 @@
 .story-card__main-container {
     display: flex;
     justify-content: space-between;
-    gap: 4rem;
+    gap: 3rem;
 }
 .story-card__text-container {
     display: flex;
     flex-direction: column;
     gap: 2rem; 
     flex-grow: 1; 
+    justify-content: space-between;
+    width: 60%;
     /* max-width: 52rem; */
     /* min-width: 20rem; */
 }
 .story-card__title {
-    max-width: 20ch;
+    width: 100%;
     word-wrap: break-word;
     display: inline-block;
 }
 .story-card__description {
-    max-width: 60ch;
+    width: 100%;
     word-wrap: break-word;
     display: inline-block;
 }
 
 @media (max-width: 580px) {
     .story-card__title {
-        max-width: 19.5rem;
+        /* max-width: 19.5rem; */
         
     }
     .story-card__description {
         display: none;
-        max-width: 19.5rem;
+        /* max-width: 19.5rem; */
     }
 } 
 
@@ -73,6 +75,15 @@
     object-fit: cover;
     width: 100%;
     height: 12rem;
+}
+
+@media (max-width: 580px){
+    .story-card__image-container{
+        max-width: 10rem;
+    }
+    .story-card__image {
+        height: 7.5rem;
+    }
 }
 
 .story-card__footer-container {

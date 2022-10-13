@@ -142,21 +142,21 @@
                                         <div class="story-card__buttons">
                                             <div class="button-container">
                                                 {% if request.user in story.likes.all %}
-                                                <button id="like-story-button" onclick="storyClick(this.value)" value="{{story.pk}}">
+                                                <div id="like-story-button" onclick="storyClick(this.value)" value="{{story.pk}}">
                                                     <div class="button-pill button-pill-md">
                                                         {% csrf_token %}
                                                         <img class="icon-xxsm svg-icon-accent" id="{{story.pk}}-like-story-icon" src="{% static 'svg/like-icon-filled.svg' %}" alt="">
                                                         <span id="{{story.pk}}-like-count">{{story.like_count}}</span>
                                                     </div>
-                                                </button>
+                                                </div>
                                                 {% else %}
-                                                <button id="like-story-button" onclick="storyClick(this.value)" value="{{story.pk}}">
+                                                <div id="like-story-button" onclick="storyClick(this.value)" value="{{story.pk}}">
                                                     <div class="button-pill button-pill-md">
                                                         {% csrf_token %}
                                                         <img class="icon-xxsm svg-icon-accent" id="{{story.pk}}-like-story-icon" src="{% static 'svg/like-icon.svg' %}" alt="">
                                                         <span id="{{story.pk}}-like-count">{{story.like_count}}</span>
                                                     </div>
-                                                </button>
+                                                </div>
                                                 {% endif %}
                 
                                                 
@@ -164,27 +164,27 @@
                 
                                                 <div class="dropdown">
                                                     
-                                                    <div class="" type="button" data-toggle="dropdown">
+                                                    <div class="" data-toggle="dropdown">
                                                         <img id="" class="icon-xsm svg-icon-primary" src="{% static 'svg/bookmark-add.svg' %}" alt="">
                                                     </div>
                                                     <div class="dropdown-menu fs-body-4">
                                                         {% for list in current_user.lists.all %}
                                                         {% if story in list.stories.all %}
                                                         <div class="dropdown-item">
-                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}|{{list.pk}}">
+                                                            <div class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}|{{list.pk}}">
                                                                 {% csrf_token %}
                                                                 <img class="icon-xsm" id="{{story.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon-filled.svg' %}" alt="">
                                                                 <span>{{list}}</span>
-                                                            </button>
+                                                            </div>
                                                         
                                                         </div>
                                                         {% else %}
                                                         <div class="dropdown-item">
-                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}|{{list.pk}}">
+                                                            <div class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}|{{list.pk}}">
                                                                 {% csrf_token %}
                                                                 <img class="icon-xsm" id="{{story.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon.svg' %}" alt="">
                                                                 <span>{{list}}</span>
-                                                            </button>
+                                                            </div>
                                                         
                                                         </div>
                                                         {% endif %}
