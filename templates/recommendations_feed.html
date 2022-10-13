@@ -157,7 +157,7 @@
                 
                                                 {% if request.user == story.author_id %}
                                                 <div class="dropdown">
-                                                    <div class="" type="button" data-toggle="dropdown" >
+                                                    <div class="" data-toggle="dropdown" >
                                                         <img class="icon-xsm svg-icon-primary" src="{% static 'svg/more-icon.svg' %}" alt="">
                                                     </div>
                                                     <div class="dropdown-menu fs-body-4">
@@ -173,27 +173,27 @@
                 
                                                 <div class="dropdown">
                                                     
-                                                    <div class="" type="button" data-toggle="dropdown">
+                                                    <div class="" data-toggle="dropdown">
                                                         <img id="" class="icon-xsm svg-icon-primary" src="{% static 'svg/bookmark-add.svg' %}" alt="">
                                                     </div>
                                                     <div class="dropdown-menu fs-body-4">
                                                         {% for list in current_user.lists.all %}
                                                         {% if story in list.stories.all %}
                                                         <div class="dropdown-item">
-                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}|{{list.pk}}">
+                                                            <div class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}|{{list.pk}}">
                                                                 {% csrf_token %}
                                                                 <img class="icon-xsm" id="{{story.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon-filled.svg' %}" alt="">
                                                                 <span>{{list}}</span>
-                                                            </button>
+                                                            </div>
                                                         
                                                         </div>
                                                         {% else %}
                                                         <div class="dropdown-item">
-                                                            <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}|{{list.pk}}">
+                                                            <div class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}|{{list.pk}}">
                                                                 {% csrf_token %}
                                                                 <img class="icon-xsm" id="{{story.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon.svg' %}" alt="">
                                                                 <span>{{list}}</span>
-                                                            </button>
+                                                            </div>
                                                         
                                                         </div>
                                                         {% endif %}
