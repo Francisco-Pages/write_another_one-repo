@@ -23,13 +23,13 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY',"django-insecure-_90e(hy0ofr20p@x3x8vxp$gdodd_w$m1i&kq50y==8vgym(be")
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('IS_DEVELOPMENT', True)
+DEBUG = os.getenv('IS_DEVELOPMENT', False)
 
 ALLOWED_HOSTS = [
-    os.getenv('APP_HOST','127.0.0.1')
+    os.getenv('APP_HOST')
 ]
 
 INSTALLED_APPS = [
