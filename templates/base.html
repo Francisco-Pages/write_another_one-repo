@@ -50,7 +50,9 @@
         <nav class="layout__navbar-container">
             <nav class="navbar">
                 <header class="navbar__logo-container ff-title">
-                    <div class="fs-heading-2">W</div>
+                    <a href="{% url 'home' %}">
+                        <div class="fs-heading-2">W</div>
+                    </a>
                     
                 </header>
                 <main class="navbar__buttons-container fs-body-1">
@@ -99,7 +101,7 @@
                 <footer class="navbar__profile-container">
                     {% if request.user.is_authenticated %}
                         
-                        <div class="dropup">
+                        <div id="dropdown-menu-id" class="dropup">
                             
                             <div class="navbar__button-container" data-toggle="dropdown" aria-expanded="false">
                                 <a href="{% url 'author:detailed_author' request.user request.user.pk %}">
@@ -169,6 +171,20 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 
 <script defer>
+
+    console.log(window.innerWidth)
+   
+
+    window.addEventListener('resize', function(){
+        if(window.innerWidth < 900) {
+            document.querySelector("#dropdown-menu-id").className = 'dropleft show'
+        }else{
+            document.querySelector("#dropdown-menu-id").className = 'dropup show'
+        }
+    });
+
+
+
     function authorClick(authorClicked){
     console.log("click registered")
     const author = authorClicked
