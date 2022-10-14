@@ -25,7 +25,7 @@
                                 </div>
                         </div>
                         <div class="button-container">
-                            {% if request.user in object.pinners.all %}
+                            <!-- {% if request.user in object.pinners.all %}
                             <button id="pin-list-button" onclick="pinList(this.value)" value="{{object.pk}}">
                                 <div class="icon-sm">
                                     {% csrf_token %}
@@ -44,7 +44,22 @@
                             </button>
                             
                             {% endif %}
-                            
+                             -->
+                            <div class="button-container">
+                                <div class="dropdown">
+                                    <button class="" data-toggle="dropdown">
+                                        <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/more-icon.svg' %}" alt="">
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right fs-body-4">
+                                    
+                                    <a class="dropdown-item" href="{% url 'story:update-list' object.user object.slug object.pk %}">Edit</a>
+                                    
+
+                                    <a class="dropdown-item" href="{% url 'story:delete-list' object.user object.slug object.pk %}">Delete</a>
+                                    </div>
+                                </div>
+                                
+                            </div>
                         </div>
                     </header>
                     <main class="header-feed__main-container">

@@ -12,7 +12,12 @@
                 <div class="header-feed content-container">
                     <header class="header-feed__title-container">
                         <div class="header-feed__title fs-heading-4 fw-bold text-main">
-                            New List
+                            {% if "new-list" in request.path %}
+                            New list
+                            {% else %}
+                            <span class="text-secondary">Editing "<span class="text-main">{{object.name}}</span>"</span>
+                            {% endif %}
+
                         </div>
                         
                         
@@ -35,7 +40,13 @@
                         {% csrf_token %}
                         
                         <div class="button-container">
-                            <button type="submit" class="button-pill">Create</button>
+                            <button type="submit" class="button-pill button-green">
+                                {% if "new-list" in request.path %}
+                                Create
+                                {% else %}
+                                Confirm
+                                {% endif %}
+                            </button>
 
                         </div>
                         
