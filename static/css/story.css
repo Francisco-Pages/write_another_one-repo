@@ -1,7 +1,7 @@
 .story {
     display: flex;
     flex-direction: column;
-    
+    margin: 0 2rem 0 2rem;
     
 }
 .story__header-main-container {
@@ -64,6 +64,7 @@
 
 .story__header-text {
     max-width: 100%;
+    word-break: break-word;
     /* text-align: center; */
     /* display: flex; */
     /* align-items: center; */

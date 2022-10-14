@@ -4,14 +4,14 @@
     min-height: 100vh;
     position: fixed;
     justify-content: space-between;
-    max-width: 8rem;
-    min-width: 8rem;
+    /* max-width: 8rem; */
+    /* min-width: 8rem; */
     /* margin-top: 2rem; */
     border-right: 1px solid var(--border-primary);
 }
 
 .navbar__logo-container {
-    margin: 2rem 0 2rem 0;
+    /* padding: 2rem 0 2rem 0; */
     text-align: center;
     /* font-size: 5rem; */
     /* min-height: 10rem; */
@@ -20,7 +20,7 @@
 .navbar__buttons-container {
     display: flex;
     flex-direction: column;
-    max-height: 40rem;
+    /* max-height: 40rem; */
     justify-content: space-evenly;
     flex-grow: 1;
     flex-shrink: 1;
@@ -38,24 +38,28 @@
     /* margin-bottom: 4rem; */
     display: flex;
     justify-content: center;
-    min-height: 10rem;
+    align-items: center;
+    height: 6.3rem;
+    /* min-height: 10rem; */
 }
 
 @media (max-width: 900px) {
     .navbar {
         flex-direction: row;
         min-height: 0;
-        position: relative;
+        /* position: absolute; */
         min-width: none;
         max-width: none;
         border-right: none;
         border-bottom:  1px solid var(--border-primary);
         flex-grow: 1;
-        margin: 0 2rem 0 2rem ;
+        margin: 0 1rem 0 1rem ;
+        position: sticky;
+        top: 0;
     }
     .navbar__logo-container {
         min-height: 0;
-        margin: 0 2rem 0 2rem;
+        /* margin: 0 2rem 0 2rem; */
     }
     .navbar__buttons-container {
         flex-direction: row;
@@ -64,6 +68,6 @@
     }
     .navbar__profile-container {
         min-height: 0;
-        margin-right: 2rem;
+        /* margin-right: 2rem; */
     }
 }

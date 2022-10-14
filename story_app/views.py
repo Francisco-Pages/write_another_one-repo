@@ -418,7 +418,7 @@ class AuthorSearchResultsView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.GET.get('q') == None:
-            query = 'Recommended'
+            query = ''
         else:
             query = self.request.GET.get("q")
         current_user = author_models.UserExtra.objects.get(user=self.request.user)
@@ -445,7 +445,7 @@ class TagSearchResultsView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.GET.get('q') == None:
-            query = 'Recommended'
+            query = ''
         else:
             query = self.request.GET.get("q")
         context['query'] = query

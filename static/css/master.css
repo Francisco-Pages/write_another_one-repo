@@ -358,6 +358,11 @@ UTILITY CLASSES
 .fs-heading-2 {
     font-size: var(--fs-800);
 }
+@media (max-width: 400px){
+    .fs-heading-2 {
+        font-size: var(--fs-700);
+    }
+}
 .fs-heading-3 {
     font-size: var(--fs-700);
 }

@@ -33,6 +33,11 @@
     }
     .layout__navbar-container {
         min-width: none;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+
+    
     }
     .layout__main-container {
         padding: 0;
