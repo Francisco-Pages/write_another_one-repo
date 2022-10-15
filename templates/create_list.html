@@ -12,7 +12,7 @@
                 <div class="header-feed content-container">
                     <header class="header-feed__title-container">
                         <div class="header-feed__title fs-heading-4 fw-bold text-main">
-                            {% if "new-list" in request.path %}
+                            {% if "/story/new-list" in request.path %}
                             New list
                             {% else %}
                             <span class="text-secondary">Edit "<span class="text-main">{{object.name}}</span>"</span>
