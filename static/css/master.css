@@ -434,8 +434,7 @@ UTILITY CLASSES
     text-align: center;
 }
 .button-round:hover {
-    background-color: var(--background-secondary);
-    
+    background-color: var(--background-alt-secondary);
 }
 
 .svg-icon-primary {

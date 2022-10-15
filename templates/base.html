@@ -57,7 +57,7 @@
                 </header>
                 <main class="navbar__buttons-container fs-body-1">
                     
-                    <div class="navbar__button-container">
+                    <div class="navbar__button-container" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<span class='ff-body fs-body-4'>Home</span>">
                         <a href="{% url 'home' %}">
                             <div class="button-round">
                                 <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/home-icon.svg' %}" alt="">
@@ -65,7 +65,7 @@
                             </div> 
                         </a>
                     </div>
-                    <div class="navbar__button-container">
+                    <div class="navbar__button-container" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<span class='ff-body fs-body-4'>Write</span>">
                         <a href="{% url 'story:write' %}">
                             <div class="button-round">
                                 <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/write-icon.svg' %}" alt="">
@@ -74,7 +74,7 @@
                         </a>
                     </div>
                     
-                    <div class="navbar__button-container">
+                    <div class="navbar__button-container" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<span class='ff-body fs-body-4'>Lists</span>">
                         <a href="{% url 'story:author-list' request.user %}">
                             <div class="button-round">
                                 <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/list-icon.svg' %}" alt="">
@@ -83,7 +83,7 @@
                         </a>
                     </div>
 
-                    <div class="navbar__button-container">
+                    <div class="navbar__button-container" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<span class='ff-body fs-body-4'>Explore</span>">
                         <a href="{% url 'story:story-search-results' %}">
 
                             <div class="button-round">
@@ -171,6 +171,11 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 
 <script defer>
+
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    })
+    
 
     console.log(window.innerWidth)
     if(window.innerWidth < 900) {
