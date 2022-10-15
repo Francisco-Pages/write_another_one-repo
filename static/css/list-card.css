@@ -7,9 +7,9 @@
 .list-card {
     display: flex;
     justify-content: space-between;
-    gap: 4rem;
+    /* gap: 4rem; */
     margin: 2rem auto 0 auto;
-    padding: 1rem;
+    padding: 1rem 3rem 1rem 3rem;
     background-color: var(--background-secondary);
     border: 1px solid var(--background-alt-secondary);
     border-radius: 3px;
@@ -27,6 +27,10 @@
 .list-card__header {
     display: flex;
     gap: 2rem;
+}
+
+.list-card__description {
+    word-break: break-word;
 }
 
 .list-card__author {
