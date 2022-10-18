@@ -694,6 +694,23 @@ UTILITY CLASSES
     gap: 1rem;
 }
 
+.horizontal-scroll-container {
+    display: flex;
+    max-width: 90%;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 0.5rem;
+    background-image: linear-gradient(to right, var(--background-primary), var(--background-primary)),
+                      linear-gradient(to right, var(--background-primary), var(--background-primary)),
+                      linear-gradient(to right, rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0)),
+                      linear-gradient(to left, rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0));
+    background-position: left center, right center, left center, right center;
+    background-repeat: no-repeat;
+    background-color: var(--background-primary);
+    background-size: 20px 100%, 20px 100%, 10px 100%, 10px 100%;
+    background-attachment: local, local, scroll, scroll;
+}
+
 .space-between {
     justify-content: space-between;
 }

@@ -29,42 +29,43 @@
 
                     </header>
                     <main class="header-feed__main-container">
-                        {% for user in user_extra %}
-                        {% if forloop.counter < 10 %}
-                        <div class="button-container">
-                            <a href="{% url 'author:detailed_author' user.user.username user.user.id %}">
-                                <img class="icon-md icon-round" src="{{ user.cover_image.url }}" alt="">
-                            </a>
-                            <!-- <div class="fs-body-5 icon-notification">
-                                9+
-                            </div> -->
-                        </div>
-                        {% else %}
+                        
+                        <div class="horizontal-scroll-container">
 
-                        {% endif %}
-                        {% endfor %}
-                        <div class="button-container">
-                            <a href="{% url 'story:author-search-results' %}">
-                                <img class="icon-xsm svg-icon-primary" src="{% static 'svg/add-icon.svg' %}" alt="">
-                            </a>
+                        
+                            {% for user in user_extra %}
                             
+                            <div class="button-container">
+                                <a href="{% url 'author:detailed_author' user.user.username user.user.id %}">
+                                    <img class="icon-md icon-round" src="{{ user.cover_image.url }}" alt="">
+                                </a>
+                                <!-- <div class="fs-body-5 icon-notification">
+                                    9+
+                                </div> -->
+                            </div>
+                            {% endfor %}
                         </div>
+                            <div class="button-container">
+                                <a href="{% url 'story:author-search-results' %}">
+                                    <img class="icon-xsm svg-icon-primary" src="{% static 'svg/add-icon.svg' %}" alt="">
+                                </a>
+                            
+                            </div>
 
                     </main>
                     <main class="header-feed__main-container text-main">
                         
-                        {% for tag in current_user.tags.all %}
-                        {% if forloop.counter < 6 %}
-                        <a href="{% url 'story:detailed-tag' tag.slug %}">
-                            <div class="tag-card__tag-icon-lg">
-                                {{tag.name}}
-                            </div>
-                        </a>
-                        {% else %}
-                        
-                        {% endif %}
-                        
-                        {% endfor %}
+                        <div class="horizontal-scroll-container">
+                            {% for tag in current_user.tags.all %}
+                            
+                            <a href="{% url 'story:detailed-tag' tag.slug %}">
+                                <div class="tag-card__tag-icon-lg">
+                                    {{tag.name}}
+                                </div>
+                            </a>
+                            
+                            {% endfor %}
+                        </div>
                         <div class="button-container">
                             <a href="{% url 'story:tag_search_results' %}">
                                 <img class="icon-xsm svg-icon-primary" src="{% static 'svg/add-icon.svg' %}" alt="">
