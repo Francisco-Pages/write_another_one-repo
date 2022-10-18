@@ -28,45 +28,65 @@
                         
 
                     </header>
-                    <main class="header-feed__main-container">
-                        {% for user in user_extra %}
-                        <div class="button-container">
-                            <a href="{% url 'author:detailed_author' user.user.username user.user.id %}">
-                                <img class="icon-md icon-round" src="{{ user.cover_image.url }}" alt="">
-                            </a>
-                            <!-- <div class="fs-body-5 icon-notification">
-                                9+
-                            </div> -->
-                        </div>
-
-                        {% endfor %}
-                        <div class="button-container">
-                            <a href="{% url 'story:author-search-results' %}">
-                                <img class="icon-xsm svg-icon-primary" src="{% static 'svg/add-icon.svg' %}" alt="">
-                            </a>
+                    <div class="col-container-1">
+                        <main class="header-feed__main-container">
                             
-                        </div>
-
-                    </main>
-                    <main class="header-feed__main-container text-main">
-                        
-                        {% for tag in current_user.tags.all %}
-                        <a href="{% url 'story:detailed-tag' tag.slug %}">
-                            <div class="tag-card__tag-icon-lg">
-                                {{tag.name}}
+                            <div class="horizontal-scroll-container">
+    
+                            
+                                {% for user in user_extra %}
+                                
+                                <div class="button-container">
+                                    <a href="{% url 'author:detailed_author' user.user.username user.user.id %}">
+                                        <img class="icon-md icon-round" src="{{ user.cover_image.url }}" alt="">
+                                    </a>
+                                    <!-- <div class="fs-body-5 icon-notification">
+                                        9+
+                                    </div> -->
+                                </div>
+                                {% empty %}
+                                <a class="button-pill button-green" href="{% url 'story:author-search-results' %}">
+                                    Authors you follow will show up here
+                               </a>
+                                {% endfor %}
+                                
                             </div>
-                        </a>
-                        
-                        {% endfor %}
-                        <div class="button-container">
-                            <a href="{% url 'story:tag_search_results' %}">
-                                <img class="icon-xsm svg-icon-primary" src="{% static 'svg/add-icon.svg' %}" alt="">
-                            </a>
+                                <div class="button-container">
+                                    <a href="{% url 'story:author-search-results' %}">
+                                        <img class="icon-xsm svg-icon-primary" src="{% static 'svg/add-icon.svg' %}" alt="">
+                                    </a>
+                                
+                                </div>
+    
+                        </main>
+                        <main class="header-feed__main-container text-main">
                             
-                        </div>
-                        
-                        <!-- <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/next.svg' %}" alt=""> -->
-                    </main>
+                            <div class="horizontal-scroll-container">
+                                {% for tag in current_user.tags.all %}
+                                
+                                <a href="{% url 'story:detailed-tag' tag.slug %}">
+                                    <div class="tag-card__tag-icon-lg">
+                                        {{tag.name}}
+                                    </div>
+                                </a>
+                                {% empty %}
+                                
+                                <a class="button-pill button-green" href="{% url 'story:tag_search_results' %}">
+                                     Tags you follow will show up here
+                                </a>
+                                
+                                {% endfor %}
+                            </div>
+                            <div class="button-container">
+                                <a href="{% url 'story:tag_search_results' %}">
+                                    <img class="icon-xsm svg-icon-primary" src="{% static 'svg/add-icon.svg' %}" alt="">
+                                </a>
+                                
+                            </div>
+                            <!-- <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/next.svg' %}" alt=""> -->
+                        </main>
+
+                    </div>
                     <footer class="header-feed__footer-container">
                         <div class="header-feed__footer-tab">
                             <a href="{% url 'home' %}">
