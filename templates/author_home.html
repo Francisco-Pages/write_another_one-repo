@@ -43,7 +43,12 @@
                                     9+
                                 </div> -->
                             </div>
+                            {% empty %}
+                            <a class="button-pill button-green" href="{% url 'story:author-search-results' %}">
+                                Authors you follow will show up here
+                           </a>
                             {% endfor %}
+                            
                         </div>
                             <div class="button-container">
                                 <a href="{% url 'story:author-search-results' %}">
@@ -62,6 +67,11 @@
                                 <div class="tag-card__tag-icon-lg">
                                     {{tag.name}}
                                 </div>
+                            </a>
+                            {% empty %}
+                            
+                            <a class="button-pill button-green" href="{% url 'story:tag_search_results' %}">
+                                 Tags you follow will show up here
                             </a>
                             
                             {% endfor %}

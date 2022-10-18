@@ -135,7 +135,7 @@
                     
                     {% else %}
                         <div class="navbar__button-container" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<span class='ff-body fs-body-4'>Log in</span>">
-                            <a href="{% url 'author:login' %}?next={{request.path}}">
+                            <a href="{% url 'author:login' %}">
                                 <div class="button-round">
                                     <img class="icon-xsm" src="{% static 'svg/login-icon.svg' %}" alt="">
                                 </div>       
