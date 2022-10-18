@@ -32,18 +32,29 @@
 
       
         <main class="content-container col-container centered-container ">
-          <form method="POST" class="flex-container-1 col-container">
+          <form method="POST" class="flex-container-1 col-container fs-body-2">
           
           
           {% csrf_token %}
 
           {{ form.as_p }}
 
-          <div class="button-container">
-            <button type="submit" class="button-pill button-green">Sign In</button>
-          </div>
+          
+          <button type="submit" class="button-pill button-green fs-body-4">
+            <div class="centered-container">
+              Sign In
+            </div> 
+          </button>
+          <p>Not a member?</p>
 
-          <a href="{% url 'author:signup' %}">Not a member? Click here to signup</a>
+          <a href="{% url 'author:signup' %}" class="button-pill button-blue  fs-body-4">
+            <div class="centered-container">
+              Register
+            </div>
+
+          </a>
+          
+          
           </form>
         </main>
       </div>

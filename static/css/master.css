@@ -51,6 +51,10 @@
     --clr-constant-400: hsl(202,69%,14%);
     --clr-constant-900: hsl(0,0%,0%);
 
+    --clr-yellow: hsl(44, 100%, 55%);
+    --clr-blue: hsl(216,100%,50%);
+    --clr-green: hsl(119,71%,31%);
+    
     --svg-yellow: invert(78%) sepia(85%) saturate(3200%) hue-rotate(344deg) brightness(110%) contrast(100%);
 
 
@@ -420,14 +424,34 @@ UTILITY CLASSES
 }
 
 .button-green {
-    background-color: var(--background-accent);
+    background-color: var(--clr-green);
+    border: 2px solid var(--background-secondary);
+    color: var(--clr-constant-100);
+}
+.button-blue {
+    background-color: var(--clr-blue);
+    border: 2px solid var(--background-secondary);
+    color: var(--clr-constant-100);
+}
+.button-yellow {
+    background-color: var(--bclr-yellow);
     border: 2px solid var(--background-secondary);
     color: var(--clr-constant-100);
 }
 
 .button-green:hover {
-    background-color: var(--background-accent);
-    border: 2px solid var(--clr-constant-300);
+    /* background-color: var(--background-accent); */
+    border: 2px solid var(--clr-yellow);
+    color: var(--clr-constant-100);
+}
+.button-blue:hover {
+    /* background-color: var(--background-accent); */
+    border: 2px solid var(--clr-yellow);
+    color: var(--clr-constant-100);
+}
+.button-yellow:hover {
+    /* background-color: var(--background-accent); */
+    border: 2px solid var(--clr-yellow);
     color: var(--clr-constant-100);
 }
 .button-pill-md {
