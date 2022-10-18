@@ -24,6 +24,7 @@
     margin: 2rem auto 0 auto;
     align-items: center;
     border-radius: 99rem;
+    border: 1px solid var(--border-primary);
     padding: 0.8rem 2rem;
     /* background-color: var(--background-secondary); */
     background-color: var(--background-alt-secondary);
