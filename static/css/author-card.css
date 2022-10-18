@@ -20,6 +20,18 @@
     /* max-width: 60rem; */
     justify-content: space-between;
 }
+.author-card__text-container {
+    /* max-width: var(--content-width); */
+}
+.author-card__author {
+    /* max-width: var(--content-width); */
+    word-break: break-word;
+}
+.author-card__description {
+    /* max-width: 50%; */
+    word-break: break-word;
+}
+
 @media (max-width: 440px) {
     .author-card__description {
         display: none;
@@ -29,6 +41,7 @@
 .author-card__author-info {
     display: flex;
     gap: 1rem;
+
     /* align-items: center; */
 }
 @media (max-width: 480px) {

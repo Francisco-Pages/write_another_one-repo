@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-
-{# at the terminal, run pip install django-bootstrap4 #}
+{% load static %}
 
 
 
@@ -9,16 +8,23 @@
 <main class="layout__main-container">
   <main class="main">
 
-    <header class="main__header">
+    <header class="main__header ">
       <div class="header-feed content-container">
         <header class="header-feed__title-container">
-          <div class="header-feed__title fs-heading-4 fw-bold">
-            Register
+          <div class="header-feed__title fs-heading-2 fw-bold ff-title centered-container col-center-container">
+            
+            
+            <div class="col-center-container">
+                <span class="the-title fs-body-3">The</span>
+                <span>Write</span>
+            </div>
+            <span>Another One</span>
+         
           </div>
         </header>
 
-        <footer class="header-feed__footer-container">
-
+        <footer class="col-center-container fw-bold fs-body-3">
+            <div>Register</div>
         </footer>
       </div>
     </header>
@@ -28,14 +34,34 @@
 
       
         <main class="content_container col-container centered-container">
-          <form method="POST" class="flex-container-1 col-container">
+          <form method="POST" class="flex-container-1 col-container container-thinnest">
           
           
           {% csrf_token %}
 
-          {{ form.as_p }}
+          {% for field in form %}
+            <div class="fs-body-2">
+              <div>
+                {{field.label}}
+              </div>
+              <div>
+                {{field}}
+              </div>
+              <div class="text-alt-secondary">
+                {{field.help_text}}
+              </div>
+            </div>
+          {% endfor %}
+          <br>
+          <div class="flex-container text-container-thin centered-container ">
+            <div class="button-container">
+              <img class="icon-xxsm svg-icon-yellow" src="{% static 'svg/three-star-icon-filled.svg' %}"  alt="">
+            </div>
+            <p class="break-word">I haven't added a "forgot password" page yet. If you forget it
+              you will have to wait until I figure out how to do it. Write on!</p>
+          </div>
 
-          <div class="button-container">
+          <div class="button-container centered-container">
             <button type="submit" class="button-pill button-green">Sign Up</button>
 
           </div>

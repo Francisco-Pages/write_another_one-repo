@@ -38,8 +38,15 @@
 }
 .tag-card__text-container {
     /* min-width: 54rem; */
+    word-break: break-word;
 }
 .tag-card__footer {
     display: flex;
     gap: 1rem;
+}
+
+@media (max-width: 390px){
+    .tag-card__footer {
+        display: none;
+    }
 }

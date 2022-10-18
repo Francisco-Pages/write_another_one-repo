@@ -11,7 +11,7 @@
                         
                         <form class="search-bar" action="{% url 'story:tag_search_results' %}" method="GET">
                             <img class="icon-xsm" src="{% static 'svg/search-icon.svg' %}" alt="">
-                            <input type="text" name="q" id="" placeholder="search">
+                            <input class="search-bar-input" type="text" name="q" id="" placeholder="search">
                         </form>
                         
                         
@@ -56,7 +56,7 @@
                         </div>
                         <a href="{% url 'story:detailed-tag' tag.tag.slug %}">
                             <div class="tag-card__text-container">
-                                <div class="fs-body-3 fw-bold">
+                                <div class="ff-title fs-body-1 fw-bold">
                                     {{tag.tag.name}}
                                 </div>
                                 <div class="tag-card__footer fs-body-3 text-secondary">
@@ -71,7 +71,7 @@
                             </div>
                         </a>
                     </div>
-                        <div class="tag-card__follow-button button-container">
+                        <div class="tag-card__follow-button button-container button-pill button-green">
                             {% if tag.tag in current_user.tags.all %}
                             <button id="follow-tag-button" onclick="followTag(this.value)" value="{{tag.pk}}">
                                 

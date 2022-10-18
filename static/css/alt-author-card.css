@@ -22,7 +22,15 @@
     flex-direction: column;
     gap: 2rem;
     flex-grow: 1;
-
+    width: 60%;
+}
+@media (max-width: 580px) {
+    .alt-author-card__main-container {
+        width: 100%;
+    }
+}
+.alt-author-card__info {
+    word-break: break-word;
 }
 .alt-author-card__author-name {
     display: flex;
@@ -31,7 +39,9 @@
 }
 .alt-author-card__description {
     /* text-align: center; */
-    margin-right: 10rem;
+    /* margin-right: 10rem; */
+    word-wrap: break-word;
+    width: 75%;
 }
 .alt-author-card__name-footer {
     display: flex;

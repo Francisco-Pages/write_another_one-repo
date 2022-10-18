@@ -11,7 +11,7 @@
                         
                         <form class="search-bar" action="{% url 'story:author-search-results' %}" method="GET">
                             <img class="icon-xsm" src="{% static 'svg/search-icon.svg' %}" alt="">
-                            <input type="text" name="q" id="" placeholder="search">
+                            <input class="search-bar-input" type="text" name="q" id="" placeholder="search">
                         </form>
                         
                         
@@ -58,7 +58,7 @@
                                 
                                 <div class="author-card__author-info text-secondary">
                                     <a href="{% url 'author:detailed_author' author.user.username author.user.pk %}">
-                                        <div class="ff-body fs-body-2 text-main fw-bold">
+                                        <div class="author-card__author ff-title fs-body-2 text-main fw-bold">
                                             {{author}} 
 
                                         </div>

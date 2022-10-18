@@ -1,13 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block head %}
-<style>
-    .editor__content {
-        height: {{content_height}}
-    }
-</style>
-{% endblock %}
 
 {% block content %}
 
@@ -16,7 +9,7 @@
         
         <main class="main">
 
-            <header class="main__header">
+            <header>
                 <div class="write__header">
                     <div class="write__editor-container">
                         
