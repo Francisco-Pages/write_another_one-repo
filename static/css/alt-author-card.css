@@ -10,11 +10,11 @@
     max-width: 74rem;
     margin: 0 auto;
 }
-@media (max-width: 580px) {
+/* @media (max-width: 580px) {
     .alt-author-card {
         flex-direction: column;
     }
-}
+} */
 
 
 .alt-author-card__main-container {
@@ -34,14 +34,14 @@
 }
 .alt-author-card__author-name {
     display: flex;
-    gap: 4rem;
+    gap: 1rem;
     justify-content: space-between;
 }
 .alt-author-card__description {
     /* text-align: center; */
     /* margin-right: 10rem; */
-    word-wrap: break-word;
-    width: 75%;
+    word-break: break-word;
+    /* width: 75%; */
 }
 .alt-author-card__name-footer {
     display: flex;

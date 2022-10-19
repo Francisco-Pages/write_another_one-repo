@@ -57,7 +57,7 @@
                         <div class="alt-author-card">
                             <header class="alt-author-card__image-container">
                                 <a href="{% url 'author:detailed_author' object.author_id.username object.author_id.id %}">
-                                    <img class="icon-xl icon-round" src="{{ user_extras.cover_image.url }}" alt="">
+                                    <img class="icon-lg icon-round" src="{{ user_extras.cover_image.url }}" alt="">
                                 </a>
     
                             </header>
@@ -66,14 +66,12 @@
                                     <div class="alt-author-card__info">
                                         <a href="{% url 'author:detailed_author' object.author_id.username object.author_id.id %}">
                                         <div class="ff-body fs-body-1 fw-bold">
-                                            {{object.author_id.first_name | capfirst}}
-                                            {{object.author_id.last_name | capfirst}}
+                                            {{object.author_id}}
+                                            
     
                                         </div>
                                         <div class="alt-author-card__name-footer text-alt-secondary">
-                                            <div>
-                                                @{{object.author_id}}
-                                            </div>
+                                            
                                             <div>
                                                 <span id="{{user_extras.pk}}-follower-count">{{user_extras.follower_count}}</span> Followers
                                             </div>
@@ -109,11 +107,11 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                                <a href="{% url 'author:detailed_author' object.author_id.username object.author_id.id %}">
+                                <!-- <a href="{% url 'author:detailed_author' object.author_id.username object.author_id.id %}">
                                     <div class="alt-author-card__description fs-body-3 text-secondary">
                                         {{user_extras.about_user}}
                                     </div>
-                                </a>
+                                </a> -->
                              
                                 
     
@@ -124,7 +122,7 @@
                 </div>
                 <div class="flex-container">
                     <div class="divider-section fs-body-1 ff-body">
-                        More by {{object.author_id.first_name | capfirst}}
+                        More by <span class="fw-bold">{{object.author_id}}</span>
                     </div>
                 </div>
 

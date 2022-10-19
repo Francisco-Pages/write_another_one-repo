@@ -12,7 +12,7 @@
                         <div class="alt-author-card">
                             <header class="alt-author-card__image-container">
                             
-                                <img class="icon-xl icon-round" src="{{ object_extra.cover_image.url }}" alt="">
+                                <img class="icon-lg icon-round" src="{{ object_extra.cover_image.url }}" alt="">
                                 
     
                             </header>
@@ -24,11 +24,7 @@
                                             {{object.username}}
                                                 
                                         </div>
-                                        <div class="alt-author-card__name-footer text-alt-secondary">
-                                            <div>
-                                                {{object.get_full_name}}
-                                            </div>
-                                            
+                                        <div class="alt-author-card__name-footer text-alt-secondary">                                            
                                             <div>
                                                 <span id="{{ object_extra.pk }}-follower-count">{{object_extra.follower_count}}</span> Followers
                                             </div>
@@ -108,7 +104,7 @@
                                 ·
                             </div>
                             <div class="">
-                                {{ story.published_date }}
+                                {{ story.show_time_since }}
                             </div>
                             
                             
