@@ -54,6 +54,7 @@
     --clr-yellow: hsl(44, 100%, 55%);
     --clr-blue: hsl(216,100%,50%);
     --clr-green: hsl(119,71%,31%);
+    --clr-red: hsl(0,70%,53%);
     
     --svg-yellow: invert(78%) sepia(85%) saturate(3200%) hue-rotate(344deg) brightness(110%) contrast(100%);
 
@@ -434,7 +435,12 @@ UTILITY CLASSES
     color: var(--clr-constant-100);
 }
 .button-yellow {
-    background-color: var(--bclr-yellow);
+    background-color: var(--clr-yellow);
+    border: 2px solid var(--background-secondary);
+    color: var(--clr-constant-100);
+}
+.button-red {
+    background-color: var(--clr-red);
     border: 2px solid var(--background-secondary);
     color: var(--clr-constant-100);
 }
@@ -450,6 +456,11 @@ UTILITY CLASSES
     color: var(--clr-constant-100);
 }
 .button-yellow:hover {
+    /* background-color: var(--background-accent); */
+    border: 2px solid var(--clr-yellow);
+    color: var(--clr-constant-100);
+}
+.button-red:hover {
     /* background-color: var(--background-accent); */
     border: 2px solid var(--clr-yellow);
     color: var(--clr-constant-100);

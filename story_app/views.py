@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, reverse
 from django.http import Http404, HttpResponseRedirect, JsonResponse
+from django.core.exceptions import PermissionDenied
 from taggit.models import Tag
 from django.db.models import Q, F
 from . import forms
@@ -220,6 +221,15 @@ class StoryUpdateView(LoginRequiredMixin, UpdateView):
     # success_url = reverse_lazy("detailed_author")
     template_name = 'write.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        handler = super().dispatch(request, *args, **kwargs)
+        user = request.user
+        story = self.get_object()
+        
+        if not (story.author_id == user or user.is_superuser):
+            raise PermissionDenied
+        return handler
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         current_user = author_models.UserExtra.objects.get(user=self.request.user)
@@ -235,6 +245,21 @@ class StoryUpdateView(LoginRequiredMixin, UpdateView):
 class StoryDeleteView(DeleteView):
     model = story_models.Story 
     template_name = 'story_confirm_delete.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        handler = super().dispatch(request, *args, **kwargs)
+        user = request.user
+        story = self.get_object()
+        
+        if not (story.author_id == user or user.is_superuser):
+            raise PermissionDenied
+        return handler
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_user = author_models.UserExtra.objects.get(user=self.request.user)
+        context['current_user'] = current_user
+        return context
 
     def get_success_url(self, **kwargs):    
         return reverse_lazy('author:detailed_author', kwargs = {'slug':self.object.author_id, 'pk':self.object.author_id.pk})     

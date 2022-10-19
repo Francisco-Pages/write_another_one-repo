@@ -21,11 +21,16 @@
                                 
                     </div>
                     <div class="write__buttons-container">
-                    
+                        {% if "/story/update-story/" in request.path %}
+                        <div class="button-container">
+                            <a class="button-pill button-red" href="{% url 'story:delete-story' object.slug object.pk %}">Delete</a>
+
+                        </div>
+                        {% endif %}
                         
                         <div class="button-container">
                             
-                            <a href="#" class="button-pill" data-toggle="modal" data-target="#exampleModal">Publish</a>
+                            <a href="#" class="button-pill button-green" data-toggle="modal" data-target="#exampleModal">Publish</a>
                             
                         </div>
                     </div>
@@ -57,7 +62,7 @@
                         <div class="modal-dialog modal-dialog-centered">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <div class="fw-bold fs-body-1 modal-title">Confirm</div>
+                              <div class="fw-bold fs-body-1 modal-title">Add stuff</div>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -76,8 +81,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="button-pill" data-dismiss="modal">Close</button>
-                              <button class="button-pill" type="submit">Publish</button>
+                              <button class="button-pill button-red" data-dismiss="modal">Back</button>
+                              <button class="button-pill button-green" type="submit">Publish</button>
                             </div>
                           </div>
                         </div>

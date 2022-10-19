@@ -41,6 +41,9 @@ class StoryUpdateForm(ModelForm):
                 'name':'text',
                 'maxlength':'12000'
         })
+        self.fields['tags'].widget.attrs.update({
+            'class':'editor__tags',
+        })
         
     class Meta:
         model = story_models.Story
