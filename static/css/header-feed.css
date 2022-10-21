@@ -12,7 +12,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
+    word-break: break-word;
+    /* flex-wrap: wrap; */
 }
 .header-feed__title {
     display: flex;
@@ -39,7 +40,7 @@
     /* max-width: 60rem; */
     align-items: center;
     /* flex-wrap: wrap; */
-    /* word-wrap: break-word; */
+    word-wrap: break-word;
 }
 
 .header-feed__footer-container {

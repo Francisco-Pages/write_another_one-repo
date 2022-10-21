@@ -422,6 +422,7 @@ UTILITY CLASSES
     padding: 0.8rem 1.6rem;
     border: 1px solid var(--border-primary);
     color: var(--text-main);
+    min-width: max-content;
 }
 
 .button-green {

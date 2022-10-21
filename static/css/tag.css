@@ -4,6 +4,7 @@
     padding: 0.2rem 0.8rem;
     background-color: var(--background-alt-secondary);
     color: var(--text-primary);
+    min-width: max-content;
 }
 .tag-card__tag-icon-lg {
     display: inline-block;
@@ -12,6 +13,7 @@
     /* background-color: var(--background-secondary); */
     background-color: var(--background-alt-secondary);
     color: var(--text-primary);
+    min-width: max-content;
 }
 
 .tag-card__container {
