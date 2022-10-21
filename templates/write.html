@@ -21,6 +21,12 @@
                                 
                     </div>
                     <div class="write__buttons-container">
+                        <div class="text-alt-secondary">
+                            <span id="count">Characters left: 12000</span>
+                        </div>
+                        <div class="text-alt-secondary">
+                            ·
+                        </div>
                         {% if "/story/update-story/" in request.path %}
                         <div class="button-container">
                             <a class="button-pill button-red" href="{% url 'story:delete-story' object.slug object.pk %}">Delete</a>

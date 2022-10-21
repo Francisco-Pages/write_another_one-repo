@@ -172,6 +172,10 @@
 
 <script defer>
 
+    document.getElementById('id_content').onkeyup = function () {
+        document.getElementById('count').innerHTML = "Characters left: " + (12000 - this.value.length);
+    };
+
     $(function () {
     $('[data-toggle="tooltip"]').tooltip()
     })

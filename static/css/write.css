@@ -15,7 +15,7 @@
 .write__buttons-container {
     display: flex;
     gap: 1rem;
-
+    align-items: center;
 }
 
 .write__main-container {

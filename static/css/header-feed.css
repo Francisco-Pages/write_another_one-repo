@@ -39,7 +39,7 @@
     /* max-width: 60rem; */
     align-items: center;
     /* flex-wrap: wrap; */
-    word-wrap: break-word;
+    /* word-wrap: break-word; */
 }
 
 .header-feed__footer-container {
