@@ -10,6 +10,13 @@
     margin-bottom: 6rem;
 }
 
+.alt-story-card__flag {
+    position: relative;
+    top: 24px;
+    right: 10px;
+    display: flex;
+}
+
 @media (max-width: 80rem) {
     
     .alt-story-card {

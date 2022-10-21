@@ -9,7 +9,7 @@
                 <header class="story__header">
                     <div class="story__header-left-container">
                         <div class="story__image-container">
-                            <img src="{{ object.cover_image.url }}" alt="">
+                            <img class="story__image" src="{{ object.cover_image.url }}" alt="">
                             
                         </div>
                     </div>
@@ -22,7 +22,7 @@
                             
                             
                             
-                            <div class="story__header-text ff-body fs-body-3 fw-reg ">
+                            <div class="story__header-text ff-body fs-body-3 fw-semi-bold text-secondary">
                                 By {{object.author_id}}
                             </div>
                         </div>
@@ -34,7 +34,7 @@
             <main class="story__main-container">
                 <div class="flex-container">
                     <div class="divider-item">
-                        <p>Views: {% get_hit_count for object %}</p>
+                        
                     </div>
                 </div>
                 <div class="story__content ff-read fs-body-1">
@@ -44,20 +44,46 @@
                     
                                    
                 </div>
+                <div class="story__buttons-container">
+                    
+                    <div class="button-container">
+                        {% if request.user in story.likes.all %}
+                        <button id="like-story-button" onclick="storyClick(this.value)" value="{{object.pk}}">
+                            <div class="button-pill button-pill-md">
+                                {% csrf_token %}
+                                <img class="icon-xxsm svg-icon-accent" id="{{object.pk}}-like-story-icon" src="{% static 'svg/like-icon-filled.svg' %}" alt="">
+                                <span id="{{object.pk}}-like-count">{{object.like_count}}</span>
+                            </div>
+                        </button>   
+                        {% else %}
+                        <button id="like-story-button" onclick="storyClick(this.value)" value="{{object.pk}}">
+                            <div class="button-pill button-pill-md">
+                                {% csrf_token %}
+                                <img class="icon-xxsm svg-icon-accent" id="{{object.pk}}-like-story-icon" src="{% static 'svg/like-icon.svg' %}" alt="">
+                                <span id="{{object.pk}}-like-count">{{object.like_count}}</span>
+                            </div>
+                        </button>
+                        {% endif %}
+                    </div>
+                    <div class="button-pill button-pill-md">
+                        Views: {% get_hit_count for object %}
+                    </div>
+                </div>
                 <div class="flex-container">
-                    <div class="divider-section">
+                    <div class="divider-item">
 
                     </div>
                 </div>
 
             </main>
+            <br>
             <footer class="story__footer-container">
                 <div class="story__footer-section">
                     <div class="alt-author-card__container">
-                        <div class="alt-author-card">
+                        <div class="alt-author-card button-pill">
                             <header class="alt-author-card__image-container">
                                 <a href="{% url 'author:detailed_author' object.author_id.username object.author_id.id %}">
-                                    <img class="icon-lg icon-round" src="{{ user_extras.cover_image.url }}" alt="">
+                                    <img class="icon-md icon-round" src="{{ user_extras.cover_image.url }}" alt="">
                                 </a>
     
                             </header>
@@ -78,6 +104,7 @@
     
                                         </div>
                                         </a>
+                                        
                                     </div>
                                     <div class="button-container">
                                     
@@ -122,7 +149,7 @@
                 </div>
                 <div class="flex-container">
                     <div class="divider-section fs-body-1 ff-body">
-                        More by <span class="fw-bold">{{object.author_id}}</span>
+                        Most recent by <span class="fw-bold">{{object.author_id}}</span>
                     </div>
                 </div>
 
@@ -135,7 +162,11 @@
                             </header>
                         </a>
                         <main class="alt-story-card__main-container">
+                            <div class="text-alt-secondary">
+                                {{story.show_time_since}}
+                            </div>
                             <a href="{% url 'story:detailed_story' story.author_id story.slug story.pk %}">
+                                
                                 <div class="alt-story-card__title ff-title fs-heading-4 fw-bold">
                                     {{story.title}}
                                 </div>
@@ -144,6 +175,7 @@
                                 </div>
  
                             </a>
+                            
                             <a href="{% url 'author:detailed_author' story.author_id.username story.author_id.id %}">
                             <div class="alt-story-card__author">
                                     <img class="icon-sm icon-round" src="{{user_extras.cover_image.url}}" alt="">
@@ -152,6 +184,7 @@
                                     </div>
                                 </div>
                             </a>
+                            
                         </main>
                     </div>
                     {% endfor %}
