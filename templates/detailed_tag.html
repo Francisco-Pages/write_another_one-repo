@@ -29,14 +29,14 @@
                             <button id="follow-tag-button" onclick="followTag(this.value)" value="{{object.pk}}">
                                 
                                 {% csrf_token %}
-                                <div class="button-pill" id="{{ object.pk }}-followed">Following</div>
+                                <div class="button-pill button-green" id="{{ object.pk }}-followed">Following</div>
                                
                             </button>
                             {% else %}
                             <button id="follow-tag-button" onclick="followTag(this.value)" value="{{object.pk}}">
                                 
                                 {% csrf_token %}
-                                <div class="button-pill" id="{{ object.pk }}-followed">Follow</div>
+                                <div class="button-pill button-green" id="{{ object.pk }}-followed">Follow</div>
                                
                             </button>
                             {% endif %}
