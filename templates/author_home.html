@@ -108,25 +108,28 @@
                 <div class="story-card__container">
                     <article class="story-card content-container">
                         <a href="{% url 'author:detailed_author' story.author_id.username story.author_id.id %}">
-                        <header class="story-card__header ff-body fs-body-3 text-alt-secondary">
-                            {% for author in user_extra %}
-                                {% if author.user == story.author_id %}
-                                <img class="icon-xsm icon-round" src="{{ author.cover_image.url }}" alt="">
-                
+                            <header class="story-card__header ff-body fs-body-3 text-alt-secondary">
+                                {% if story.author_id == current_user.user %}
+                                <img class="icon-xsm icon-round" src="{{ current_user.cover_image.url }}" alt="">
                                 {% endif %}
-                            {% endfor %}
-                            <div class="text-main">
-                                {{ story.author_id }}
-                            </div>
-                            <div>
-                                ·
-                            </div>
-                            <div class="">
-                                {{ story.show_time_since}}
-                            </div>
-                            
-                            
-                        </header>
+                                {% for author in user_extra %}
+                                    {% if author.user == story.author_id %}
+                                    <img class="icon-xsm icon-round" src="{{ author.cover_image.url }}" alt="">
+                                    {% endif %}
+                                {% endfor %}
+    
+                                <div class="text-main">
+                                    {{ story.author_id }}
+                                </div>
+                                <div>
+                                    ·
+                                </div>
+                                <div class="">
+                                    {{ story.show_time_since}}
+                                </div>
+    
+    
+                            </header>
                         </a>
                         
                         <main class="story-card__main-container">
