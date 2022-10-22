@@ -21,12 +21,7 @@
                                 
                     </div>
                     <div class="write__buttons-container">
-                        <div class="text-alt-secondary">
-                            <span id="count">Characters left: 12000</span>
-                        </div>
-                        <div class="text-alt-secondary">
-                            ·
-                        </div>
+                        
                         {% if "/story/update-story/" in request.path %}
                         <div class="button-container">
                             <a class="button-pill button-red" href="{% url 'story:delete-story' object.slug object.pk %}">Delete</a>
@@ -52,7 +47,9 @@
                     <div class="write__title-container ff-read fs-heading-2 text-alt-secondary">
                         {{form.title}}
                     </div>
-                
+                    <div class="text-alt-secondary story__buttons-container">
+                        <span class="button-pill button-pill-sm" id="count">12000</span>
+                    </div>
                 
                     <div class="write__content-container ff-read fs-body-1 text-alt-secondary">
                         {{form.content}}

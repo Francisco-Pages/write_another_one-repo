@@ -25,7 +25,7 @@ class Story(models.Model):
     content_html = models.TextField(editable=False, default='')
     content_minified = models.CharField(max_length=12000, editable=False, default='')
     tags = TaggableManager()
-    slug = models.SlugField(null=False)
+    slug = models.SlugField(max_length=601, null=False)
     editable = models.BooleanField(default=False)
     updated = models.BooleanField(default=False)
     published_date = models.DateTimeField(default=now)
@@ -109,14 +109,14 @@ class Story(models.Model):
         return reverse('detailed_story', kwargs={'author_id':self.author_id, 'pk' : self.pk, 'slug':self.slug})
     
     def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
+        
+        self.slug = slugify(self.title)
         
         self.content_html = misaka.html(self.content)
 
-        if not self.content_minified:
-            soup = BeautifulSoup(self.content, 'html.parser')
-            self.content_minified = soup.get_text()
+        soup = BeautifulSoup(self.content, 'html.parser')
+        self.content_minified = soup.get_text()
+
         return super().save(*args, **kwargs)
 
 
