@@ -82,7 +82,7 @@ class RecommendationsFeedView(LoginRequiredMixin, TemplateView):
         following_users = [user for user in author_models.UserExtra.objects.select_related('user') if user.user in current_user.following.all()]
         
         tags_stories = []
-        for story in story_models.Story.objects.select_related('author_id').filter(~Q(author_id=self.request.user)).order_by('-published_date'):
+        for story in story_models.Story.objects.select_related('author_id').order_by('-published_date'):
             for tag in current_user.tags.all():
                 if tag in story.tags.all():
                     tags_stories.append(story)
@@ -406,9 +406,9 @@ class StorySearchResultsView(LoginRequiredMixin, ListView):
         else:
             query = self.request.GET.get("q")
         
-        object_list = story_models.Story.objects.order_by('-published_date').filter(~Q(author_id=self.request.user)).filter(
+        object_list = story_models.Story.objects.filter(
             Q(title__icontains=query) | Q(content__icontains=query) 
-        )
+        ).order_by('-published_date')
         
         return object_list
 
@@ -435,7 +435,7 @@ class AuthorSearchResultsView(LoginRequiredMixin, ListView):
         else:
             query = self.request.GET.get("q")
         
-        object_list = author_models.UserExtra.objects.filter(~Q(user=self.request.user)).filter(
+        object_list = author_models.UserExtra.objects.filter(
             Q(user__username__icontains=query) | Q(user__first_name__icontains=query) | Q(user__last_name__icontains=query)
         ).order_by('-follower_count')
         return object_list
@@ -463,7 +463,7 @@ class TagSearchResultsView(LoginRequiredMixin, ListView):
             query = self.request.GET.get("q")
         object_list = story_models.TagsExtra.objects.filter(
             Q(tag__name__icontains=query)
-        )
+        ).order_by('-follower_count')
         return object_list
 
 

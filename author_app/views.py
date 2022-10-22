@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, TemplateView, DetailView, ListView, UpdateView
 from django.contrib.auth import get_user_model
-
+from django.db.models import Q
 from time import time
 from django.http import JsonResponse
 from django.core import serializers
@@ -112,11 +112,12 @@ class AuthorHomePageView(LoginRequiredMixin, TemplateView):
         current_user = author_models.UserExtra.objects.get(user=self.request.user)
         following_users = [user for user in author_models.UserExtra.objects.select_related('user') if user.user in current_user.following.all()]
         following_user_ids = [user.user for user in author_models.UserExtra.objects.select_related('user') if user.user in current_user.following.all()]
-        following_stories = [story for story in story_models.Story.objects.select_related('author_id').order_by('-published_date') if story.author_id in following_user_ids]
-        
+        feed_stories = story_models.Story.objects.filter(Q(author_id__in=current_user.following.all()) | Q(author_id= self.request.user)).order_by('-published_date')
+
         context["current_user"] = current_user
         context['user_extra'] = following_users
-        context['following_stories'] = following_stories
+        context['following_stories'] = feed_stories
+        
         return context
 
     
