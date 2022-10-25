@@ -34,17 +34,20 @@ def follow_author(request):
             author.followers.remove(request.user)
             current_user.following.remove(author.user.pk)
             author.follower_count -= 1
+            current_user.following_count -= 1
             result = author.follower_count
             followed = 'follow'
             author.save()
+            current_user.save()
         else:
             author.followers.add(request.user)
             current_user.following.add(author.user.pk)
             author.follower_count += 1
+            current_user.following_count += 1
             result = author.follower_count
             followed = 'following'
             author.save()
-
+            current_user.save()
         return JsonResponse({'result':result, 'followed':followed})
 
 

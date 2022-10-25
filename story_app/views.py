@@ -139,6 +139,7 @@ def pin_list(request):
             result = list_obj.pinner_count
             pinned = '/static/svg/add-to-list-icon.svg'
             list_obj.save()
+            current_user.save()
         else:
             list_obj.pinners.add(request.user)
             current_user.pinned_lists.add(list_obj)
@@ -146,6 +147,7 @@ def pin_list(request):
             result = list_obj.pinner_count
             pinned = '/static/svg/in-list-icon.svg'
             list_obj.save()
+            current_user.save()
         return JsonResponse({'result':result, 'pinned':pinned})
 
 
