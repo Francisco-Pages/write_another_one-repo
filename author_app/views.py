@@ -10,6 +10,7 @@ from django.http import JsonResponse
 from django.core import serializers
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 
 from story_app import models as story_models
 from author_app import models as author_models
@@ -58,6 +59,15 @@ class UserExtraUpdateView(UpdateView):
     form_class = forms.UserExtraUpdateForm
     # success_url = reverse_lazy("home")
     template_name = 'author_app/user_update_form.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        handler = super().dispatch(request, *args, **kwargs)
+        user = request.user
+        user_extra = self.get_object()
+        
+        if not (user_extra.user == user or user.is_superuser):
+            raise PermissionDenied
+        return handler
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
