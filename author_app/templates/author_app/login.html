@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load bootstrap4 %}
 
 {% block content %}
 
@@ -13,7 +13,6 @@
             
             
             <div class="col-center-container">
-                <span class="the-title fs-body-3">The</span>
                 <span>Write</span>
             </div>
             <span>Another One</span>
@@ -37,7 +36,7 @@
           
           {% csrf_token %}
 
-          {{ form.as_p }}
+          {% bootstrap_form form %}
 
           
           <button type="submit" class="button-pill button-green fs-body-4">

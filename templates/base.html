@@ -47,7 +47,7 @@
 <body class="background-primary text-main ff-body fs-body-4 fw-reg">
  
     <div class="layout">
-        <nav class="layout__navbar-container background-primary">
+        <nav class="layout__navbar-container">
             <nav class="navbar">
                 <header class="navbar__logo-container ff-title">
                     <a href="{% url 'home' %}">
@@ -57,38 +57,54 @@
                 </header>
                 <main class="navbar__buttons-container fs-body-1">
                     
-                    <div class="navbar__button-container" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<span class='ff-body fs-body-4'>Home</span>">
+                    <div class="navbar__button-container" data-toggle="tooltip" data-placement="bottom" data-html="true" title data-original-title="<span class='ff-body fs-body-4'>Home</span>">
                         <a href="{% url 'home' %}">
                             <div class="button-round">
-                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/home-icon.svg' %}" alt="">
-                                
+                                {% if request.path == '/author/home/' or request.path == '/story/recommendations/' %}
+                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/home-icon-filled-200.svg' %}" alt="">
+                                {% else %}
+                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/home-icon-200.svg' %}" alt="">
+                                {% endif %}
                             </div> 
-                        </a>
-                    </div>
-                    <div class="navbar__button-container" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<span class='ff-body fs-body-4'>Write</span>">
-                        <a href="{% url 'story:write' %}">
-                            <div class="button-round">
-                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/write-icon.svg' %}" alt="">
-                            </div>        
-                            
                         </a>
                     </div>
                     
                     <div class="navbar__button-container" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<span class='ff-body fs-body-4'>Lists</span>">
                         <a href="{% url 'story:author-list' request.user %}">
                             <div class="button-round">
-                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/list-icon.svg' %}" alt="">
-                                
+                                {% if '/story/lists/' in request.path or '/story/pinned-lists/' in request.path or '/story/update-list/' in request.path or '/story/new-list/' in request.path %}
+                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/list-icon-200-filled.svg' %}" alt="">
+                                {% else %}
+                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/list-icon-200.svg' %}" alt="">
+                                {% endif %}
+                            </div>        
+                            
+                        </a>
+                    </div>
+                    
+                    <div class="navbar__button-container" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<span class='ff-body fs-body-4'>Explore</span>">
+                        <a href="{% url 'story:story-search-results' %}">
+                            
+                            <div class="button-round">
+                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/search-icon-200.svg' %}" alt="">
                             </div>        
                         </a>
                     </div>
+                    <div class="navbar__button-container">
+                        <div class="navbar__divider">
 
-                    <div class="navbar__button-container" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<span class='ff-body fs-body-4'>Explore</span>">
-                        <a href="{% url 'story:story-search-results' %}">
-
+                        </div>
+                    </div>
+                    
+                    <div class="navbar__button-container" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<span class='ff-body fs-body-4'>Write</span>">
+                        <a href="{% url 'story:write' %}">
                             <div class="button-round">
-                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/search-icon.svg' %}" alt="">
-                             
+                                {% if request.path == '/story/write' or '/story/update-story/' in request.path %}
+                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/write-icon-200-filled.svg' %}" alt="">
+                                {% else %}
+                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/write-icon-200.svg' %}" alt="">
+                                {% endif %}
+                                
                             </div>        
                         </a>
                     </div>
@@ -169,25 +185,17 @@
 
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+{% block script %}
 
+{% endblock %}
 <script defer>
 
     if(window.innerWidth < 900) {
             document.querySelector("#dropdown-menu-id").className = 'dropleft show'
     }else{
             document.querySelector("#dropdown-menu-id").className = 'dropup show'
-    }
-
-
-    document.getElementById('id_content').onkeyup = function () {
-        document.getElementById('count').innerHTML = (12000 - this.value.length);
     };
 
-    $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-    })
-    
-    
     window.addEventListener('resize', function(){
         if(window.innerWidth < 900) {
             document.querySelector("#dropdown-menu-id").className = 'dropleft show'
@@ -195,6 +203,17 @@
             document.querySelector("#dropdown-menu-id").className = 'dropup show'
         }
     });
+
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    });
+
+    document.getElementById('id_content').onkeyup = function () {
+        document.getElementById('count').innerHTML = (12000 - this.value.length);
+    };
+    
+    
+    
 
     function authorClick(authorClicked){
     console.log("click registered")

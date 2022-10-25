@@ -173,7 +173,7 @@ def like_story(request):
         return JsonResponse({'result':result, 'liked':liked})
 
 
-class StoryDetailView(LoginRequiredMixin, HitCountDetailView):
+class StoryDetailView(HitCountDetailView):
     login_url = reverse_lazy('login')
     model = story_models.Story
     template_name = "detailed_story.html"
@@ -183,12 +183,15 @@ class StoryDetailView(LoginRequiredMixin, HitCountDetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        
+        if self.request.user.is_authenticated:
+            current_user = author_models.UserExtra.objects.get(user=self.request.user)
+            context['current_user'] = current_user
+
         user_extras = author_models.UserExtra.objects.get(user=self.object.author_id)
-        current_user = author_models.UserExtra.objects.get(user=self.request.user)
         stories_by_author = user_extras.stories.all().exclude(pk=self.object.pk).order_by('-published_date')[:4]
         context['stories_by_author'] = stories_by_author
         context['user_extras'] = user_extras
-        context['current_user'] = current_user
         # context.update({'popular_posts': story_models.Story.objects.order_by('-hit_count_generic__hits')[:3],})
         return context
     

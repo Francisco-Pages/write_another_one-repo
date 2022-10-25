@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load bootstrap4 %}
 
 
 
@@ -15,7 +16,6 @@
             
             
             <div class="col-center-container">
-                <span class="the-title fs-body-3">The</span>
                 <span>Write</span>
             </div>
             <span>Another One</span>
@@ -39,7 +39,7 @@
           
           {% csrf_token %}
 
-          {% for field in form %}
+          <!-- {% for field in form  %}
             <div class="fs-body-2">
               <div>
                 {{field.label}}
@@ -51,14 +51,16 @@
                 {{field.help_text}}
               </div>
             </div>
-          {% endfor %}
+          {% endfor %} -->
+          
+          {% bootstrap_form form %}
           <br>
           <div class="flex-container text-container-thin centered-container ">
             <div class="button-container">
               <img class="icon-xxsm svg-icon-yellow" src="{% static 'svg/three-star-icon-filled.svg' %}"  alt="">
             </div>
             <p class="break-word">I haven't added a "forgot password" page yet. If you forget it
-              you will have to wait until I figure out how to do it. Write on!</p>
+              you will have to wait until I figure out how to do it. You've been warned!</p>
           </div>
 
           <div class="button-container centered-container">

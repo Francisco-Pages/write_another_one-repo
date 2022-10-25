@@ -1,70 +1,330 @@
-{% extends "base.html" %}
+{% load static %}
+{% load hitcount_tags %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAO</title>
+    
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/master.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header-feed.css' %}">
+    <link rel="stylesheet" href="{% static 'css/story-card.css' %}">
+    <link rel="stylesheet" href="{% static 'css/author-card.css' %}">
+    <link rel="stylesheet" href="{% static 'css/list-card.css' %}">
+    <link rel="stylesheet" href="{% static 'css/alt-story-card.css' %}">
+    <link rel="stylesheet" href="{% static 'css/alt-author-card.css' %}">
+    <link rel="stylesheet" href="{% static 'css/story.css' %}">
+    <link rel="stylesheet" href="{% static 'css/tag.css' %}">
+    <link rel="stylesheet" href="{% static 'css/write.css' %}">
+    
+    
+    <!-- FONTS -->
+    <!-- ADOBE -->
+    <link rel="stylesheet" href="https://use.typekit.net/xzz7rxn.css">
+    <!-- GOOGLE -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- LIKE NEW YORKER -->
+    <link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">
+    <!-- JOSEFIN -->
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500;700&display=swap" rel="stylesheet">
+    <!-- NIXIE POIRET ONE -->
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400&family=Poiret+One&display=swap" rel="stylesheet">
+
+    {% block head %}
+
+    {% endblock %}
+</head>
 
 
-{% block content %}
+<body class="background-primary text-main ff-body fs-body-4 fw-reg">
+ 
+    <div class="layout__public">
+        <nav class="layout__navbar-container-public">
+            <nav class="navbar__public">
+                <header class="navbar__logo-container-public ff-title">
+                    <a href="{% url 'home' %}">
+                        <div class="fs-heading-2">W</div>
+                    </a>
+                    
+                </header>
+                <main class="navbar__buttons-container-public fs-body-1">
+                    
+                    <div class="navbar__button-container-public" data-toggle="tooltip" data-placement="bottom" data-html="true" title data-original-title="<span class='ff-body fs-body-4'>Home</span>">
+                        <a href="{% url 'home' %}">
+                            <div class="button-round">
+                                {% if request.path == '/author/home/' or request.path == '/story/recommendations/' %}
+                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/home-icon-filled-200.svg' %}" alt="">
+                                {% else %}
+                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/home-icon-200.svg' %}" alt="">
+                                {% endif %}
+                            </div> 
+                        </a>
+                    </div>
+                    
+                    <div class="navbar__button-container-public" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<span class='ff-body fs-body-4'>Lists</span>">
+                        <a href="{% url 'story:author-list' request.user %}">
+                            <div class="button-round">
+                                {% if '/story/lists/' in request.path or '/story/pinned-lists/' in request.path or '/story/update-list/' in request.path or '/story/new-list/' in request.path %}
+                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/list-icon-200-filled.svg' %}" alt="">
+                                {% else %}
+                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/list-icon-200.svg' %}" alt="">
+                                {% endif %}
+                            </div>        
+                            
+                        </a>
+                    </div>
+                    
+                    <div class="navbar__button-container-public" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<span class='ff-body fs-body-4'>Explore</span>">
+                        <a href="{% url 'story:story-search-results' %}">
+                            
+                            <div class="button-round">
+                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/search-icon-200.svg' %}" alt="">
+                            </div>        
+                        </a>
+                    </div>
+                    <div class="navbar__button-container-public">
+                        <div class="navbar__divider-public">
 
-<main class="layout__main-container">
-  <main class="main">
-    <header class="main__header">
-      <div class="header-feed text-container-thin">
-        <header class="header-feed__title-container">
-          <div class="header-feed__title fs-heading-2 fw-bold ff-title centered-container col-center-container">
+                        </div>
+                    </div>
+                    
+                    <div class="navbar__button-container-public" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<span class='ff-body fs-body-4'>Write</span>">
+                        <a href="{% url 'story:write' %}">
+                            <div class="button-round">
+                                {% if request.path == '/story/write' or '/story/update-story/' in request.path %}
+                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/write-icon-200-filled.svg' %}" alt="">
+                                {% else %}
+                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/write-icon-200.svg' %}" alt="">
+                                {% endif %}
+                                
+                            </div>        
+                        </a>
+                    </div>
+                    
+                    
+                    
+                    
+                    
+                </main>
+                <footer class="navbar__profile-container-public">
+                    {% if request.user.is_authenticated %}
+                        
+                    <div id="dropdown-menu-id" class="dropup">
+                        
+                        <div class="navbar__button-container-public" data-toggle="dropdown" aria-expanded="false">
+                            <a href="{% url 'author:detailed_author' request.user request.user.pk %}">
+                                <img class="icon-md icon-round"  src="{{current_user.cover_image.url}}" alt="">
+                            </a>
+                        </div>
+                        
+                        <div class="dropdown-menu">
+                            
+                            <div class="navbar__button-container-public dropdown-item">
+                                <a href="{% url 'author:logout' %}">
+                                    <div class="button-container">
+                                        <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/logout-icon.svg' %}" alt="">   
+                                        <div class="ff-body fs-body-4">Logout</div> 
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="navbar__button-container-public dropdown-item">
+                                <a href="{% url 'author:detailed_author' request.user request.user.pk %}">
+                                    <div class="button-container">
+                                        <img class="icon-xsm icon-round"  src="{{current_user.cover_image.url}}" alt="">
+                                        <div class="ff-body fs-body-4">Profile</div> 
+                                    </div>
+                                </a>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    {% else %}
+                        <div class="navbar__button-container-public" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<span class='ff-body fs-body-4'>Log in</span>">
+                            <a href="{% url 'author:login' %}">
+                                <div class="button-round">
+                                    <img class="icon-xsm" src="{% static 'svg/login-icon.svg' %}" alt="">
+                                </div>       
+                            </a> 
+                        </div>
+                    {% endif %}
+
+                    
+                    
+
+                   
+                    
+                </footer>
+
+            </nav>
+        </nav>
+        
+
+        <main class="layout__main-container">
+          <header class="">
+              <div class="">
+                  <div class="header-feed__public text-inverted">
+                    <div class="ff-title header-feed__public-title fs-heading-1">
+                      “It's the job that's never started as takes longest to finish.”
+                      <span class="ff-read fs-heading-3">...now go write another one.</span>
+                    </div>
+                    <div class="header-feed__public-text">
+                      
+                        <a href="{% url 'author:login' %}" class="button-pill button-black button-wide fs-body-1 fw-bold">
+                          Start Writing
+                        </a>
+                      
+                    </div>
+                    
+                  </div>
+              </div>
+          </header>
             
             
-            <div class="col-center-container">
-                <span class="the-title fs-body-3">The</span>
-                <span>Write</span>
-            </div>
-            <span>Another One</span>
-         
-          </div>
-        </header>
+    
+            <main class="main">
+    
+              <div class="centered-container content-container">
+                <div class="ff-title fs-heading-3 divider-item">
+                  Recently published stories
+                </div>
+              </div>
+                  
+    
+                <div class="main__content">
+    
+                    
+                    {% for story in stories %}
+                    
+                    <div class="story-card__container">
+                        <article class="story-card content-container">
+                            <a href="{% url 'author:detailed_author' story.author_id.username story.author_id.id %}">
+                                <header class="story-card__header ff-body fs-body-3 text-alt-secondary">
+                                    {% for author in user_extra %}
+                                        {% if author.user == story.author_id %}
+                                        <img class="icon-xsm icon-round" src="{{ author.cover_image.url }}" alt="">
+                                        {% endif %}
+                                    {% endfor %}
+                                   
+                                    <div class="text-main">
+                                        {{ story.author_id }}
+                                    </div>
+                                    <div>
+                                        ·
+                                    </div>
+                                    <div class="">
+                                        {{ story.show_time_since}}
+                                    </div>
+        
+        
+                                </header>
+                            </a>
+                            
+                            <main class="story-card__main-container">
+                                <div class="story-card__text-container">
+                                    <header class="story-card__title ff-title fs-heading-3 fw-bold">
+                                            <a href="{% url 'story:detailed_story' story.author_id story.slug story.pk %}">
+                                                {{ story.title }}
+                                            </a>
+                                        </header>
+                                        <main class="story-card__description ff-read fs-body-3 fw-reg text-secondary">
+                                            {{ story.content_minified | slice:":180" }}...
+                                        </main>
+                                    <footer class="story-card__footer-container">
+                                        <footer class="story-card__footer">
+                                            
+                                            <div>
+                                                
+                                                <a href="{% url 'story:detailed-tag' story.tags.all.first.slug %}">
+                                                    <div class="tag-card__tag-icon">
+                                                        {{ story.tags.all.first.name }}
+                                                    </div>
+                                                </a>
+                                                
+                    
+                                            </div>
+                                            
+                                            <div class="story-card__buttons">
+                                                <div class="button-container">
+                                                    
+                                                    
+                                                    <a href="/author/login/?next={% url 'story:detailed_story' story.author_id story.slug story.pk %}" class="button-pill button-pill-md">
+                                                        
+                                                        <img class="icon-xxsm svg-icon-accent" src="{% static 'svg/like-icon.svg' %}" alt="">
+                                                        <span>{{story.like_count}}</span>
+                                                    </a>
+                                                    
+                                                    
+                                                    <div class="dropdown">
+                                                        
+                                                        <button class="" data-toggle="dropdown">
+                                                            <img id="" class="icon-xsm svg-icon-primary" src="{% static 'svg/bookmark-add.svg' %}" alt="">
+                                                        </button>
+                                                        <div class="dropdown-menu fs-body-4">
+                                                            
+                                                            <div class="dropdown-item">
+                                                                <a href="/author/login/?next={% url 'story:detailed_story' story.author_id story.slug story.pk %}" class="button-container">
+                                                                  Sign in to <br>bookmark this story
+                                                                </a>
+                                                            
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </footer>
+                                    </footer>
+                                </div>
+                                
+                                <a class="story-card__image-container" href="{% url 'story:detailed_story' story.author_id story.slug story.pk %}">
+                                    <img class="story-card__image" src="{{ story.cover_image.url}}" alt="">
+                                </a>
+                            </main>
+                            
+                            
+                        </article>
+                    </div> 
+                    
+                    
+                    <div class="flex-container">
+                        <div class="content-container divider-item">
+                            
+                        </div>
+                    </div>
+                    <!-- <br> -->
+                    
+                    {% endfor %}
+    
+            </main>
+    </main>
 
-        <footer class="col-center-container fw-bold fs-body-5 ff-sub-title">
-            <div>&lt;&lt; Letter from the Editor &gt;&gt;</div>
-            <div class="fw-semi-bold">Francisco J. PAGES</div>
-        </footer>
-      </div>
-    </header>
-
-    <div class="main__content ">
-      <div class="flex-container">
-
-        <main class="content_container centered-container col-container text-container-thin fs-body-3 ff-read">
-          <span>Dear Reader,</span>
-          <br>
-          <span>
-              Over the last year, I have locked myself in a cave <s>and have gone
-              hard to work</s> and worked like a hermit to bring you WRITE ANOTHER ONE:
-              a writing platform for stories, fictional/factual, to bring
-              together the imagination of authors undiscovered and the eyes and
-              hearts of avid story readers. <s>A place to give life to your tales
-              and hone your story telling skill.</s>
-
-          </span>
-          <br>
-          <span>
-              This platform is my first major project <s>but</s> and  although it took me
-              months to build, it is the conclusion of a journey of more than
-              half a decade. Now I take off the hat of creator and put on the hat of editor.
-              Over the coming months I will update the site regularly with new
-              functionalities, polish, and quality of life improvements
-              so the most important things is always front and center:
-              <br><u class="col-center-container fw-bold">The Content</u>
-          </span>
-          <br>
-          <span>
-              I hope you enjoy WRITE ANOTHER ONE, and if you do: message me.
-          </span>
-          <br>
-          <div class="button-container centered-container ff-body fs-body-4">
-            <a class="button-pill button-green" href="{% url 'author:login' %}">Start Writing</a>
-          </div>
-      </main>
-      </div>
-
+       
     </div>
-</main>
+    
+</body>
 
 
-{% endblock %}
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
+<script defer>
+
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    });
+    
+</script>
+
+</html>

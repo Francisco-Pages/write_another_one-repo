@@ -65,6 +65,45 @@
                         </button>
                         {% endif %}
                     </div>
+                    <div class="button-container">
+                        <div class="dropdown">
+                                                    
+                            <button class="" data-toggle="dropdown">
+                                <img id="" class="icon-xsm svg-icon-primary" src="{% static 'svg/bookmark-add.svg' %}" alt="">
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right fs-body-4">
+                                {% for list in current_user.lists.all %}
+                                {% if object in list.stories.all %}
+                                <div class="dropdown-item">
+                                    <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{object.pk}}|{{list.pk}}">
+                                        {% csrf_token %}
+                                        <img class="icon-xsm" id="{{object.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon-filled.svg' %}" alt="">
+                                        <span>{{list}}</span>
+                                    </button>
+                                
+                                </div>
+                                {% else %}
+                                <div class="dropdown-item">
+                                    <button class="button-container" id="add-to-list-button" onclick="addStoryToList(this.value)" value="{{story.pk}}|{{list.pk}}">
+                                        {% csrf_token %}
+                                        <img class="icon-xsm" id="{{story.pk}}-in-{{list.pk}}" src="{% static 'svg/check-box-icon.svg' %}" alt="">
+                                        <span>{{list}}</span>
+                                    </button>
+                                
+                                </div>
+                                {% endif %}
+                                {% empty %}
+                                <div class="dropdown-item">
+                                    <a href="/author/login/?next={% url 'story:detailed_story' story.author_id story.slug story.pk %}" class="button-container">
+                                      Sign in to <br>bookmark this story
+                                    </a>
+                                
+                                </div>
+                                {% endfor %}
+                                
+                            </div>
+                        </div>
+                    </div>
                     <div class="button-pill button-pill-md">
                         Views: {% get_hit_count for object %}
                     </div>

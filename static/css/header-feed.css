@@ -55,3 +55,24 @@
     border-top: 1px solid var(--text-primary);
     font-weight: var(--fw-bold);
 }
+
+.header-feed__public {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    background-color: var(--clr-green);
+    /* min-height: 40rem; */
+    border-bottom: 2px solid black;
+    padding: 5rem;
+    align-items: center;
+}
+
+.header-feed__public-title {
+    max-width: var(--title-card-width);
+}
+.header-feed__public-text {
+    display: flex;
+    flex-grow: 1;
+    max-width: var(--title-card-width);
+    justify-content: start;
+}

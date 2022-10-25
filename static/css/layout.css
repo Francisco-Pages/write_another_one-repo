@@ -1,13 +1,14 @@
 .layout {
     display: flex;
-    max-width: 143rem;
+    max-width: 100vw;
     margin: 0 auto;
     min-height: 100vh;
 }
 
 .layout__navbar-container {
     /* flex-grow: 1; */
-    min-width: 8rem;
+    min-width: 6.4rem;
+    background-color: var(--background-primary);
     /* previously 18rem when nav was wider*/
     /* margin-left: 2rem; */
     
@@ -17,7 +18,7 @@
 
 .layout__main-container {
     flex-grow: 1;
-    padding: 0 2rem 0 2rem;
+    /* padding: 0 2rem 0 2rem; */
 }
 
 .layout__aside-container {
@@ -28,7 +29,7 @@
 @media (max-width: 900px) {
     .layout {
         flex-direction: column;
-        max-width: var(--content-width);
+        max-width: 100vw;
         min-height: none;
     }
     .layout__navbar-container {
@@ -36,10 +37,27 @@
         position: sticky;
         top: 0;
         z-index: 1000;
-
-    
     }
     .layout__main-container {
         padding: 0;
     }
+}
+
+.layout-public {
+    display: flex;
+    flex-direction: column;
+    max-width: 100vw;
+    min-height: none;
+    margin: 0 auto;
+}
+.layout__navbar-container-public {
+    background-color: var(--background-primary);
+    min-width: none;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+}
+.layout__main-container-public {
+    padding: 0;
 }
