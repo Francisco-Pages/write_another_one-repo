@@ -61,9 +61,9 @@
                         <a href="{% url 'home' %}">
                             <div class="button-round">
                                 {% if request.path == '/author/home/' or request.path == '/story/recommendations/' %}
-                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/home-icon-filled-200.svg' %}" alt="">
+                                <img class="icon-xsm svg-icon-primary" src="{% static 'svg/home-icon-filled-200.svg' %}" alt="">
                                 {% else %}
-                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/home-icon-200.svg' %}" alt="">
+                                <img class="icon-xsm svg-icon-primary" src="{% static 'svg/home-icon-200.svg' %}" alt="">
                                 {% endif %}
                             </div> 
                         </a>
@@ -73,9 +73,9 @@
                         <a href="{% url 'story:author-list' request.user %}">
                             <div class="button-round">
                                 {% if '/story/lists/' in request.path or '/story/pinned-lists/' in request.path or '/story/update-list/' in request.path or '/story/new-list/' in request.path %}
-                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/list-icon-200-filled.svg' %}" alt="">
+                                <img class="icon-xsm svg-icon-primary" src="{% static 'svg/list-icon-200-filled.svg' %}" alt="">
                                 {% else %}
-                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/list-icon-200.svg' %}" alt="">
+                                <img class="icon-xsm svg-icon-primary" src="{% static 'svg/list-icon-200.svg' %}" alt="">
                                 {% endif %}
                             </div>        
                             
@@ -86,7 +86,7 @@
                         <a href="{% url 'story:story-search-results' %}">
                             
                             <div class="button-round">
-                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/search-icon-200.svg' %}" alt="">
+                                <img class="icon-xsm svg-icon-primary" src="{% static 'svg/search-icon-200.svg' %}" alt="">
                             </div>        
                         </a>
                     </div>
@@ -100,9 +100,9 @@
                         <a href="{% url 'story:write' %}">
                             <div class="button-round">
                                 {% if request.path == '/story/write' or '/story/update-story/' in request.path %}
-                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/write-icon-200-filled.svg' %}" alt="">
+                                <img class="icon-xsm svg-icon-primary" src="{% static 'svg/write-icon-200-filled.svg' %}" alt="">
                                 {% else %}
-                                <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/write-icon-200.svg' %}" alt="">
+                                <img class="icon-xsm svg-icon-primary" src="{% static 'svg/write-icon-200.svg' %}" alt="">
                                 {% endif %}
                                 
                             </div>        
@@ -130,7 +130,7 @@
                             <div class="navbar__button-container dropdown-item">
                                 <a href="{% url 'author:logout' %}">
                                     <div class="button-container">
-                                        <img class="icon-xsm" id="svg-icon-primary" src="{% static 'svg/logout-icon.svg' %}" alt="">   
+                                        <img class="icon-xsm svg-icon-primary" src="{% static 'svg/logout-icon.svg' %}" alt="">   
                                         <div class="ff-body fs-body-4">Logout</div> 
                                     </div>
                                 </a>
@@ -153,7 +153,7 @@
                         <div class="navbar__button-container" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<span class='ff-body fs-body-4'>Log in</span>">
                             <a href="{% url 'author:login' %}">
                                 <div class="button-round">
-                                    <img class="icon-xsm" src="{% static 'svg/login-icon.svg' %}" alt="">
+                                    <img class="icon-xsm svg-icon-primary" src="{% static 'svg/login-icon.svg' %}" alt="">
                                 </div>       
                             </a> 
                         </div>
