@@ -54,7 +54,7 @@ def follow_author(request):
 # Create your views here.
 class SignUp(CreateView):
     form_class = forms.UserCreateForm
-    success_url = reverse_lazy("login")
+    success_url = reverse_lazy("author:author_home")
     template_name = "author_app/signup.html"
 
 class UserExtraUpdateView(UpdateView):

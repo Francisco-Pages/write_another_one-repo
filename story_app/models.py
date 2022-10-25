@@ -21,9 +21,9 @@ class Story(models.Model):
                                     on_delete=models.CASCADE
                                 )
     title = models.TextField(max_length=300, default='Title')
-    content = BleachField(max_length=12000, default='Tell your story.')
-    content_html = models.TextField(editable=False, default='')
-    content_minified = models.CharField(max_length=12000, editable=False, default='')
+    content = BleachField(max_length=15000, default='Tell your story.')
+    content_html = models.TextField(max_length=15000, editable=False, default='')
+    content_minified = models.CharField(max_length=15000, editable=False, default='')
     tags = TaggableManager()
     slug = models.SlugField(max_length=601, null=False)
     editable = models.BooleanField(default=False)
@@ -212,5 +212,8 @@ class TagsExtra(models.Model):
     story_count = models.BigIntegerField(default='0')
     description = models.CharField(max_length=300, default='')
     date_created = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.tag
 
     

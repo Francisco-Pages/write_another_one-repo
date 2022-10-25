@@ -26,6 +26,7 @@
             
             <div class="main__content col-container">
                 <div class="content-container centered-container">
+                    {% if request.user == object.author_id %}
                     <form method="post">
                         {% csrf_token %}
                         <div class="fs-heading-4">
@@ -43,7 +44,7 @@
                         </div>
 
                     </form>
-
+                    {% endif %}
                 </div>
                 
 

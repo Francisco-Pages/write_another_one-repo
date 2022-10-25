@@ -108,9 +108,9 @@
                                         <div>
                                             
                                             
-                                            <a href="{% url 'story:detailed-tag' story.tags.all.first.slug %}">
+                                            <a href="{% url 'story:detailed-tag' story.tags.all.last.slug %}">
                                                 <div class="tag-card__tag-icon">
-                                                    {{ story.tags.all.first.name }}
+                                                    {{ story.tags.all.last.name }}
                                                 </div>
                                             </a>
                                             

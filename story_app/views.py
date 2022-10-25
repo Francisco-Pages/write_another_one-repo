@@ -247,18 +247,9 @@ class StoryUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self, **kwargs):    
         return reverse_lazy('author:detailed_author', kwargs = {'slug':self.object.author_id, 'pk':self.object.author_id.pk})     
         
-class StoryDeleteView(DeleteView):
+class StoryDeleteView(LoginRequiredMixin, DeleteView):
     model = story_models.Story 
     template_name = 'story_confirm_delete.html'
-
-    def dispatch(self, request, *args, **kwargs):
-        handler = super().dispatch(request, *args, **kwargs)
-        user = request.user
-        story = self.get_object()
-        
-        if not (story.author_id == user or user.is_superuser):
-            raise PermissionDenied
-        return handler
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -266,8 +257,8 @@ class StoryDeleteView(DeleteView):
         context['current_user'] = current_user
         return context
 
-    def get_success_url(self, **kwargs):    
-        return reverse_lazy('author:detailed_author', kwargs = {'slug':self.object.author_id, 'pk':self.object.author_id.pk})     
+    def get_success_url(self, **kwargs):      
+        return reverse_lazy('author:detailed_author', kwargs = {'slug':self.request.user, 'pk':self.request.user.pk})     
         
 
 
