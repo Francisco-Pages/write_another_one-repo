@@ -56,7 +56,7 @@
     flex-grow: 1;
     flex-shrink: 1;
     padding: 1rem;
-    max-height: 7rem;
+    height: 7rem;
     background-color: var(--background-primary);
     color: var(--text-alt-secondary);
     /* border-left: 2px solid var(--border-primary); */

@@ -10,7 +10,7 @@ class StoryCreateForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['title'].widget.attrs.update({
                 'class': 'editor__title',
-                # 'oninput':'this.style.height = "";this.style.height = this.scrollHeight + "px";',
+                'oninput':'this.style.height = "";this.style.height = this.scrollHeight + "px";',
                 'maxlength':'80',
                 
         })
@@ -34,6 +34,7 @@ class StoryUpdateForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['title'].widget.attrs.update({
                 'class': 'editor__title',
+                'oninput':'this.style.height = "";this.style.height = this.scrollHeight + "px";',
                 'maxlength':'80',
         })
         self.fields['content'].widget.attrs.update({
