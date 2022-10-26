@@ -25,8 +25,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.HomePage.as_view(), name="home"),
-    path('test/', views.TestPage.as_view(), name="test"),
-    path('thanks/', views.ThanksPage.as_view(), name="thanks"),
     path('story/', include('story_app.urls', namespace='story')),
     path('author/', include("author_app.urls", namespace="author")),
     path('author/', include("django.contrib.auth.urls")),

@@ -17,7 +17,6 @@ class StoryCreateForm(ModelForm):
         self.fields['content'].widget.attrs.update({
                 'class': 'editor__content', 
                 'name':'text',
-                # 'oninput':'this.style.height = "";this.style.height = this.scrollHeight + "px"',
                 'maxlength':'14000'
         })
         self.fields['tags'].widget.attrs.update({

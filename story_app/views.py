@@ -24,25 +24,6 @@ from django.conf import settings
 
 # Create your views here.
 
-def write(request):
-    return render(request, 'write.html')
-
-def read(request):
-    return render(request, 'read.html')
-
-def test_home(request):
-    return render(request, 'story_app/test_home.html')
-    
-def lists(request):
-    return render(request, 'lists.html')
-
-def detailed_list(request):
-    return render(request, 'detailed_list.html')
-
-def explore(request):
-    return render(request, 'explore.html')
-
-
 def add_story_to_list(request):
     if request.POST.get('action') =='post':
         added = ''
@@ -68,32 +49,6 @@ def add_story_to_list(request):
         
         
         return JsonResponse({'added':added, 'added_in_list':added_in_list})
-
-class RecommendationsFeedView(LoginRequiredMixin, TemplateView):
-    login_url = reverse_lazy('login')
-    template_name = 'recommendations_feed.html'
-    # model = author_models.UserExtra
-        
-   
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        current_user = author_models.UserExtra.objects.get(user=self.request.user)
-        following_users = [user for user in author_models.UserExtra.objects.select_related('user') if user.user in current_user.following.all()]
-        
-        tags_stories = []
-        for story in story_models.Story.objects.select_related('author_id').order_by('-published_date'):
-            for tag in current_user.tags.all():
-                if tag in story.tags.all():
-                    tags_stories.append(story)
-                    break
-                
-
-        context['tags_stories'] = tags_stories
-        context["current_user"] = current_user
-        context['user_extra'] = following_users
-        
-        return context
 
 def follow_tag(request):
     if request.POST.get('action') == 'post':
@@ -174,6 +129,32 @@ def like_story(request):
 
         return JsonResponse({'result':result, 'liked':liked})
 
+        
+class RecommendationsFeedView(LoginRequiredMixin, TemplateView):
+    login_url = reverse_lazy('login')
+    template_name = 'recommendations_feed.html'
+    # model = author_models.UserExtra
+        
+   
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        current_user = author_models.UserExtra.objects.get(user=self.request.user)
+        following_users = [user for user in author_models.UserExtra.objects.select_related('user') if user.user in current_user.following.all()]
+        
+        tags_stories = []
+        for story in story_models.Story.objects.select_related('author_id').order_by('-published_date'):
+            for tag in current_user.tags.all():
+                if tag in story.tags.all():
+                    tags_stories.append(story)
+                    break
+                
+
+        context['tags_stories'] = tags_stories
+        context["current_user"] = current_user
+        context['user_extra'] = following_users
+        
+        return context
 
 class StoryDetailView(HitCountDetailView):
     login_url = reverse_lazy('login')

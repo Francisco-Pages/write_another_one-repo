@@ -120,36 +120,6 @@ class Story(models.Model):
         return super().save(*args, **kwargs)
 
 
-                                
-class EditSuggestion(models.Model):
-    editor_id = models.ForeignKey(
-                                    settings.AUTH_USER_MODEL,
-                                    null=True,
-                                    default=None,
-                                    on_delete=models.CASCADE
-                                )    
-    story_id = models.ForeignKey(
-                                    Story, 
-                                    default=None,
-                                    on_delete=models.CASCADE
-                                )
-    content_removed = models.CharField(max_length=12000, default='content removed')
-    content_added = models.CharField(max_length=12000, default='content added')
-    comments = models.CharField(max_length=12000, default='comments')
-    liked = models.BooleanField(default=False)
-    accepted = models.BooleanField(default=False)
-    created_date = models.DateTimeField(default=now)
-
-class UpdatedStory(models.Model):
-    og_story_id = models.ForeignKey(
-                                    Story, 
-                                    default=None,
-                                    on_delete=models.CASCADE
-                                )
-    new_title = models.CharField(max_length=300, default='new title')
-    new_content = models.CharField(max_length=12000, default='new content')
-    created_date = models.DateTimeField(default=now)
-
 class StoryList(models.Model):
     user = models.ForeignKey(
                             settings.AUTH_USER_MODEL,
@@ -188,6 +158,22 @@ class StoryList(models.Model):
         ordering = ['created_date']
     
 
+
+class TagsExtra(models.Model):
+    tag = models.OneToOneField(Tag,
+                                default=None,
+                                on_delete=models.CASCADE,
+                                primary_key=True
+                            )
+    follower_count = models.BigIntegerField(default='0')
+    story_count = models.BigIntegerField(default='0')
+    description = models.CharField(max_length=300, default='')
+    date_created = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.tag.name
+
+    
 class LikedStory(models.Model):
     user = models.ForeignKey(
                                 settings.AUTH_USER_MODEL,
@@ -202,18 +188,31 @@ class LikedStory(models.Model):
                             )
     liked_date = models.DateTimeField(default=now)
 
-class TagsExtra(models.Model):
-    tag = models.OneToOneField(Tag,
-                                default=None,
-                                on_delete=models.CASCADE,
-                                primary_key=True
-                            )
-    follower_count = models.BigIntegerField(default='0')
-    story_count = models.BigIntegerField(default='0')
-    description = models.CharField(max_length=300, default='')
-    date_created = models.DateTimeField(default=now)
+class UpdatedStory(models.Model):
+    og_story_id = models.ForeignKey(
+                                    Story, 
+                                    default=None,
+                                    on_delete=models.CASCADE
+                                )
+    new_title = models.CharField(max_length=300, default='new title')
+    new_content = models.CharField(max_length=12000, default='new content')
+    created_date = models.DateTimeField(default=now)
 
-    def __str__(self):
-        return self.tag
-
-    
+class EditSuggestion(models.Model):
+    editor_id = models.ForeignKey(
+                                    settings.AUTH_USER_MODEL,
+                                    null=True,
+                                    default=None,
+                                    on_delete=models.CASCADE
+                                )    
+    story_id = models.ForeignKey(
+                                    Story, 
+                                    default=None,
+                                    on_delete=models.CASCADE
+                                )
+    content_removed = models.CharField(max_length=12000, default='content removed')
+    content_added = models.CharField(max_length=12000, default='content added')
+    comments = models.CharField(max_length=12000, default='comments')
+    liked = models.BooleanField(default=False)
+    accepted = models.BooleanField(default=False)
+    created_date = models.DateTimeField(default=now)

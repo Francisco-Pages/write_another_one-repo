@@ -11,12 +11,6 @@ from . import views as project_views
 from taggit.models import Tag
 
 
-class TestPage(TemplateView):
-    template_name = 'test.html'
-
-class ThanksPage(TemplateView):
-    template_name = 'thanks.html'
-
 class HomePage(TemplateView):
     template_name = 'index.html'
     
@@ -31,13 +25,5 @@ class HomePage(TemplateView):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect('author:author_home')
-            # return redirect('author:author_home', username=request.user.username, pk=request.user.pk)
         return super(project_views.HomePage, self).dispatch(request, *args, **kwargs)
 
-
-
-
-    # def get(self, request, *args, **kwargs):
-    #     if request.user.is_authenticated:
-    #         return HttpResponseRedirect(reverse("test"))
-    #     return super().get(request, *args, **kwargs) 

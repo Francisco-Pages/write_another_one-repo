@@ -82,17 +82,6 @@ class UserExtraUpdateView(UpdateView):
         return reverse_lazy('author:detailed_author', kwargs = {'slug':self.object.user, 'pk':self.object.user.pk})     
     
 
-
-class AuthorTemplateView(LoginRequiredMixin, TemplateView):
-    login_url = reverse_lazy('login')
-    template_name = 'author.html'
-    
-    extra_context = {
-        'stories': story_models.Story.objects.all(),
-        'follows': author_models.Follow.objects.all(),
-    }
-
-# OTHER'S PROFILES
 class AuthorDetailView(LoginRequiredMixin, DetailView):
     login_url = reverse_lazy('login')
     model = authmodels.User
@@ -109,9 +98,7 @@ class AuthorDetailView(LoginRequiredMixin, DetailView):
         return context
     
     
-        
-    
-# OWN PROFILE
+
 
 class AuthorHomePageView(LoginRequiredMixin, TemplateView):
     login_url = reverse_lazy('login')
@@ -132,44 +119,3 @@ class AuthorHomePageView(LoginRequiredMixin, TemplateView):
         context['following_stories'] = feed_stories
         
         return context
-
-    
-        
-# class ListsListView(LoginRequiredMixin,ListView):
-#     login_url = reverse_lazy('login')
-#     template_name = 'story_lists.html'
-
-#     def get_queryset(self, **kwargs):
-        
-#         self.user_lists = story_models.StoryList.objects.all().select_related('user')
-
-#         return [user_list for user_list in self.user_lists if user_list.user == self.request.user]
-
-# class ListDetailView(LoginRequiredMixin, DetailView):
-#     login_url = reverse_lazy('login')
-#     model = story_models.StoryList
-#     template_name = 'detailed_list.html'
-
-
-    
-    # def get_queryset(self, **kwargs):
-        
-    #     self.following_stories = story_models.Story.objects.all().select_related('author_id')
-
-    #     return [story for story in self.following_stories if story.author_id == self.request.user]
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context["following_stories"] = self.following_stories
-    #     return context
-    
-
-    # extra_context = {
-    #     'stories': story_models.Story.objects.filter().order_by('-published_date'),
-    #     'tags_followed': story_models.TagsFollowed.objects.all(),
-    #     'authors_followed': author_models.Follow.objects.filter().order_by('-followed_date'),
-    #     'user_extras': author_models.UserExtra.objects.all(),
-
-    #     # 'authors_followed': [u for u in author_models.Follow.objects.all()]
-    # }
-
