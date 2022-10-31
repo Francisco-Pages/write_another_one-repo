@@ -29,5 +29,4 @@ urlpatterns = [
     path('author/', include("author_app.urls", namespace="author")),
     path('author/', include("django.contrib.auth.urls")),
     path('__debug__/', include('debug_toolbar.urls')),
-    # path('author', author_views.author, name='author'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

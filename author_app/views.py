@@ -18,8 +18,8 @@ from author_app import models as author_models
 from django.contrib.auth import models as authmodels
 
 
-
 from . import forms
+
 
 @login_required
 def follow_author(request):
@@ -28,7 +28,8 @@ def follow_author(request):
         followed = ''
         pk = int(request.POST.get('authorpk'))
         author = get_object_or_404(author_models.UserExtra, pk=pk)
-        current_user = get_object_or_404(author_models.UserExtra, user=request.user)
+        current_user = get_object_or_404(
+            author_models.UserExtra, user=request.user)
 
         if author.followers.filter(pk=request.user.pk).exists():
             author.followers.remove(request.user)
@@ -48,7 +49,7 @@ def follow_author(request):
             followed = 'following'
             author.save()
             current_user.save()
-        return JsonResponse({'result':result, 'followed':followed})
+        return JsonResponse({'result': result, 'followed': followed})
 
 
 # Create your views here.
@@ -57,7 +58,8 @@ class SignUp(CreateView):
     success_url = reverse_lazy("author:author_home")
     template_name = "author_app/signup.html"
 
-class UserExtraUpdateView(UpdateView):
+
+class UserExtraUpdateView(LoginRequiredMixin, UpdateView):
     model = author_models.UserExtra
     form_class = forms.UserExtraUpdateForm
     # success_url = reverse_lazy("home")
@@ -67,22 +69,23 @@ class UserExtraUpdateView(UpdateView):
         handler = super().dispatch(request, *args, **kwargs)
         user = request.user
         user_extra = self.get_object()
-        
+
         if not (user_extra.user == user or user.is_superuser):
             raise PermissionDenied
         return handler
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        current_user = author_models.UserExtra.objects.get(user=self.request.user)
+        current_user = author_models.UserExtra.objects.get(
+            user=self.request.user)
         context['current_user'] = current_user
         return context
 
-    def get_success_url(self, **kwargs):    
-        return reverse_lazy('author:detailed_author', kwargs = {'slug':self.object.user, 'pk':self.object.user.pk})     
-    
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('author:detailed_author', kwargs={'slug': self.object.user, 'pk': self.object.user.pk})
 
-class AuthorDetailView(LoginRequiredMixin, DetailView):
+
+class AuthorDetailView(DetailView):
     login_url = reverse_lazy('login')
     model = authmodels.User
     template_name = "detailed_author.html"
@@ -90,32 +93,36 @@ class AuthorDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         object_extra = author_models.UserExtra.objects.get(user=self.object)
-        stories_by_user = [story for story in object_extra.stories.all().order_by('-published_date')]
-        current_user = author_models.UserExtra.objects.get(user=self.request.user)
-        context['current_user'] = current_user
+        stories_by_user = [
+            story for story in object_extra.stories.all().order_by('-published_date')]
+        if self.request.user.is_authenticated:
+            current_user = author_models.UserExtra.objects.get(
+                user=self.request.user)
+            context['current_user'] = current_user
         context['object_extra'] = object_extra
         context['stories'] = stories_by_user
         return context
-    
-    
 
 
 class AuthorHomePageView(LoginRequiredMixin, TemplateView):
     login_url = reverse_lazy('login')
     template_name = 'author_home.html'
     # model = author_models.UserExtra
-        
-   
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        current_user = author_models.UserExtra.objects.get(user=self.request.user)
-        following_users = [user for user in author_models.UserExtra.objects.select_related('user') if user.user in current_user.following.all()]
-        following_user_ids = [user.user for user in author_models.UserExtra.objects.select_related('user') if user.user in current_user.following.all()]
-        feed_stories = story_models.Story.objects.filter(Q(author_id__in=current_user.following.all()) | Q(author_id= self.request.user)).order_by('-published_date')
+        current_user = author_models.UserExtra.objects.get(
+            user=self.request.user)
+        following_users = [user for user in author_models.UserExtra.objects.select_related(
+            'user') if user.user in current_user.following.all()]
+        following_user_ids = [user.user for user in author_models.UserExtra.objects.select_related(
+            'user') if user.user in current_user.following.all()]
+        feed_stories = story_models.Story.objects.filter(Q(author_id__in=current_user.following.all()) | Q(
+            author_id=self.request.user)).order_by('-published_date')
 
         context["current_user"] = current_user
         context['user_extra'] = following_users
         context['following_stories'] = feed_stories
-        
+
         return context
