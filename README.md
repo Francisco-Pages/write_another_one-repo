@@ -53,7 +53,7 @@ Open your browser and navigate to http://127.0.0.1:8000/
 ⸻
 
 Project Structure
-
+```bash
 write_another_one-repo/
 ├── author_app/        # Handles author-related functionalities
 ├── story_app/         # Manages stories and related content
@@ -63,7 +63,7 @@ write_another_one-repo/
 ├── wao_project/       # Project configuration and settings
 ├── manage.py          # Django's command-line utility
 └── requirements.txt   # Python dependencies
-
+```
 
 ⸻
 
